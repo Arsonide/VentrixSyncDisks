@@ -1,0 +1,9 @@
+{
+    "name": "VentVigilante",
+    "website_url": "https://github.com/Arsonide/VentVigilante",
+    "description": "Plugin that adds a sync disk with vent related abilities to Shadows of Doubt.",
+    "dependencies": [
+        "Venomaus-SODCommon-1.1.7"
+    ],
+    "version_number": "0.8.0"
+}
