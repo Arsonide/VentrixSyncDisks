@@ -5,10 +5,11 @@ namespace VentVigilante.Implementation.Renderers;
 public class VentRenderer : MonoBehaviour
 {
     public float DespawnTimer;
-
+    private Renderer renderer;
+    
     private void Awake()
     {
-
+        
     }
 
     private void OnDestroy()

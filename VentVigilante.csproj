@@ -46,6 +46,9 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>lib\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>lib\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
     <Reference Include="UniverseLib.IL2CPP.Interop">
       <HintPath>..\FMODHelper\lib\UniverseLib.IL2CPP.Interop.dll</HintPath>
     </Reference>

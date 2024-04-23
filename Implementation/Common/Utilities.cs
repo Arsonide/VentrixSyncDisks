@@ -21,10 +21,10 @@ public static class Utilities
             {
                 return;
             }
-            
+
 #pragma warning restore CS0162
         }
-        
+
         VentVigilantePlugin.Log.Log(level, message);
     }
 }

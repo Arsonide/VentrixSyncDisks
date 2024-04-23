@@ -1,6 +1,5 @@
 ﻿using Il2CppInterop.Runtime.Injection;
 using BepInEx;
-using BepInEx.Logging;
 using SOD.Common.BepInEx;
 using VentVigilante.Implementation.Common;
 using VentVigilante.Implementation.Config;
@@ -40,12 +39,12 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
 
     private void Initialize()
     {
-        Utilities.Log("Plugin is running initialization.", LogLevel.Debug);
+        SyncDisks.Initialize();
     }
     
     private void Uninitialize()
     {
-        Utilities.Log("Plugin is running uninitialization.", LogLevel.Debug);
         VentRendererPool.CleanupVentRenderers();
+        SyncDisks.Uninitialize();
     }
 }
