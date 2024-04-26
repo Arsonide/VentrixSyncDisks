@@ -1,9 +1,12 @@
 ﻿using Il2CppInterop.Runtime.Injection;
 using BepInEx;
+using SOD.Common;
 using SOD.Common.BepInEx;
+using SOD.Common.Helpers;
 using VentVigilante.Implementation.Common;
 using VentVigilante.Implementation.Config;
 using VentVigilante.Implementation.Renderers;
+using SyncDisks = VentVigilante.Implementation.Common.SyncDisks;
 
 namespace VentVigilante;
 
@@ -25,7 +28,8 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
         Utilities.Log($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
         Harmony.PatchAll();
         Utilities.Log($"Plugin {MyPluginInfo.PLUGIN_GUID} is patched!");
-        ClassInjector.RegisterTypeInIl2Cpp<VentRenderer>();       
+        ClassInjector.RegisterTypeInIl2Cpp<DuctMapCube>();
+        ClassInjector.RegisterTypeInIl2Cpp<EcholocationPulse>();
         Utilities.Log($"Plugin {MyPluginInfo.PLUGIN_GUID} has added custom types!");
         
         Initialize();
@@ -40,11 +44,24 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
     private void Initialize()
     {
         SyncDisks.Initialize();
+
+        Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
+        Lib.SaveGame.OnAfterLoad += OnAfterLoad;
     }
     
     private void Uninitialize()
     {
-        VentRendererPool.CleanupVentRenderers();
+        DuctMapCubePool.CleanupVentRenderers();
         SyncDisks.Uninitialize();
+        
+        Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
+    }
+
+    private void OnAfterLoad(object sender, SaveGameArgs e)
+    {
+        if (DuctMapCubePool.BaseDuctMapCube == null)
+        {
+            DuctMapCubePool.Initialize();
+        }
     }
 }

@@ -11,24 +11,29 @@ namespace VentVigilante.Implementation.Common;
 
 public static class SyncDisks
 {
-    public const int CRAWLER_MULTIPLIER_1 = 3;
-    public const int CRAWLER_MULTIPLIER_2 = 5;
-    public const int CRAWLER_MULTIPLIER_3 = 7;
+    public const int MECHANIC_MULTIPLIER_1 = 3;
+    public const int MECHANIC_MULTIPLIER_2 = 5;
+    public const int MECHANIC_MULTIPLIER_3 = 7;
     
-    public static bool IsCrawlerInstalled => _crawlerLevel > 0;
+    public static bool IsMechanicInstalled => _mechanicLevel > 0;
     public static bool IsMapperInstalled => _mapperLevel > 0;
-    public static int CrawlerLevel => _crawlerLevel;
+    public static bool IsCreatureInstalled => _creatureLevel > 0;
+    public static int MechanicLevel => _mechanicLevel;
     public static int MapperLevel => _mapperLevel;
-    
-    private static int _crawlerLevel = -1;
-    private static int _mapperLevel = -1;
-    
-    private static int _crawlerEffectId = -1;
-    private static int _mapperEffectId = -1;
+    public static int CreatureLevel => _creatureLevel;
 
-    private static HashSet<int> _crawlerUpgradeOptionIds = new HashSet<int>();
+    private static int _mechanicLevel = -1;
+    private static int _mapperLevel = -1;
+    private static int _creatureLevel = -1;
+
+    private static int _mechanicEffectId = -1;
+    private static int _mapperEffectId = -1;
+    private static int _creatureEffectId = -1;
+
+    private static HashSet<int> _mechanicUpgradeOptionIds = new HashSet<int>();
     private static HashSet<int> _mapperUpgradeOptionIds = new HashSet<int>();
-    
+    private static HashSet<int> _creatureUpgradeOptionIds = new HashSet<int>();
+
     public static void Initialize()
     {
         Register();
@@ -84,28 +89,38 @@ public static class SyncDisks
            .AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketSyncClinic)
 #endif
            
-           .AddEffect("Vent Crawler", $"Vent crawling is now {CRAWLER_MULTIPLIER_1}x faster; you do not get cold in vents.", out int crawlerEffectId, "IconRun")
-           .AddUpgradeOption(new SyncDiskBuilder.Options($"Vent crawling is now {CRAWLER_MULTIPLIER_2}x faster; vents close as you enter or leave them.",
-                                                         $"Vent crawling is now {CRAWLER_MULTIPLIER_3}x faster; enter and exit vents further away."),
-                             out SyncDiskBuilder.OptionIds crawlerUpgradeIds)
+           .AddEffect("Vent Mechanic", $"Vent crawling is now {MECHANIC_MULTIPLIER_1}x faster; you do not get cold in vents.", out int mechanicEffectId, "IconRun")
+           .AddUpgradeOption(new SyncDiskBuilder.Options($"Vent crawling is now {MECHANIC_MULTIPLIER_2}x faster; vents close as you enter or leave them.",
+                                                         $"Vent crawling is now {MECHANIC_MULTIPLIER_3}x faster; enter and exit vents further away."),
+                             out SyncDiskBuilder.OptionIds mechanicUpgradeIds)
            
            .AddEffect("Vent Mapper", "Throwing a coin in vents will mark that vent for a while through walls; you do not make sounds when moving in vents.", out int mapperEffectId, "IconMap")
            .AddUpgradeOption(new SyncDiskBuilder.Options("Throwing a coin in vents will now also release an \"echolocation\" wave that briefly marks any connected vents.",
                                                          "Marks from echolocation waves now last as long as normal marks."),
                              out SyncDiskBuilder.OptionIds mapperUpgradeIds)
            
+           .AddEffect("Vent Creature", "Throwing a coin in vents will mark that vent for a while through walls; you do not make sounds when moving in vents.", out int creatureEffectId, "IconMap")
+           .AddUpgradeOption(new SyncDiskBuilder.Options("Throwing a coin in vents will now also release an \"echolocation\" wave that briefly marks any connected vents.",
+                                                         "Marks from echolocation waves now last as long as normal marks."),
+                             out SyncDiskBuilder.OptionIds creatureUpgradeIds)
+           
            .CreateAndRegister();
 
-        _crawlerEffectId = crawlerEffectId;
+        _mechanicEffectId = mechanicEffectId;
         _mapperEffectId = mapperEffectId;
-        
-        _crawlerUpgradeOptionIds.Clear();
-        _crawlerUpgradeOptionIds.Add(crawlerUpgradeIds.Option1Id);
-        _crawlerUpgradeOptionIds.Add(crawlerUpgradeIds.Option2Id);
+        _creatureEffectId = creatureEffectId;
+
+        _mechanicUpgradeOptionIds.Clear();
+        _mechanicUpgradeOptionIds.Add(mechanicUpgradeIds.Option1Id);
+        _mechanicUpgradeOptionIds.Add(mechanicUpgradeIds.Option2Id);
         
         _mapperUpgradeOptionIds.Clear();
         _mapperUpgradeOptionIds.Add(mapperUpgradeIds.Option1Id);
         _mapperUpgradeOptionIds.Add(mapperUpgradeIds.Option2Id);
+        
+        _creatureUpgradeOptionIds.Clear();
+        _creatureUpgradeOptionIds.Add(creatureUpgradeIds.Option1Id);
+        _creatureUpgradeOptionIds.Add(creatureUpgradeIds.Option2Id);
     }
     
     #region Level Management Events
@@ -128,8 +143,9 @@ public static class SyncDisks
     
     private static void OnAfterLoad(object sender, SaveGameArgs e)
     {
-        _crawlerLevel = 0;
+        _mechanicLevel = 0;
         _mapperLevel = 0;
+        _creatureLevel = 0;
         OnLevelsModified();
     }
     
@@ -142,14 +158,19 @@ public static class SyncDisks
 
         int id = args.Effect.Value.Id;
 
-        if (_crawlerEffectId == id)
+        if (_mechanicEffectId == id)
         {
-            _crawlerLevel = 1;
+            _mechanicLevel = 1;
             OnLevelsModified();
         }
         else if (_mapperEffectId == id)
         {
             _mapperLevel = 1;
+            OnLevelsModified();
+        }
+        else if (_creatureEffectId == id)
+        {
+            _creatureLevel = 1;
             OnLevelsModified();
         }
     }
@@ -163,14 +184,19 @@ public static class SyncDisks
 
         int id = args.UpgradeOption.Value.Id;
 
-        if (_crawlerUpgradeOptionIds.Contains(id))
+        if (_mechanicUpgradeOptionIds.Contains(id))
         {
-            _crawlerLevel++;
+            _mechanicLevel++;
             OnLevelsModified();
         }
         else if (_mapperUpgradeOptionIds.Contains(id))
         {
             _mapperLevel++;
+            OnLevelsModified();
+        }
+        else if (_creatureUpgradeOptionIds.Contains(id))
+        {
+            _creatureLevel++;
             OnLevelsModified();
         }
     }
@@ -184,14 +210,19 @@ public static class SyncDisks
 
         int id = args.Effect.Value.Id;
 
-        if (_crawlerEffectId == id)
+        if (_mechanicEffectId == id)
         {
-            _crawlerLevel = 0;
+            _mechanicLevel = 0;
             OnLevelsModified();
         }
         else if (_mapperEffectId == id)
         {
             _mapperLevel = 0;
+            OnLevelsModified();
+        }
+        else if (_creatureEffectId == id)
+        {
+            _creatureLevel = 0;
             OnLevelsModified();
         }
     }

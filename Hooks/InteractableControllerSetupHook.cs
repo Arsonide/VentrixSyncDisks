@@ -39,7 +39,7 @@ public class InteractableControllerSetupHook
             _ventRecognitionRangeCache = _airVentPreset.recognitionRange;
         }
 
-        if (SyncDisks.CrawlerLevel >= 3)
+        if (SyncDisks.MechanicLevel >= 3)
         {
             _airVentPreset.rangeModifier = _ventRangeModifierCache + 1f;
         }

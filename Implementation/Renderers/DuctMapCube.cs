@@ -2,19 +2,14 @@
 
 namespace VentVigilante.Implementation.Renderers;
 
-public class VentRenderer : MonoBehaviour
+public class DuctMapCube : MonoBehaviour
 {
+    public Renderer Renderer;
     public float DespawnTimer;
-    private Renderer renderer;
-    
-    private void Awake()
+
+    public void Initialize()
     {
         
-    }
-
-    private void OnDestroy()
-    {
-
     }
 
     private void Update()
@@ -29,6 +24,6 @@ public class VentRenderer : MonoBehaviour
     
     private void OnDespawn()
     {
-        VentRendererPool.ReleaseVentRenderer(this);
+        DuctMapCubePool.ReleaseVentRenderer(this);
     }
 }

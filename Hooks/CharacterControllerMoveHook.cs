@@ -15,16 +15,16 @@ public class CharacterControllerMoveHook
             return true;
         }
         
-        switch (SyncDisks.CrawlerLevel)
+        switch (SyncDisks.MechanicLevel)
         {
             case 1:
-                motion *= SyncDisks.CRAWLER_MULTIPLIER_1;
+                motion *= SyncDisks.MECHANIC_MULTIPLIER_1;
                 break;
             case 2:
-                motion *= SyncDisks.CRAWLER_MULTIPLIER_2;
+                motion *= SyncDisks.MECHANIC_MULTIPLIER_2;
                 break;
             case 3:
-                motion *= SyncDisks.CRAWLER_MULTIPLIER_3;
+                motion *= SyncDisks.MECHANIC_MULTIPLIER_3;
                 break;
         }
 
