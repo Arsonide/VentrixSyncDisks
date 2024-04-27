@@ -5,8 +5,8 @@ using SOD.Common.BepInEx;
 using SOD.Common.Helpers;
 using VentVigilante.Implementation.Common;
 using VentVigilante.Implementation.Config;
+using VentVigilante.Implementation.Disks;
 using VentVigilante.Implementation.Renderers;
-using SyncDisks = VentVigilante.Implementation.Common.SyncDisks;
 
 namespace VentVigilante;
 
@@ -43,7 +43,7 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
 
     private void Initialize()
     {
-        SyncDisks.Initialize();
+        VentrixDiskManager.Initialize();
 
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
         Lib.SaveGame.OnAfterLoad += OnAfterLoad;
@@ -52,7 +52,7 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
     private void Uninitialize()
     {
         DuctMapCubePool.CleanupVentRenderers();
-        SyncDisks.Uninitialize();
+        VentrixDiskManager.Uninitialize();
         
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
     }

@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 using UnityEngine;
-using VentVigilante.Implementation.Common;
+using VentVigilante.Implementation.Disks;
 
 namespace VentVigilante.Hooks;
 
@@ -15,16 +15,16 @@ public class CharacterControllerMoveHook
             return true;
         }
         
-        switch (SyncDisks.MechanicLevel)
+        switch (VentrixDiskManager.RunnerDisk.Level)
         {
             case 1:
-                motion *= SyncDisks.MECHANIC_MULTIPLIER_1;
+                motion *= VentrixDiskManager.MECHANIC_MULTIPLIER_1;
                 break;
             case 2:
-                motion *= SyncDisks.MECHANIC_MULTIPLIER_2;
+                motion *= VentrixDiskManager.MECHANIC_MULTIPLIER_2;
                 break;
             case 3:
-                motion *= SyncDisks.MECHANIC_MULTIPLIER_3;
+                motion *= VentrixDiskManager.MECHANIC_MULTIPLIER_3;
                 break;
         }
 

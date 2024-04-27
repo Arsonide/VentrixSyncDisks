@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using UnityEngine;
-using UnityEngine.Pool;
 using VentVigilante.Implementation.Common;
 using VentVigilante.Implementation.Renderers;
 
@@ -53,20 +52,15 @@ public class CoinThrowingHooks
             {
                 return;
             }
-
-            ObjectPool<>
-            Utilities.Log("Coin Impact");
-
+            
             // We're going to do a lot of early outs here to make sure a coin vibrating in the corner doesn't spam echolocation pulses.
             if (__instance.GetInstanceID() != LastCoinThrown)
             {
-                Utilities.Log("Coin Impact EO1");
                 return;
             }
             
             if (__instance.rb.velocity.magnitude < IMPACT_THRESHOLD_VELOCITY)
             {
-                Utilities.Log("Coin Impact EO2");
                 return;
             }
 
@@ -74,7 +68,6 @@ public class CoinThrowingHooks
 
             if (LastCoinImpactPosition != Vector3.zero && Vector3.Distance(LastCoinImpactPosition, coinPosition) < IMPACT_THRESHOLD_DISTANCE)
             {
-                Utilities.Log("Coin Impact EO3");
                 return;
             }
 
@@ -83,7 +76,6 @@ public class CoinThrowingHooks
 
             if (startDuct == null)
             {
-                Utilities.Log("Coin Impact EO4");
                 return;
             }
 

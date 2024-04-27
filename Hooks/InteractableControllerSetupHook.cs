@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-using VentVigilante.Implementation.Common;
+using VentVigilante.Implementation.Disks;
 
 namespace VentVigilante.Hooks;
 
@@ -39,7 +39,7 @@ public class InteractableControllerSetupHook
             _ventRecognitionRangeCache = _airVentPreset.recognitionRange;
         }
 
-        if (SyncDisks.MechanicLevel >= 3)
+        if (VentrixDiskManager.ParkourDisk.Level >= 2)
         {
             _airVentPreset.rangeModifier = _ventRangeModifierCache + 1f;
         }
