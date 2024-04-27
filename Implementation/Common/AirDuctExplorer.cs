@@ -1,4 +1,5 @@
-﻿using VentVigilante.Implementation.Renderers;
+﻿using VentVigilante.Implementation.Markers;
+using VentVigilante.Implementation.Renderers;
 
 namespace VentVigilante.Implementation.Common;
 
@@ -17,7 +18,7 @@ public class AirDuctExplorer
     {
         public AirDuctGroup.AirDuctSection AirDuct;
         public int ConnectionCount;
-        public DuctMapCubeType Type;
+        public DuctMarkerType Type;
 
         public TickResult(AirDuctGroup.AirDuctSection airDuct, bool hasVent, int connectionCount)
         {
@@ -26,19 +27,19 @@ public class AirDuctExplorer
             Type = GetColorBasedOnConnections(hasVent, connectionCount);
         }
 
-        private DuctMapCubeType GetColorBasedOnConnections(bool hasVent, int count)
+        private DuctMarkerType GetColorBasedOnConnections(bool hasVent, int count)
         {
             if (hasVent)
             {
-                return DuctMapCubeType.NormalVent;
+                return DuctMarkerType.NormalVent;
             }
 
             if (AirDuct.peekSection)
             {
-                return DuctMapCubeType.PeekDuct;
+                return DuctMarkerType.PeekDuct;
             }
 
-            return DuctMapCubeType.NormalDuct;
+            return DuctMarkerType.NormalDuct;
         }
     }
 

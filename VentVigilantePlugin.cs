@@ -7,6 +7,8 @@ using VentVigilante.Implementation;
 using VentVigilante.Implementation.Common;
 using VentVigilante.Implementation.Config;
 using VentVigilante.Implementation.Disks;
+using VentVigilante.Implementation.Markers;
+using VentVigilante.Implementation.Pooling;
 using VentVigilante.Implementation.Renderers;
 using VentVigilante.Implementation.Snooping;
 
@@ -30,7 +32,8 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
         Utilities.Log($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
         Harmony.PatchAll();
         Utilities.Log($"Plugin {MyPluginInfo.PLUGIN_GUID} is patched!");
-        ClassInjector.RegisterTypeInIl2Cpp<DuctMapCube>();
+        ClassInjector.RegisterTypeInIl2Cpp<BasePoolObject>();
+        ClassInjector.RegisterTypeInIl2Cpp<DuctMarker>();
         ClassInjector.RegisterTypeInIl2Cpp<EcholocationPulse>();
         ClassInjector.RegisterTypeInIl2Cpp<Timer>();
         Utilities.Log($"Plugin {MyPluginInfo.PLUGIN_GUID} has added custom types!");
@@ -55,7 +58,11 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
     
     private void Uninitialize()
     {
-        DuctMapCubePool.CleanupVentRenderers();
+        if (DuctMarkerPool.Instance != null)
+        {
+            DuctMarkerPool.Instance.Uninitialize();
+        }
+        
         DiskRegistry.Uninitialize();
         SnoopHighlighter.Uninitialize();
         
@@ -64,9 +71,10 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
 
     private void OnAfterLoad(object sender, SaveGameArgs e)
     {
-        if (DuctMapCubePool.BaseDuctMapCube == null)
+        if (DuctMarkerPool.Instance == null)
         {
-            DuctMapCubePool.Initialize();
+            DuctMarkerPool.Instance = new DuctMarkerPool();
+            DuctMarkerPool.Instance.Initialize();
         }
         
         Timer.Create();

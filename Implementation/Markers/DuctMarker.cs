@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using VentVigilante.Implementation.Pooling;
 
-namespace VentVigilante.Implementation.Renderers;
+namespace VentVigilante.Implementation.Markers;
 
-public class DuctMapCube : MonoBehaviour
+public class DuctMarker : BasePoolObject
 {
     public Renderer Renderer;
     public float DespawnTimer;
@@ -24,6 +25,6 @@ public class DuctMapCube : MonoBehaviour
     
     private void OnDespawn()
     {
-        DuctMapCubePool.ReleaseVentRenderer(this);
+        DuctMarkerPool.Instance.ReleaseMarker(this);
     }
 }
