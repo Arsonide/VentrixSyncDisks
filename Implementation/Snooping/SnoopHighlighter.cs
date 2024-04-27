@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using SOD.Common;
 using SOD.Common.Helpers;
 using UnityEngine;
@@ -9,7 +8,7 @@ namespace VentVigilante.Implementation.Snooping;
 
 public static class SnoopHighlighter
 {
-    private static bool IsSnooping = false;
+    private static NewRoom SnoopingRoom = null;
 
     private static List<AirDuctGroup.AirDuctSection> Neighbors = new List<AirDuctGroup.AirDuctSection>();
     private static List<AirDuctGroup.AirVent> Vents = new List<AirDuctGroup.AirVent>();
@@ -43,12 +42,12 @@ public static class SnoopHighlighter
     
     public static void Reset()
     {
-        IsSnooping = false;
+        SnoopingRoom = null;
     }
 
     private static void OnTick()
     {
-        if (!IsSnooping)
+        if (SnoopingRoom == null)
         {
             for (int i = AllList.Count - 1; i >= 0; --i)
             {
@@ -59,24 +58,17 @@ public static class SnoopHighlighter
             return;
         }
 
-        NewRoom room = Player.Instance?.currentDuctSection?.node?.room;
-
-        if (room == null)
-        {
-            return;
-        }
-        
         for (int i = AllList.Count - 1; i >= 0; --i)
         {
             Actor snooped = AllList[i];
             
-            if (!room.currentOccupants.Contains(snooped))
+            if (!SnoopingRoom.currentOccupants.Contains(snooped))
             {
                 RemoveSnoopedActor(snooped);
             }
         }
         
-        foreach (Actor occupant in room.currentOccupants)
+        foreach (Actor occupant in SnoopingRoom.currentOccupants)
         {
             if (!IsSnoopedActor(occupant))
             {
@@ -159,35 +151,62 @@ public static class SnoopHighlighter
 
     public static void RefreshSnoopingState()
     {
-        IsSnooping = GetPlayerSnooping();
+        SnoopingRoom = GetPlayerSnoopingRoom();
     }
     
-    private static bool GetPlayerSnooping()
+    private static NewRoom GetPlayerSnoopingRoom()
     {
         if (Player.Instance == null)
         {
-            return false;
+            return null;
         }
         
         if (!Player.Instance.inAirVent)
         {
-            return false;
+            return null;
         }
 
         AirDuctGroup.AirDuctSection section = Player.Instance.currentDuctSection;
 
         if (section == null)
         {
-            return false;
+            return null;
         }
 
         if (section.peekSection)
         {
-            return true;
+            return section.node?.room;
         }
         
         VentHelpers.GetVentInformation(section, ref Neighbors, ref Vents);
-        return Vents.Count > 0;
+
+        if (Vents.Count > 0)
+        {
+            // Apparently parts of vent an be unassigned, sometimes...not all the time. Just search a variety of sources for a stupid room.
+            AirDuctGroup.AirVent vent = Vents[0];
+            NewRoom roomNode = vent?.roomNode?.room;
+
+            if (roomNode != null)
+            {
+                return roomNode;
+            }
+            
+            NewRoom ventRoom = vent?.room;
+
+            if (ventRoom != null)
+            {
+                return ventRoom;
+            }
+
+            NewRoom sectionRoom = section?.node?.room;
+
+            if (sectionRoom != null)
+            {
+                return sectionRoom;
+            }
+        }
+
+        return null;
     }
     
     public static void RefreshActorOutline(Actor actor)

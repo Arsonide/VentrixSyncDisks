@@ -1,4 +1,6 @@
-﻿using HarmonyLib;
+﻿#define FAST_VENTS // Uncomment to move very fast through vents.
+
+using HarmonyLib;
 using UnityEngine;
 using VentVigilante.Implementation.Disks;
 
@@ -14,6 +16,11 @@ public class VentSpeedHook
         {
             return true;
         }
+   
+#if FAST_VENTS
+        motion *= 10f;
+        return true;
+#endif
         
         switch (DiskRegistry.RunnerDisk.Level)
         {
