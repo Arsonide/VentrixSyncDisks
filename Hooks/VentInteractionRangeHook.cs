@@ -4,11 +4,10 @@ using VentVigilante.Implementation.Disks;
 namespace VentVigilante.Hooks;
 
 [HarmonyPatch(typeof(InteractableController), "Setup")]
-public class InteractableControllerSetupHook
+public class VentInteractionRangeHook
 {
     private static InteractablePreset _airVentPreset;
     private static float _ventRangeModifierCache = -1;
-    private static float _ventRecognitionRangeCache = -1;
     
     [HarmonyPostfix]
     private static void Postfix(Interactable newInteractable)
@@ -33,19 +32,7 @@ public class InteractableControllerSetupHook
         {
             _ventRangeModifierCache = _airVentPreset.rangeModifier;
         }
-        
-        if (_ventRecognitionRangeCache < 0f)
-        {
-            _ventRecognitionRangeCache = _airVentPreset.recognitionRange;
-        }
 
-        if (VentrixDiskManager.ParkourDisk.Level >= 2)
-        {
-            _airVentPreset.rangeModifier = _ventRangeModifierCache + 1f;
-        }
-        else
-        {
-            _airVentPreset.rangeModifier = _ventRangeModifierCache;
-        }
+        _airVentPreset.rangeModifier = DiskRegistry.ParkourDisk.Level > 1 ? _ventRangeModifierCache + 1f : _ventRangeModifierCache;
     }
 }

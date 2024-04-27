@@ -1,16 +1,20 @@
 ﻿using System;
 using HarmonyLib;
-using UnityEngine;
-using VentVigilante.Implementation.Common;
+using VentVigilante.Implementation.Disks;
 
 namespace VentVigilante.Hooks;
 
 [HarmonyPatch(typeof(Interactable), "OnInteraction", new Type[] {typeof(InteractablePreset.InteractionAction), typeof(Actor), typeof(bool), typeof(float)})]
-public class VentChecker
+public class VentAutoCloseHook
 {
     [HarmonyPostfix]
     private static void Postfix(Interactable __instance, InteractablePreset.InteractionAction action, Actor who, bool allowDelays, float additionalDelay)
     {
+        if (DiskRegistry.ParkourDisk.Level < 3)
+        {
+            return;
+        }
+        
         if (__instance == null || who != Player.Instance)
         {
             return;

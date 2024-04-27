@@ -6,7 +6,7 @@ using VentVigilante.Hooks;
 
 namespace VentVigilante.Implementation.Disks;
 
-public static class DiskDatabase
+public static class DiskRegistry
 {
     public const int MECHANIC_MULTIPLIER_1 = 3;
     public const int MECHANIC_MULTIPLIER_2 = 5;
@@ -150,7 +150,7 @@ public static class DiskDatabase
 
     private static void OnLevelsModified()
     {
-        InteractableControllerSetupHook.RefreshVentInteractionRanges();
+        VentInteractionRangeHook.RefreshVentInteractionRanges();
     }
     
     #endregion

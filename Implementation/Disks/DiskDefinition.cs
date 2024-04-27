@@ -6,11 +6,11 @@ using SOD.Common.Helpers.SyncDiskObjects;
 
 namespace VentVigilante.Implementation.Disks;
 
-public class VentrixDiskDefinition
+public class DiskDefinition
 {
     public string Name = string.Empty;
     public int Price = 1000;
-    public List<VentrixDiskEffectDefinition> Effects = new List<VentrixDiskEffectDefinition>();
+    public List<DiskEffectDefinition> Effects = new List<DiskEffectDefinition>();
 
     public void Register()
     {
@@ -56,7 +56,7 @@ public class VentrixDiskDefinition
         builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketSyncClinic);
 #endif
 
-        foreach (VentrixDiskEffectDefinition effect in Effects)
+        foreach (DiskEffectDefinition effect in Effects)
         {
             builder.AddEffect(effect.Name, effect.Description, out effect.EffectId, effect.Icon);
             SyncDiskBuilder.Options options = default(SyncDiskBuilder.Options);

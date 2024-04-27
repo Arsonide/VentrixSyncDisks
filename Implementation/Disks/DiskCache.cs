@@ -5,7 +5,7 @@ using SOD.Common.Helpers.SyncDiskObjects;
 
 namespace VentVigilante.Implementation.Disks;
 
-public class VentrixDiskCache
+public class DiskCache
 {
     public bool IsInstalled => Level > 0;
 
@@ -27,7 +27,7 @@ public class VentrixDiskCache
     private int _level = -1;
     private int _maxLevel = -1;
     
-    public VentrixDiskCache(int effect, SyncDiskBuilder.OptionIds options)
+    public DiskCache(int effect, SyncDiskBuilder.OptionIds options)
     {
         _effectId = effect;
         _upgradeOptionIds = new HashSet<int>();

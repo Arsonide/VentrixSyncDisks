@@ -43,7 +43,7 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
 
     private void Initialize()
     {
-        VentrixDiskManager.Initialize();
+        DiskRegistry.Initialize();
 
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
         Lib.SaveGame.OnAfterLoad += OnAfterLoad;
@@ -52,7 +52,7 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
     private void Uninitialize()
     {
         DuctMapCubePool.CleanupVentRenderers();
-        VentrixDiskManager.Uninitialize();
+        DiskRegistry.Uninitialize();
         
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
     }

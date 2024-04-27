@@ -5,7 +5,7 @@ using VentVigilante.Implementation.Disks;
 namespace VentVigilante.Hooks;
 
 [HarmonyPatch(typeof(CharacterController), "Move")]
-public class CharacterControllerMoveHook
+public class VentSpeedHook
 {
     [HarmonyPrefix]
     private static bool Prefix(ref Vector3 motion)
@@ -15,16 +15,16 @@ public class CharacterControllerMoveHook
             return true;
         }
         
-        switch (VentrixDiskManager.RunnerDisk.Level)
+        switch (DiskRegistry.RunnerDisk.Level)
         {
             case 1:
-                motion *= VentrixDiskManager.MECHANIC_MULTIPLIER_1;
+                motion *= DiskRegistry.MECHANIC_MULTIPLIER_1;
                 break;
             case 2:
-                motion *= VentrixDiskManager.MECHANIC_MULTIPLIER_2;
+                motion *= DiskRegistry.MECHANIC_MULTIPLIER_2;
                 break;
             case 3:
-                motion *= VentrixDiskManager.MECHANIC_MULTIPLIER_3;
+                motion *= DiskRegistry.MECHANIC_MULTIPLIER_3;
                 break;
         }
 

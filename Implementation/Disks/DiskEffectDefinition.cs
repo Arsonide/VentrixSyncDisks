@@ -3,7 +3,7 @@ using SOD.Common.Helpers.SyncDiskObjects;
 
 namespace VentVigilante.Implementation.Disks;
 
-public class VentrixDiskEffectDefinition
+public class DiskEffectDefinition
 {
     public string Name = string.Empty;
     public string Icon = string.Empty;
