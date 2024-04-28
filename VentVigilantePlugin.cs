@@ -20,9 +20,9 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
     {
         base.Load();
         
-        VentVigilanteConfig.Initialize(Config);
+        VentrixConfig.Initialize(Config);
         
-        if (!VentVigilanteConfig.Enabled.Value)
+        if (!VentrixConfig.Enabled.Value)
         {
             Utilities.Log($"Plugin {MyPluginInfo.PLUGIN_GUID} is disabled.");
             return;
