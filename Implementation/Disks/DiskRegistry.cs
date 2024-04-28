@@ -217,8 +217,8 @@ public static class DiskRegistry
         };
 
         mappingEffect.Description = "Throwing coins in air ducts will create brief \"echolocation\" pulses that show the vent network through walls.";
-        mappingEffect.Upgrades.Add("Your \"echolocation\" pulses now cover a much wider area.");
-        mappingEffect.Upgrades.Add("You now remember your \"echolocation\" pulses and see them as long as you are holding your coin.");
+        mappingEffect.Upgrades.Add("Your \"echolocation\" pulses now travel twice as far down the air ducts.");
+        mappingEffect.Upgrades.Add("You now remember your \"echolocation\" pulses much longer while you are holding your coin.");
         
         // Effect B Properties
         DiskEffectDefinition snoopingEffect = new DiskEffectDefinition

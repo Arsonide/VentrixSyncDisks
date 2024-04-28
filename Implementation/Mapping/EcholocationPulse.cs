@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 using VentVigilante.Implementation.Common;
+using VentVigilante.Implementation.Disks;
 using VentVigilante.Implementation.Pooling;
 
 namespace VentVigilante.Implementation.Mapping;
@@ -46,14 +47,21 @@ public class EcholocationPulse : BasePoolObject
     {
         _explorer.StartExploration(startDuct);
 
-        for (int i = 0; i < 50; ++i)
+        int range = 25;
+
+        if (DiskRegistry.MappingDisk.Level >= 2)
+        {
+            range = 50;
+        }
+        
+        for (int i = 0; i < range; ++i)
         {
             List<DuctExplorerTick> results = _explorer.TickExploration(startDuct);
 
             foreach (DuctExplorerTick result in results)
             {
                 Vector3 position = VentHelpers.AirDuctToPosition(result.Duct);
-                DuctMarkerPool.Instance.CreateMarker(result.Type, position, 0.5f);
+                DuctMarkerPool.Instance.CreateMarker(result.Type, position, 1f);
             }
 
             yield return EcholocationPulsePool.Instance.PulseDelay;

@@ -14,7 +14,7 @@ public class EcholocationPulsePool : BasePoolManager<EcholocationPulse>
         
         if (PulseDelay == null)
         {
-            PulseDelay = new WaitForSeconds(0.05f);
+            PulseDelay = new WaitForSeconds(0.1f);
         }
     }
 

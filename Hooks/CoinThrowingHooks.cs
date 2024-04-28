@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 using VentVigilante.Implementation.Common;
+using VentVigilante.Implementation.Disks;
 using VentVigilante.Implementation.Mapping;
 
 namespace VentVigilante.Hooks;
@@ -37,8 +38,6 @@ public class CoinThrowingHooks
 
             LastCoinThrown = __instance.GetInstanceID();
             LastCoinImpactPosition = Vector3.zero;
-
-            Utilities.Log("Player Threw Coin");
         }
     }
 
@@ -48,6 +47,11 @@ public class CoinThrowingHooks
         [HarmonyPostfix]
         public static void Postfix(InteractableController __instance)
         {
+            if (DiskRegistry.MappingDisk.Level <= 0)
+            {
+                return;
+            }
+            
             if (!IsPlayerThrownCoin(__instance))
             {
                 return;
