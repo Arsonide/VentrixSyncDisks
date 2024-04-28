@@ -3,6 +3,7 @@ using SOD.Common;
 using SOD.Common.Helpers;
 using UnityEngine;
 using VentVigilante.Implementation.Common;
+using VentVigilante.Implementation.Disks;
 
 namespace VentVigilante.Implementation.Snooping;
 
@@ -17,6 +18,8 @@ public static class SnoopHighlighter
     private static HashSet<int> HumanSet = new HashSet<int>();
     private static HashSet<int> MachineSet = new HashSet<int>();
 
+    private static MaterialPropertyBlock FullAlphaBlock = new MaterialPropertyBlock();
+
     public static void Initialize()
     {
         Reset();
@@ -26,6 +29,8 @@ public static class SnoopHighlighter
 
         Timer.OnTick -= OnTick;
         Timer.OnTick += OnTick;
+        
+        FullAlphaBlock.SetFloat("_AlphaVal", 1f);
     }
 
     public static void Uninitialize()
@@ -47,17 +52,12 @@ public static class SnoopHighlighter
 
     private static void OnTick()
     {
-        if (SnoopingRoom == null)
+        if (SnoopingRoom == null || DiskRegistry.SnoopingDisk.Level <= 0)
         {
-            for (int i = AllList.Count - 1; i >= 0; --i)
-            {
-                Actor snooped = AllList[i];
-                RemoveSnoopedActor(snooped);
-            }
-
+            ClearSnoopedActors();
             return;
         }
-
+        
         for (int i = AllList.Count - 1; i >= 0; --i)
         {
             Actor snooped = AllList[i];
@@ -74,6 +74,25 @@ public static class SnoopHighlighter
             {
                 AddSnoopedActor(occupant);
             }
+        }
+        
+        // When actors change clothes and stuff the outline gets off.
+        EnforceMeshLayers();
+    }
+
+    private static void ClearSnoopedActors()
+    {
+        int count = AllList.Count;
+
+        if (count <= 0)
+        {
+            return;
+        }
+
+        for (int i = count - 1; i >= 0; --i)
+        {
+            Actor snooped = AllList[i];
+            RemoveSnoopedActor(snooped);
         }
     }
 
@@ -156,6 +175,11 @@ public static class SnoopHighlighter
     
     private static NewRoom GetPlayerSnoopingRoom()
     {
+        if (DiskRegistry.SnoopingDisk.Level <= 0)
+        {
+            return null;
+        }
+        
         if (Player.Instance == null)
         {
             return null;
@@ -173,7 +197,7 @@ public static class SnoopHighlighter
             return null;
         }
 
-        if (section.peekSection)
+        if (section.peekSection && DiskRegistry.SnoopingDisk.Level >= 2)
         {
             return section.node?.room;
         }
@@ -211,7 +235,8 @@ public static class SnoopHighlighter
     
     public static void RefreshActorOutline(Actor actor)
     {
-        bool shouldBeOutlined = actor.outline.outlineActive || IsSnoopedActor(actor);
+        bool snooped = IsSnoopedActor(actor);
+        bool shouldBeOutlined = actor.outline.outlineActive || snooped;
 
         foreach (MeshRenderer mesh in actor.outline.meshesToOutline)
         {
@@ -221,6 +246,28 @@ public static class SnoopHighlighter
             }
 
             mesh.gameObject.layer = shouldBeOutlined ? 30 : 24;
+            
+        }
+
+        if (!snooped)
+        {
+            return;
+        }
+
+        foreach (MeshRenderer mesh in actor.outline.meshesToOutline)
+        {
+            mesh.SetPropertyBlock(FullAlphaBlock);
+        }
+    }
+
+    private static void EnforceMeshLayers()
+    {
+        foreach (Actor actor in AllList)
+        {
+            foreach (MeshRenderer mesh in actor.outline.meshesToOutline)
+            {
+                mesh.gameObject.layer = 30;
+            }
         }
     }
 }

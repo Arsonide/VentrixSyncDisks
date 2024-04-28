@@ -24,4 +24,34 @@ public class SnooperPeekHooks
             SnoopHighlighter.RefreshActorOutline(__instance.actor);
         }
     }
+    
+    [HarmonyPatch(typeof(OutlineController), "SetAlpha")]
+    public class OutlineControllerSetOutlineAlphaHook
+    {
+        [HarmonyPostfix]
+        private static void Postfix(OutlineController __instance, float val)
+        {
+            SnoopHighlighter.RefreshActorOutline(__instance.actor);
+        }
+    }
+    
+    [HarmonyPatch(typeof(Player), "EnterVent")]
+    public class PlayerEnterVentHook
+    {
+        [HarmonyPostfix]
+        private static void Postfix(Player __instance, bool restoreTransform = false)
+        {
+            SnoopHighlighter.RefreshSnoopingState();
+        }
+    }
+    
+    [HarmonyPatch(typeof(Player), "ExitVent")]
+    public class PlayerExitVentHook
+    {
+        [HarmonyPostfix]
+        private static void Postfix(Player __instance, bool restoreTransform = false)
+        {
+            SnoopHighlighter.RefreshSnoopingState();
+        }
+    }
 }
