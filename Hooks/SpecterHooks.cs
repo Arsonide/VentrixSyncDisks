@@ -3,7 +3,7 @@ using VentVigilante.Implementation.Disks;
 
 namespace VentVigilante.Hooks;
 
-public class GhostHooks
+public class SpecterHooks
 {
     [HarmonyPatch(typeof(AudioController), "PlayWorldFootstep")]
     public class AudioControllerPlayWorldFootstepHook
@@ -49,6 +49,27 @@ public class GhostHooks
                 default:
                     return 1f;
             }
+        }
+    }
+    
+    [HarmonyPatch(typeof(StatusController), "Cold")]
+    public class StatusControllerColdHook
+    {
+        [HarmonyPrefix]
+        private static bool Prefix(StatusController __instance, StatusController.StatusInstance inst)
+        {
+            if (DiskRegistry.SpecterDisk.Level >= 2 && Player.Instance.inAirVent)
+            {
+                if (Player.Instance.heat < 0.5f)
+                {
+                    Player.Instance.heat = 0.5f;
+                }
+                
+                __instance.RemoveAllCounts(inst);
+                return false;
+            }
+
+            return true;
         }
     }
 }
