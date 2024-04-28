@@ -17,6 +17,8 @@ public class VentSpeedHook
             return true;
         }
    
+#pragma warning disable 0162
+        
 #if FAST_VENTS
         motion *= 10f;
         return true;
@@ -36,5 +38,7 @@ public class VentSpeedHook
         }
 
         return true;
+        
+#pragma warning restore 0162
     }
 }

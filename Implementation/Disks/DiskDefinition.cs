@@ -15,7 +15,7 @@ public class DiskDefinition
     public void Register()
     {
         SyncDiskBuilder builder = Lib.SyncDisks.Builder(Name, MyPluginInfo.PLUGIN_GUID, true);
-
+        
 #if EASILY_ATTAINABLE
         builder.SetPrice(0);
         builder.SetManufacturer(SyncDiskPreset.Manufacturer.ElGen);

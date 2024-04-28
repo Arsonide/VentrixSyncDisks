@@ -7,9 +7,8 @@ using VentVigilante.Implementation;
 using VentVigilante.Implementation.Common;
 using VentVigilante.Implementation.Config;
 using VentVigilante.Implementation.Disks;
-using VentVigilante.Implementation.Markers;
+using VentVigilante.Implementation.Mapping;
 using VentVigilante.Implementation.Pooling;
-using VentVigilante.Implementation.Renderers;
 using VentVigilante.Implementation.Snooping;
 
 namespace VentVigilante;
@@ -58,6 +57,11 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
     
     private void Uninitialize()
     {
+        if (EcholocationPulsePool.Instance != null)
+        {
+            EcholocationPulsePool.Instance.Uninitialize();
+        }
+        
         if (DuctMarkerPool.Instance != null)
         {
             DuctMarkerPool.Instance.Uninitialize();
@@ -71,6 +75,12 @@ public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
 
     private void OnAfterLoad(object sender, SaveGameArgs e)
     {
+        if (EcholocationPulsePool.Instance == null)
+        {
+            EcholocationPulsePool.Instance = new EcholocationPulsePool();
+            EcholocationPulsePool.Instance.Initialize();
+        }
+        
         if (DuctMarkerPool.Instance == null)
         {
             DuctMarkerPool.Instance = new DuctMarkerPool();

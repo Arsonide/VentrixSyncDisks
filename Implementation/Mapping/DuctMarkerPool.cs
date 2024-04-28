@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using VentVigilante.Implementation.Pooling;
 
-namespace VentVigilante.Implementation.Markers;
+namespace VentVigilante.Implementation.Mapping;
 
 public class DuctMarkerPool : BasePoolManager<DuctMarker>
 {

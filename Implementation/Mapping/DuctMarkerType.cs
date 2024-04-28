@@ -1,4 +1,4 @@
-﻿namespace VentVigilante.Implementation.Markers;
+﻿namespace VentVigilante.Implementation.Mapping;
 
 public enum DuctMarkerType
 {

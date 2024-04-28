@@ -16,7 +16,7 @@ public class BasePoolManager<T> where T : BasePoolObject
     public virtual void Initialize()
     {
         SetupManager();
-        _typeName = GetType().Name;
+        _typeName = typeof(T).Name;
         
         _baseObject = CreateBaseObject();
         GameObject go = _baseObject.gameObject;
@@ -52,7 +52,7 @@ public class BasePoolManager<T> where T : BasePoolObject
         return null;
     }
 
-    protected T CheckoutPoolObject()
+    public T CheckoutPoolObject()
     {
         T copyObject;
         int lastIndex = _availableObjects.Count - 1;
@@ -72,6 +72,7 @@ public class BasePoolManager<T> where T : BasePoolObject
             _allObjects.Add(copyObject);
         }
         
+        copyObject.OnCheckout();
         return copyObject;
     }
     
@@ -80,9 +81,10 @@ public class BasePoolManager<T> where T : BasePoolObject
         
     }
 
-    protected void CheckinPoolObject(T poolObject)
+    public void CheckinPoolObject(T poolObject)
     {
         poolObject.gameObject.SetActive(false);
         _availableObjects.Add(poolObject);
+        poolObject.OnCheckin();
     }
 }

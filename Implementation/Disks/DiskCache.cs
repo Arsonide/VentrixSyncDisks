@@ -1,4 +1,4 @@
-﻿//#define MOCK_INSTALLATION // Uncomment to pretend the Sync Disk is installed, even if it isn't.
+﻿#define MOCK_INSTALLATION // Uncomment to pretend the Sync Disk is installed, even if it isn't.
 
 using System.Collections.Generic;
 using SOD.Common.Helpers.SyncDiskObjects;
@@ -13,11 +13,15 @@ public class DiskCache
     {
         get
         {
+#pragma warning disable 0162
+            
 #if MOCK_INSTALLATION
             return _maxLevel;
 #endif
             
             return _level;
+            
+#pragma warning restore 0162
         }
     }
 

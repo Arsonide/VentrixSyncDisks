@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
 using VentVigilante.Implementation.Common;
-using VentVigilante.Implementation.Renderers;
+using VentVigilante.Implementation.Mapping;
 
 namespace VentVigilante.Hooks;
 
@@ -79,9 +79,8 @@ public class CoinThrowingHooks
                 return;
             }
 
-            GameObject pulse = new GameObject("Pulse");
-            EcholocationPulse p = pulse.AddComponent<EcholocationPulse>();
-            p.StartPulse(startDuct);
+            EcholocationPulse pulse = EcholocationPulsePool.Instance.CheckoutPoolObject();
+            pulse.StartPulse(startDuct);
         }
     }
 }
