@@ -33,4 +33,25 @@ public class MenaceHooks
             }
         }
     }
+        
+    [HarmonyPatch(typeof(StatusController), "ToxicGas")]
+    public class StatusControllerToxicGasHook
+    {
+        [HarmonyPrefix]
+        private static bool Prefix(StatusController __instance, StatusController.StatusInstance inst)
+        {
+            if (DiskRegistry.MenaceDisk.Level >= 2 && Player.Instance.inAirVent)
+            {
+                if (Player.Instance.gasLevel > 0f)
+                {
+                    Player.Instance.gasLevel = 0f;
+                }
+                
+                __instance.RemoveAllCounts(inst);
+                return false;
+            }
+
+            return true;
+        }
+    }
 }
