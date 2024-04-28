@@ -1,24 +1,30 @@
 ﻿using BepInEx.Configuration;
+using UnityEngine;
+using VentVigilante.Implementation.Common;
 
 namespace VentVigilante.Implementation.Config;
 
 public static partial class VentrixConfig
 {
-    public static ConfigEntry<float> SpecterFootstepChanceBase;
-    public static ConfigEntry<float> SpecterFootstepChanceFirst;
-    public static ConfigEntry<float> SpecterFootstepChanceSecond;
-    
-    public static ConfigEntry<bool> SpecterColdImmunityBase;
-    public static ConfigEntry<bool> SpecterColdImmunityFirst;
-    public static ConfigEntry<bool> SpecterColdImmunitySecond;
+    private static ConfigEntry<float> SpecterFootstepChanceBase;
+    private static ConfigEntry<float> SpecterFootstepChanceFirst;
+    private static ConfigEntry<float> SpecterFootstepChanceSecond;
+    public static ConfigCache<float> SpecterFootstepChance;
 
-    public static ConfigEntry<float> MenaceCitizenNerveBase;
-    public static ConfigEntry<float> MenaceCitizenNerveFirst;
-    public static ConfigEntry<float> MenaceNerveLevelSecond;
+    private static ConfigEntry<bool> SpecterColdImmunityBase;
+    private static ConfigEntry<bool> SpecterColdImmunityFirst;
+    private static ConfigEntry<bool> SpecterColdImmunitySecond;
+    public static ConfigCache<bool> SpecterColdImmunity;
 
-    public static ConfigEntry<bool> MenaceToxicImmunityBase;
-    public static ConfigEntry<bool> MenaceToxicImmunityFirst;
-    public static ConfigEntry<bool> MenaceToxicImmunitySecond;
+    private static ConfigEntry<float> MenaceCitizenNerveBase;
+    private static ConfigEntry<float> MenaceCitizenNerveFirst;
+    private static ConfigEntry<float> MenaceCitizenNerveSecond;
+    public static ConfigCache<float> MenaceCitizenNerve;
+
+    private static ConfigEntry<bool> MenaceToxicImmunityBase;
+    private static ConfigEntry<bool> MenaceToxicImmunityFirst;
+    private static ConfigEntry<bool> MenaceToxicImmunitySecond;
+    public static ConfigCache<bool> MenaceToxicImmunity;
 
     private static void InitializeMischief(ConfigFile config)
     {
@@ -49,7 +55,7 @@ public static partial class VentrixConfig
         MenaceCitizenNerveFirst = config.Bind($"7. {NAME_SHORT_MENACE}", "Citizen Nerve (First Upgrade)", 0.2f,
                                             new ConfigDescription($"The amount a citizen's nerve is set to when you pop out of vents with the first upgrade of {NAME_SHORT_MENACE}."));
 
-        MenaceNerveLevelSecond = config.Bind($"7. {NAME_SHORT_MENACE}", "Citizen Nerve (Second Upgrade)", 0.1f,
+        MenaceCitizenNerveSecond = config.Bind($"7. {NAME_SHORT_MENACE}", "Citizen Nerve (Second Upgrade)", 0.1f,
                                              new ConfigDescription($"The amount a citizen's nerve is set to when you pop out of vents with the second upgrade of {NAME_SHORT_MENACE}."));
         
         MenaceToxicImmunityBase = config.Bind($"7. {NAME_SHORT_MENACE}", "Toxic Immunity (Base Level)", false,
@@ -60,6 +66,23 @@ public static partial class VentrixConfig
         
         MenaceToxicImmunitySecond = config.Bind($"7. {NAME_SHORT_MENACE}", "Toxic Immunity (Second Upgrade)", true,
                                               new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_MENACE} grants you toxic gas immunity in vents."));
+        
+        // Setup Caches
+        SpecterFootstepChance = new ConfigCache<float>(1f,
+                                                       (level, oldValue, newValue) => $"You make {Utilities.MultiplierForDescription(newValue, "less", "more", out string description)}% {description} noise moving through vents.",
+                                                       SpecterFootstepChanceBase, SpecterFootstepChanceFirst, SpecterFootstepChanceSecond);
+        
+        SpecterColdImmunity = new ConfigCache<bool>(false,
+                                                     (level, oldValue, newValue) => $"You {(newValue ? "no longer" : "now")} get cold when in vents.",
+                                                     SpecterColdImmunityBase, SpecterColdImmunityFirst, SpecterColdImmunitySecond);
+        
+        MenaceCitizenNerve = new ConfigCache<float>(1f,
+                                                  (level, oldValue, newValue) => $"Popping out of private vents lowers nerves of nearby citizens by {Mathf.RoundToInt(newValue)}%.",
+                                                  MenaceCitizenNerveBase, MenaceCitizenNerveFirst, MenaceCitizenNerveSecond);
+        
+        MenaceToxicImmunity = new ConfigCache<bool>(false,
+                                                    (level, oldValue, newValue) => $"You are {(newValue ? "no longer" : "now")} affected by toxic gas in vents.",
+                                                    MenaceToxicImmunityBase, MenaceToxicImmunityFirst, MenaceToxicImmunitySecond);
     }
 
     public static void ResetMischief()
@@ -72,7 +95,7 @@ public static partial class VentrixConfig
         SpecterColdImmunitySecond.Value = (bool)SpecterColdImmunitySecond.DefaultValue;
         MenaceCitizenNerveBase.Value = (float)MenaceCitizenNerveBase.DefaultValue;
         MenaceCitizenNerveFirst.Value = (float)MenaceCitizenNerveFirst.DefaultValue;
-        MenaceNerveLevelSecond.Value = (float)MenaceNerveLevelSecond.DefaultValue;
+        MenaceCitizenNerveSecond.Value = (float)MenaceCitizenNerveSecond.DefaultValue;
         MenaceToxicImmunityBase.Value = (bool)MenaceToxicImmunityBase.DefaultValue;
         MenaceToxicImmunityFirst.Value = (bool)MenaceToxicImmunityFirst.DefaultValue;
         MenaceToxicImmunitySecond.Value = (bool)MenaceToxicImmunitySecond.DefaultValue;

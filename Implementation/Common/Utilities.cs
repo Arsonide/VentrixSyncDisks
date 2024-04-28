@@ -1,4 +1,5 @@
 ﻿using BepInEx.Logging;
+using UnityEngine;
 
 namespace VentVigilante.Implementation.Common;
 
@@ -26,5 +27,17 @@ public static class Utilities
         }
 
         VentVigilantePlugin.Log.Log(level, message);
+    }
+
+    public static int MultiplierForDescription(float multiplier, string lowerDescription, string higherDescription, out string description)
+    {
+        if (multiplier < 1)
+        {
+            description = lowerDescription;
+            return Mathf.RoundToInt((1 - multiplier) * 100);
+        }
+
+        description = higherDescription;
+        return Mathf.RoundToInt((multiplier - 1) * 100);
     }
 }

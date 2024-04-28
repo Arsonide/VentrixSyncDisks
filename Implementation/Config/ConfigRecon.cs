@@ -1,24 +1,29 @@
 ﻿using BepInEx.Configuration;
+using VentVigilante.Implementation.Common;
 
 namespace VentVigilante.Implementation.Config;
 
 public static partial class VentrixConfig
 {
-    public static ConfigEntry<int> MappingEcholocationRangeBase;
-    public static ConfigEntry<int> MappingEcholocationRangeFirst;
-    public static ConfigEntry<int> MappingEcholocationRangeSecond;
+    private static ConfigEntry<int> MappingEcholocationRangeBase;
+    private static ConfigEntry<int> MappingEcholocationRangeFirst;
+    private static ConfigEntry<int> MappingEcholocationRangeSecond;
+    public static ConfigCache<int> MappingEcholocationRange;
+    
+    private static ConfigEntry<float> MappingEcholocationSpeedBase;
+    private static ConfigEntry<float> MappingEcholocationSpeedFirst;
+    private static ConfigEntry<float> MappingEcholocationSpeedSecond;
+    public static ConfigCache<float> MappingEcholocationSpeed;
 
-    public static ConfigEntry<float> MappingEcholocationSpeedBase;
-    public static ConfigEntry<float> MappingEcholocationSpeedFirst;
-    public static ConfigEntry<float> MappingEcholocationSpeedSecond;
-    
-    public static ConfigEntry<float> MappingEcholocationDurationBase;
-    public static ConfigEntry<float> MappingEcholocationDurationFirst;
-    public static ConfigEntry<float> MappingEcholocationDurationSecond;
-    
-    public static ConfigEntry<float> MappingCoinMultiplierBase;
-    public static ConfigEntry<float> MappingCoinMultiplierFirst;
-    public static ConfigEntry<float> MappingCoinMultiplierSecond;
+    private static ConfigEntry<float> MappingEcholocationDurationBase;
+    private static ConfigEntry<float> MappingEcholocationDurationFirst;
+    private static ConfigEntry<float> MappingEcholocationDurationSecond;
+    public static ConfigCache<float> MappingEcholocationDuration;
+
+    private static ConfigEntry<float> MappingCoinMultiplierBase;
+    private static ConfigEntry<float> MappingCoinMultiplierFirst;
+    private static ConfigEntry<float> MappingCoinMultiplierSecond;
+    public static ConfigCache<float> MappingCoinMultiplier;
 
     public static ConfigEntry<string> SnoopingOutlineColorHex;
 
@@ -62,9 +67,27 @@ public static partial class VentrixConfig
         
         SnoopingOutlineColorHex = config.Bind($"5. {NAME_SHORT_SNOOPING}", "Highlight Color Multiplier", "FFFFFF",
                                               new ConfigDescription($"A hex code for what color the {NAME_SHORT_SNOOPING} outline will be multiplied by."));
+
+        // Setup Caches
+        MappingEcholocationRange = new ConfigCache<int>(-1,
+                                                        GetEcholocationRangeDescription,
+                                                        MappingEcholocationRangeBase, MappingEcholocationRangeFirst, MappingEcholocationRangeSecond);
+
+        MappingEcholocationSpeed = new ConfigCache<float>(0.1f,
+                                                          (level, oldValue, newValue) => $"Your \"echolocation\" pulses now travel {Utilities.MultiplierForDescription(newValue / oldValue, "slower", "faster", out string description)}% {description}.",
+                                                          MappingEcholocationSpeedBase, MappingEcholocationSpeedFirst, MappingEcholocationSpeedSecond);
+
+        MappingEcholocationDuration = new ConfigCache<float>(1f,
+                                                             (level, oldValue, newValue) => $"Your \"echolocation\" pulses now expire {Utilities.MultiplierForDescription(newValue / oldValue, "faster", "slower", out string description)}% {description}.",
+                                                             MappingEcholocationDurationBase, MappingEcholocationDurationFirst, MappingEcholocationDurationSecond);
+
+        MappingCoinMultiplier = new ConfigCache<float>(1f,
+                                                       (level, oldValue, newValue) =>
+                                                           $"You remember your \"echolocation\" pulse {Utilities.MultiplierForDescription(newValue, "longer", "shorter", out string description)}% {description} while holding a coin.",
+                                                 MappingCoinMultiplierBase, MappingCoinMultiplierFirst, MappingCoinMultiplierSecond);
     }
 
-    public static void ResetMobility()
+    public static void ResetRecon()
     {
         MappingEcholocationRangeBase.Value = (int)MappingEcholocationRangeBase.DefaultValue;
         MappingEcholocationRangeFirst.Value = (int)MappingEcholocationRangeFirst.DefaultValue;
@@ -79,5 +102,18 @@ public static partial class VentrixConfig
         MappingCoinMultiplierFirst.Value = (float)MappingCoinMultiplierFirst.DefaultValue;
         MappingCoinMultiplierSecond.Value = (float)MappingCoinMultiplierSecond.DefaultValue;
         SnoopingOutlineColorHex.Value = (string)SnoopingOutlineColorHex.DefaultValue;
+    }
+
+    private static string GetEcholocationRangeDescription(int level, int oldValue, int newValue)
+    {
+        if (level == 1)
+        {
+            return "Throwing coins in air ducts will create brief \"echolocation\" pulses that show the vent network through walls.";
+        }
+
+        float change = (float)newValue / (float)oldValue;
+        int percent = Utilities.MultiplierForDescription(change, "smaller", "larger", out string description);
+
+        return $"Your \"echolocation\" pulses are now {percent}% {description}.";
     }
 }

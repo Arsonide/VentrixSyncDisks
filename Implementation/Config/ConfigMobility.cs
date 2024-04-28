@@ -1,24 +1,30 @@
 ﻿using BepInEx.Configuration;
+using UnityEngine;
+using VentVigilante.Implementation.Common;
 
 namespace VentVigilante.Implementation.Config;
 
 public static partial class VentrixConfig
 {
-    public static ConfigEntry<float> RunnerSpeedMultiplierBase;
-    public static ConfigEntry<float> RunnerSpeedMultiplierFirst;
-    public static ConfigEntry<float> RunnerSpeedMultiplierSecond;
+    private static ConfigEntry<float> RunnerSpeedMultiplierBase;
+    private static ConfigEntry<float> RunnerSpeedMultiplierFirst;
+    private static ConfigEntry<float> RunnerSpeedMultiplierSecond;
+    public static ConfigCache<float> RunnerSpeedMultiplier;
+    
+    private static ConfigEntry<float> ParkourInteractRangeBase;
+    private static ConfigEntry<float> ParkourInteractRangeFirst;
+    private static ConfigEntry<float> ParkourInteractRangeSecond;
+    public static ConfigCache<float> ParkourInteractRange;
 
-    public static ConfigEntry<float> ParkourInteractRangeBase;
-    public static ConfigEntry<float> ParkourInteractRangeFirst;
-    public static ConfigEntry<float> ParkourInteractRangeSecond;
-    
-    public static ConfigEntry<float> ParkourTransitionSpeedBase;
-    public static ConfigEntry<float> ParkourTransitionSpeedFirst;
-    public static ConfigEntry<float> ParkourTransitionSpeedSecond;
-    
-    public static ConfigEntry<bool> ParkourAutoCloseBase;
-    public static ConfigEntry<bool> ParkourAutoCloseFirst;
-    public static ConfigEntry<bool> ParkourAutoCloseSecond;
+    private static ConfigEntry<float> ParkourTransitionSpeedBase;
+    private static ConfigEntry<float> ParkourTransitionSpeedFirst;
+    private static ConfigEntry<float> ParkourTransitionSpeedSecond;
+    public static ConfigCache<float> ParkourTransitionSpeed;
+
+    private static ConfigEntry<bool> ParkourAutoCloseBase;
+    private static ConfigEntry<bool> ParkourAutoCloseFirst;
+    private static ConfigEntry<bool> ParkourAutoCloseSecond;
+    public static ConfigCache<bool> ParkourAutoClose;
 
     private static void InitializeMobility(ConfigFile config)
     {
@@ -57,9 +63,26 @@ public static partial class VentrixConfig
         
         ParkourAutoCloseSecond = config.Bind($"3. {NAME_SHORT_PARKOUR}", "Auto Close Vents (Second Upgrade)", true,
                                              new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_PARKOUR} auto closes vents you enter and exit."));
+
+        // Setup Caches
+        RunnerSpeedMultiplier = new ConfigCache<float>(1f,
+                                                       (level, oldValue, newValue) => $"You now move {Mathf.RoundToInt(newValue)}x {(newValue > 1 ? "faster" : "slower")} through vents.",
+                                                       RunnerSpeedMultiplierBase, RunnerSpeedMultiplierFirst, RunnerSpeedMultiplierSecond);
+        
+        ParkourInteractRange = new ConfigCache<float>(0f,
+                                                       (level, oldValue, newValue) => $"You can now reach vents {newValue}m further away.",
+                                                       ParkourInteractRangeBase, ParkourInteractRangeFirst, ParkourInteractRangeSecond);
+        
+        ParkourTransitionSpeed = new ConfigCache<float>(1f,
+                                                        (level, oldValue, newValue) => $"You get in and out of vents {Utilities.MultiplierForDescription(newValue, "faster", "slower", out string description)}% {description}.",
+                                                        ParkourTransitionSpeedBase, ParkourTransitionSpeedFirst, ParkourTransitionSpeedSecond);
+        
+        ParkourAutoClose = new ConfigCache<bool>(false,
+                                                        (level, oldValue, newValue) => $"Vents {(newValue ? "now" : "no longer")} automatically close when entering or exiting them.",
+                                                        ParkourAutoCloseBase, ParkourAutoCloseFirst, ParkourAutoCloseSecond);
     }
 
-    public static void ResetRecon()
+    public static void ResetMobility()
     {
         RunnerSpeedMultiplierBase.Value = (float)RunnerSpeedMultiplierBase.DefaultValue;
         RunnerSpeedMultiplierFirst.Value = (float)RunnerSpeedMultiplierFirst.DefaultValue;
