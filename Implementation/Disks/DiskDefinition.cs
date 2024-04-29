@@ -77,6 +77,9 @@ public class DiskDefinition
             builder.AddUpgradeOption(options, out effect.OptionIds);
         }
 
+        builder.SetCanBeSideJobReward(true);
+        builder.SetWorldSpawnOption(true);
+        
         builder.CreateAndRegister();
     }
 }
