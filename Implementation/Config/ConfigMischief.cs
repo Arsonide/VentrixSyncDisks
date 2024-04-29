@@ -77,7 +77,7 @@ public static partial class VentrixConfig
                                                      SpecterColdImmunityBase, SpecterColdImmunityFirst, SpecterColdImmunitySecond);
         
         MenaceCitizenNerve = new ConfigCache<float>(1f,
-                                                  (level, oldValue, newValue) => $"Popping out of private vents lowers nerves of nearby citizens by {Mathf.RoundToInt(newValue)}%.",
+                                                  (level, oldValue, newValue) => $"Popping out of vents in private rooms lowers nerves of people by {Mathf.RoundToInt(newValue)}%.",
                                                   MenaceCitizenNerveBase, MenaceCitizenNerveFirst, MenaceCitizenNerveSecond);
         
         MenaceToxicImmunity = new ConfigCache<bool>(false,

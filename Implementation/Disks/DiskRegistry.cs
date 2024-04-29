@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using SOD.Common;
 using SOD.Common.Helpers;
 using SOD.Common.Helpers.SyncDiskObjects;
 using VentVigilante.Hooks;
+using VentVigilante.Implementation.Config;
 
 namespace VentVigilante.Implementation.Disks;
 
 public static class DiskRegistry
 {
-    public const int MECHANIC_MULTIPLIER_1 = 3;
-    public const int MECHANIC_MULTIPLIER_2 = 5;
-    public const int MECHANIC_MULTIPLIER_3 = 7;
-
     // These could be a dictionary but I feel that would slow down access for no reason.
     public static DiskCache RunnerDisk;
     public static DiskCache ParkourDisk;
@@ -21,6 +19,8 @@ public static class DiskRegistry
     public static DiskCache MenaceDisk;
 
     private static List<DiskCache> AllDisks = new List<DiskCache>();
+    private static List<string> CacheDescriptions = new List<string>();
+    private static StringBuilder Builder = new StringBuilder();
     
     public static void Initialize()
     {
@@ -46,6 +46,40 @@ public static class DiskRegistry
         AllDisks.Add(SnoopingDisk);
         AllDisks.Add(SpecterDisk);
         AllDisks.Add(MenaceDisk);
+    }
+
+    private static string GetDiskLevelDescription(int level, params ConfigCache[] caches)
+    {
+        CacheDescriptions.Clear();
+
+        foreach (ConfigCache cache in caches)
+        {
+            if (cache.GetDescriptionRelevant(level))
+            {
+                CacheDescriptions.Add(cache.GetDescription(level));
+            }
+        }
+
+        int count = CacheDescriptions.Count;
+
+        if (count <= 0)
+        {
+            return "Error Getting Description";
+        }
+        
+        Builder.Clear();
+
+        for (int i = 0; i < count; ++i)
+        {
+            bool isFirst = i == 0;
+            bool isLast = i == count - 1;
+            string raw = CacheDescriptions[i];
+            Builder.Append(isFirst ? raw[0] : char.ToLowerInvariant(raw[0]));
+            Builder.Append(raw, 1, raw.Length - 2);
+            Builder.Append(isLast ? "." : "; ");
+        }
+
+        return Builder.ToString();
     }
     
     #region Level Management Events
@@ -168,24 +202,24 @@ public static class DiskRegistry
         // Effect A Properties
         DiskEffectDefinition runnerEffect = new DiskEffectDefinition
         {
-            Name = "Airway Runner",
+            Name = VentrixConfig.NAME_LONG_RUNNER,
             Icon = "IconRun",
         };
 
-        runnerEffect.Description = "You now move a little faster through vents.";
-        runnerEffect.Upgrades.Add("You now move moderately faster through vents.");
-        runnerEffect.Upgrades.Add("You now move much faster through vents.");
+        runnerEffect.Description = GetDiskLevelDescription(1, VentrixConfig.RunnerSpeedMultiplier);
+        runnerEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.RunnerSpeedMultiplier));
+        runnerEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.RunnerSpeedMultiplier));
         
         // Effect B Properties
         DiskEffectDefinition parkourEffect = new DiskEffectDefinition
         {
-            Name = "Ductwork Parkour",
+            Name = VentrixConfig.NAME_LONG_PARKOUR,
             Icon = "IconWetFloor",
         };
 
-        parkourEffect.Description = "You enter and exit vents faster.";
-        parkourEffect.Upgrades.Add("You can reach vents further away.");
-        parkourEffect.Upgrades.Add("Vents automatically close when entering or exiting them.");
+        parkourEffect.Description = GetDiskLevelDescription(1, VentrixConfig.ParkourTransitionSpeed, VentrixConfig.ParkourInteractRange, VentrixConfig.ParkourAutoClose);
+        parkourEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.ParkourTransitionSpeed, VentrixConfig.ParkourInteractRange, VentrixConfig.ParkourAutoClose));
+        parkourEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.ParkourTransitionSpeed, VentrixConfig.ParkourInteractRange, VentrixConfig.ParkourAutoClose));
         
         // Finishing Up
         mobilityDisk.Effects.Add(runnerEffect);
@@ -212,21 +246,22 @@ public static class DiskRegistry
         // Effect A Properties
         DiskEffectDefinition mappingEffect = new DiskEffectDefinition
         {
-            Name = "Acoustic Mapping",
+            Name = VentrixConfig.NAME_LONG_MAPPING,
             Icon = "IconCoinDistraction",
         };
 
-        mappingEffect.Description = "Throwing coins in air ducts will create brief \"echolocation\" pulses that show the vent network through walls.";
-        mappingEffect.Upgrades.Add("Your \"echolocation\" pulses now travel twice as far down the air ducts.");
-        mappingEffect.Upgrades.Add("You now remember your \"echolocation\" pulses much longer while you are holding your coin.");
+        mappingEffect.Description = GetDiskLevelDescription(1, VentrixConfig.MappingEcholocationRange, VentrixConfig.MappingEcholocationSpeed, VentrixConfig.MappingEcholocationDuration, VentrixConfig.MappingCoinMultiplier);
+        mappingEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.MappingEcholocationRange, VentrixConfig.MappingEcholocationSpeed, VentrixConfig.MappingEcholocationDuration, VentrixConfig.MappingCoinMultiplier));
+        mappingEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.MappingEcholocationRange, VentrixConfig.MappingEcholocationSpeed, VentrixConfig.MappingEcholocationDuration, VentrixConfig.MappingCoinMultiplier));
         
         // Effect B Properties
         DiskEffectDefinition snoopingEffect = new DiskEffectDefinition
         {
-            Name = "Grill Snooping",
+            Name = VentrixConfig.NAME_LONG_SNOOPING,
             Icon = "IconOpticalCammo",
         };
 
+        // TODO Make these dynamic.
         snoopingEffect.Description = "When near vent entrances and exits you mark citizens in that room through walls.";
         snoopingEffect.Upgrades.Add("Your marks now also appear when near \"peeking\" vents in air ducts.");
         snoopingEffect.Upgrades.Add("Your marks now also apply to any security devices in that room.");
@@ -256,24 +291,24 @@ public static class DiskRegistry
         // Effect A Properties
         DiskEffectDefinition specterEffect = new DiskEffectDefinition
         {
-            Name = "Crawlspace Specter",
+            Name = VentrixConfig.NAME_LONG_SPECTER,
             Icon = "IconDeath",
         };
 
-        specterEffect.Description = "You now make less noise when moving through air ducts.";
-        specterEffect.Upgrades.Add("You no longer get cold when in vents.");
-        specterEffect.Upgrades.Add("You now rarely make noise when moving through air ducts.");
+        specterEffect.Description = GetDiskLevelDescription(1, VentrixConfig.SpecterFootstepChance, VentrixConfig.SpecterColdImmunity);
+        specterEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.SpecterFootstepChance, VentrixConfig.SpecterColdImmunity));
+        specterEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.SpecterFootstepChance, VentrixConfig.SpecterColdImmunity));
         
         // Effect B Properties
         DiskEffectDefinition menaceEffect = new DiskEffectDefinition
         {
-            Name = "Shaft Menace",
+            Name = VentrixConfig.NAME_LONG_MENACE,
             Icon = "IconPassedOut",
         };
 
-        menaceEffect.Description = "Citizens witnessing you burst forth from a vent can become frightened and flee.";
-        menaceEffect.Upgrades.Add("You are no longer affected by toxic gas in vents.");
-        menaceEffect.Upgrades.Add("Citizens are much more likely to flee when you exit vents.");
+        menaceEffect.Description = GetDiskLevelDescription(1, VentrixConfig.MenaceCitizenNerve, VentrixConfig.MenaceToxicImmunity);
+        menaceEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.MenaceCitizenNerve, VentrixConfig.MenaceToxicImmunity));
+        menaceEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.MenaceCitizenNerve, VentrixConfig.MenaceToxicImmunity));
         
         // Finishing Up
         mischiefDisk.Effects.Add(specterEffect);

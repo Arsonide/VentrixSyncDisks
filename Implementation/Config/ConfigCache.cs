@@ -3,7 +3,13 @@ using BepInEx.Configuration;
 
 namespace VentVigilante.Implementation.Config;
 
-public class ConfigCache<T> where T : IEquatable<T>
+public abstract class ConfigCache
+{
+    public abstract bool GetDescriptionRelevant(int level);
+    public abstract string GetDescription(int level);
+}
+
+public class ConfigCache<T> : ConfigCache where T : IEquatable<T>
 {
     private T[] _cachedLevels;
     private int _maxLevel;
@@ -35,7 +41,7 @@ public class ConfigCache<T> where T : IEquatable<T>
         return _cachedLevels[level];
     }
     
-    public bool GetDescriptionRelevant(int level)
+    public override bool GetDescriptionRelevant(int level)
     {
         if (level < 1 || level > _maxLevel)
         {
@@ -48,7 +54,7 @@ public class ConfigCache<T> where T : IEquatable<T>
         return !thisValue.Equals(oldValue);
     }
     
-    public string GetDescription(int level)
+    public override string GetDescription(int level)
     {
         if (level < 1 || level > _maxLevel)
         {
