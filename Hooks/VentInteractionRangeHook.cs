@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using VentVigilante.Implementation.Config;
 using VentVigilante.Implementation.Disks;
 
 namespace VentVigilante.Hooks;
@@ -33,6 +34,16 @@ public class VentInteractionRangeHook
             _ventRangeModifierCache = _airVentPreset.rangeModifier;
         }
 
-        _airVentPreset.rangeModifier = DiskRegistry.ParkourDisk.Level > 1 ? _ventRangeModifierCache + 1f : _ventRangeModifierCache;
+        int level = DiskRegistry.ParkourDisk.Level;
+
+        if (level > 0)
+        {
+            float extension = VentrixConfig.ParkourInteractRange.GetLevel(level);
+            _airVentPreset.rangeModifier = _ventRangeModifierCache + extension;
+        }
+        else
+        {
+            _airVentPreset.rangeModifier = _ventRangeModifierCache;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using HarmonyLib;
+using VentVigilante.Implementation.Config;
 using VentVigilante.Implementation.Disks;
 
 namespace VentVigilante.Hooks;
@@ -10,7 +11,9 @@ public class VentAutoCloseHook
     [HarmonyPostfix]
     private static void Postfix(Interactable __instance, InteractablePreset.InteractionAction action, Actor who, bool allowDelays, float additionalDelay)
     {
-        if (DiskRegistry.ParkourDisk.Level < 3)
+        int level = DiskRegistry.ParkourDisk.Level;
+        
+        if (level <= 0)
         {
             return;
         }
@@ -22,7 +25,12 @@ public class VentAutoCloseHook
 
         if (__instance.preset.name == "AirVent" && action.interactionName == "Enter")
         {
-            __instance.OnInteraction(InteractablePreset.InteractionKey.primary, Player.Instance);
+            bool autoClose = VentrixConfig.ParkourAutoClose.GetLevel(level);
+
+            if (autoClose)
+            {
+                __instance.OnInteraction(InteractablePreset.InteractionKey.primary, Player.Instance);
+            }
         }
     }
 }

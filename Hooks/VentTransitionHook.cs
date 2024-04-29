@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using VentVigilante.Implementation.Common;
+using VentVigilante.Implementation.Config;
 using VentVigilante.Implementation.Disks;
 
 namespace VentVigilante.Hooks;
@@ -34,12 +35,14 @@ public class VentTransitionHook
 
         if (newEnterTransition == EnterPreset)
         {
-            EnterPreset.transitionTime = DiskRegistry.ParkourDisk.Level > 0 ? EnterSpeed * 0.5f : EnterSpeed;
+            float multiplier = VentrixConfig.ParkourTransitionSpeed.GetLevel(DiskRegistry.ParkourDisk.Level);
+            EnterPreset.transitionTime = DiskRegistry.ParkourDisk.Level > 0 ? EnterSpeed * multiplier : EnterSpeed;
         }
 
         if (newEnterTransition == ExitPreset)
         {
-            ExitPreset.transitionTime = DiskRegistry.ParkourDisk.Level > 0 ? ExitSpeed * 0.5f : ExitSpeed;
+            float multiplier = VentrixConfig.ParkourTransitionSpeed.GetLevel(DiskRegistry.ParkourDisk.Level);
+            ExitPreset.transitionTime = DiskRegistry.ParkourDisk.Level > 0 ? ExitSpeed * multiplier : ExitSpeed;
         }
 
         return true;
