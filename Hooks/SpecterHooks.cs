@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using VentrixSyncDisks.Implementation.Config;
 using VentrixSyncDisks.Implementation.Disks;
 
 namespace VentrixSyncDisks.Hooks;
@@ -25,7 +26,7 @@ public class SpecterHooks
                 return true;
             }
 
-            float footstepChance = GetFootstepChance(level);
+            float footstepChance = VentrixConfig.SpecterFootstepChance.GetLevel(level);
 
             if (_rand.NextSingle() > footstepChance)
             {
@@ -35,21 +36,6 @@ public class SpecterHooks
 
             return true;
         }
-
-        private static float GetFootstepChance(int level)
-        {
-            switch (level)
-            {
-                case 1:
-                    return 0.68f;
-                case 2:
-                    return 0.36f;
-                case 3:
-                    return 0.04f;
-                default:
-                    return 1f;
-            }
-        }
     }
     
     [HarmonyPatch(typeof(StatusController), "Cold")]
@@ -58,7 +44,19 @@ public class SpecterHooks
         [HarmonyPrefix]
         private static bool Prefix(StatusController __instance, StatusController.StatusInstance inst)
         {
-            if (DiskRegistry.SpecterDisk.Level >= 2 && Player.Instance.inAirVent)
+            if (!Player.Instance.inAirVent)
+            {
+                return true;
+            }
+            
+            int level = DiskRegistry.SpecterDisk.Level;
+            
+            if (level <= 0)
+            {
+                return true;
+            }
+            
+            if (VentrixConfig.SpecterColdImmunity.GetLevel(level))
             {
                 if (Player.Instance.heat < 0.5f)
                 {

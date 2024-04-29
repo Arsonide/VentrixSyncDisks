@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Config;
 using VentrixSyncDisks.Implementation.Disks;
 using VentrixSyncDisks.Implementation.Pooling;
 
@@ -13,14 +14,15 @@ public class DuctMarker : BasePoolObject
     private void Update()
     {
         float dt = Time.deltaTime;
-
-        if (DiskRegistry.MappingDisk.Level >= 3)
+        int level = DiskRegistry.MappingDisk.Level;
+        
+        if (level > 0)
         {
             FirstPersonItem firstPersonItem = FirstPersonItemController.Instance.currentItem;
 
             if (firstPersonItem != null && firstPersonItem.presetName.StartsWith("coin"))
             {
-                dt *= 0.1f;
+                dt *= VentrixConfig.MappingCoinMultiplier.GetLevel(level);
             }
         }
         

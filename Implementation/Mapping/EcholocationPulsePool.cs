@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using VentrixSyncDisks.Implementation.Config;
 using VentrixSyncDisks.Implementation.Pooling;
 
 namespace VentrixSyncDisks.Implementation.Mapping;
@@ -6,15 +7,24 @@ namespace VentrixSyncDisks.Implementation.Mapping;
 public class EcholocationPulsePool : BasePoolManager<EcholocationPulse>
 {
     public static EcholocationPulsePool Instance;
-    public WaitForSeconds PulseDelay = null;
+    
+    public WaitForSeconds[] PulseDelays = null;
 
     protected override void SetupManager()
     {
         base.SetupManager();
-        
-        if (PulseDelay == null)
+
+        if (PulseDelays != null)
         {
-            PulseDelay = new WaitForSeconds(0.1f);
+            return;
+        }
+
+        PulseDelays = new WaitForSeconds[4];
+
+        for (int i = 0, iC = PulseDelays.Length; i < iC; ++i)
+        {
+            // Index zero is just holding a place. It will use the default value.
+            PulseDelays[i] = new WaitForSeconds(VentrixConfig.MappingEcholocationSpeed.GetLevel(i));
         }
     }
 

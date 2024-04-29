@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Config;
 using VentrixSyncDisks.Implementation.Disks;
 using VentrixSyncDisks.Implementation.Pooling;
 
@@ -45,26 +46,29 @@ public class EcholocationPulse : BasePoolObject
     [HideFromIl2Cpp]
     private IEnumerator PulseRoutine(AirDuctGroup.AirDuctSection startDuct)
     {
-        _explorer.StartExploration(startDuct);
+        int level = DiskRegistry.MappingDisk.Level;
 
-        int range = 25;
-
-        if (DiskRegistry.MappingDisk.Level >= 2)
+        if (level <= 0)
         {
-            range = 50;
+            yield break;
         }
         
-        for (int i = 0; i < range; ++i)
+        _explorer.StartExploration(startDuct);
+
+        int pulseRange = VentrixConfig.MappingEcholocationRange.GetLevel(level);
+        float pulseDuration = VentrixConfig.MappingEcholocationDuration.GetLevel(level);
+
+        for (int i = 0; i < pulseRange; ++i)
         {
             List<DuctExplorerTick> results = _explorer.TickExploration(startDuct);
 
             foreach (DuctExplorerTick result in results)
             {
                 Vector3 position = VentHelpers.AirDuctToPosition(result.Duct);
-                DuctMarkerPool.Instance.CreateMarker(result.Type, position, 1f);
+                DuctMarkerPool.Instance.CreateMarker(result.Type, position, pulseDuration);
             }
 
-            yield return EcholocationPulsePool.Instance.PulseDelay;
+            yield return EcholocationPulsePool.Instance.PulseDelays[level];
         }
 
         EcholocationPulsePool.Instance.CheckinPoolObject(this);
