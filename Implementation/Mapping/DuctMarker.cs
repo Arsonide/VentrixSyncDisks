@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using VentVigilante.Implementation.Common;
-using VentVigilante.Implementation.Disks;
-using VentVigilante.Implementation.Pooling;
+using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Disks;
+using VentrixSyncDisks.Implementation.Pooling;
 
-namespace VentVigilante.Implementation.Mapping;
+namespace VentrixSyncDisks.Implementation.Mapping;
 
 public class DuctMarker : BasePoolObject
 {

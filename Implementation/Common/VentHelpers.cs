@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace VentVigilante.Implementation.Common;
+namespace VentrixSyncDisks.Implementation.Common;
 
 public static class VentHelpers
 {

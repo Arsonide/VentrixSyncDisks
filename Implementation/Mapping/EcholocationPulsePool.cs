@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using VentVigilante.Implementation.Pooling;
+using VentrixSyncDisks.Implementation.Pooling;
 
-namespace VentVigilante.Implementation.Mapping;
+namespace VentrixSyncDisks.Implementation.Mapping;
 
 public class EcholocationPulsePool : BasePoolManager<EcholocationPulse>
 {

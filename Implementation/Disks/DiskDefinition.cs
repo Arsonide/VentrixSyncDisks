@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using SOD.Common;
 using SOD.Common.Helpers.SyncDiskObjects;
 
-namespace VentVigilante.Implementation.Disks;
+namespace VentrixSyncDisks.Implementation.Disks;
 
 public class DiskDefinition
 {

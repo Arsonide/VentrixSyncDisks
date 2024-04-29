@@ -1,7 +1,7 @@
 ﻿using System;
 using BepInEx.Configuration;
 
-namespace VentVigilante.Implementation.Config;
+namespace VentrixSyncDisks.Implementation.Config;
 
 public abstract class ConfigCache
 {

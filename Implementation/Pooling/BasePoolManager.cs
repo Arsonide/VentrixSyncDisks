@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using BepInEx.Logging;
-using VentVigilante.Implementation.Common;
+using VentrixSyncDisks.Implementation.Common;
 
-namespace VentVigilante.Implementation.Pooling;
+namespace VentrixSyncDisks.Implementation.Pooling;
 
 public class BasePoolManager<T> where T : BasePoolObject
 {

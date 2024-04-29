@@ -2,10 +2,10 @@
 using SOD.Common;
 using SOD.Common.Helpers;
 using UnityEngine;
-using VentVigilante.Implementation.Common;
-using VentVigilante.Implementation.Disks;
+using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Disks;
 
-namespace VentVigilante.Implementation.Snooping;
+namespace VentrixSyncDisks.Implementation.Snooping;
 
 public static class SnoopHighlighter
 {

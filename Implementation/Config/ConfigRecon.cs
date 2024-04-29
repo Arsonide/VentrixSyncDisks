@@ -1,7 +1,7 @@
 ﻿using BepInEx.Configuration;
-using VentVigilante.Implementation.Common;
+using VentrixSyncDisks.Implementation.Common;
 
-namespace VentVigilante.Implementation.Config;
+namespace VentrixSyncDisks.Implementation.Config;
 
 public static partial class VentrixConfig
 {

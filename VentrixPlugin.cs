@@ -3,18 +3,17 @@ using BepInEx;
 using SOD.Common;
 using SOD.Common.BepInEx;
 using SOD.Common.Helpers;
-using VentVigilante.Implementation;
-using VentVigilante.Implementation.Common;
-using VentVigilante.Implementation.Config;
-using VentVigilante.Implementation.Disks;
-using VentVigilante.Implementation.Mapping;
-using VentVigilante.Implementation.Pooling;
-using VentVigilante.Implementation.Snooping;
+using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Config;
+using VentrixSyncDisks.Implementation.Disks;
+using VentrixSyncDisks.Implementation.Mapping;
+using VentrixSyncDisks.Implementation.Pooling;
+using VentrixSyncDisks.Implementation.Snooping;
 
-namespace VentVigilante;
+namespace VentrixSyncDisks;
 
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-public class VentVigilantePlugin : PluginController<VentVigilantePlugin>
+public class VentrixPlugin : PluginController<VentrixPlugin>
 {
     public override void Load()
     {

@@ -1,9 +1,9 @@
 ﻿using HarmonyLib;
-using VentVigilante.Implementation.Common;
-using VentVigilante.Implementation.Config;
-using VentVigilante.Implementation.Disks;
+using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Config;
+using VentrixSyncDisks.Implementation.Disks;
 
-namespace VentVigilante.Hooks;
+namespace VentrixSyncDisks.Hooks;
 
 [HarmonyPatch(typeof(Player), "TransformPlayerController")]
 public class VentTransitionHook

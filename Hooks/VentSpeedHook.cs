@@ -2,10 +2,10 @@
 
 using HarmonyLib;
 using UnityEngine;
-using VentVigilante.Implementation.Config;
-using VentVigilante.Implementation.Disks;
+using VentrixSyncDisks.Implementation.Config;
+using VentrixSyncDisks.Implementation.Disks;
 
-namespace VentVigilante.Hooks;
+namespace VentrixSyncDisks.Hooks;
 
 [HarmonyPatch(typeof(CharacterController), "Move")]
 public class VentSpeedHook

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace VentVigilante.Implementation.Common;
+namespace VentrixSyncDisks.Implementation.Common;
 
 public class Timer : MonoBehaviour
 {

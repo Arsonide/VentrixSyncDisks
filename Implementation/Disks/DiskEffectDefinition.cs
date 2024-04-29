@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using SOD.Common.Helpers.SyncDiskObjects;
 
-namespace VentVigilante.Implementation.Disks;
+namespace VentrixSyncDisks.Implementation.Disks;
 
 public class DiskEffectDefinition
 {

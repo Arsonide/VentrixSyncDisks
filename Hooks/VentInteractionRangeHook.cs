@@ -1,8 +1,8 @@
 ﻿using HarmonyLib;
-using VentVigilante.Implementation.Config;
-using VentVigilante.Implementation.Disks;
+using VentrixSyncDisks.Implementation.Config;
+using VentrixSyncDisks.Implementation.Disks;
 
-namespace VentVigilante.Hooks;
+namespace VentrixSyncDisks.Hooks;
 
 [HarmonyPatch(typeof(InteractableController), "Setup")]
 public class VentInteractionRangeHook

@@ -1,7 +1,7 @@
 ﻿using BepInEx.Logging;
 using UnityEngine;
 
-namespace VentVigilante.Implementation.Common;
+namespace VentrixSyncDisks.Implementation.Common;
 
 public static class Utilities
 {
@@ -26,7 +26,7 @@ public static class Utilities
 #pragma warning restore CS0162
         }
 
-        VentVigilantePlugin.Log.Log(level, message);
+        VentrixPlugin.Log.Log(level, message);
     }
 
     public static int MultiplierForDescription(float multiplier, string lowerDescription, string higherDescription, out string description)

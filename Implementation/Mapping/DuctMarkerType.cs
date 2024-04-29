@@ -1,4 +1,4 @@
-﻿namespace VentVigilante.Implementation.Mapping;
+﻿namespace VentrixSyncDisks.Implementation.Mapping;
 
 public enum DuctMarkerType
 {

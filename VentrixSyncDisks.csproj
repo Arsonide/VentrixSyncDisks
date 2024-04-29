@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>VentVigilante</AssemblyName>
-    <Description>Plugin that adds a sync disk with vent related abilities to Shadows of Doubt.</Description>
-    <Version>0.9.3</Version>
+    <AssemblyName>VentrixSyncDisks</AssemblyName>
+    <Description>Plugin that adds three sync disks with vent related abilities to Shadows of Doubt.</Description>
+    <Version>0.8.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
@@ -12,18 +12,18 @@
       https://nuget.bepinex.dev/v3/index.json;
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
-    <RootNamespace>VentVigilante</RootNamespace>
+    <RootNamespace>VentrixSyncDisks</RootNamespace>
     <PackageVersion>0.8.0</PackageVersion>
-    <Title>VentVigilante</Title>
+    <Title>VentrixSyncDisks</Title>
     <Authors>Arsonide</Authors>
     <Copyright>Arsonide</Copyright>
-    <PackageProjectUrl>https://github.com/Arsonide/VentVigilante</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/Arsonide/VentVigilante/blob/main/LICENSE</PackageLicenseUrl>
-    <RepositoryUrl>https://github.com/Arsonide/VentVigilante</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Arsonide/VentrixSyncDisks</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/Arsonide/VentrixSyncDisks/blob/main/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/Arsonide/VentrixSyncDisks</RepositoryUrl>
     <AssemblyVersion>0.8.0</AssemblyVersion>
     <FileVersion>0.8.0</FileVersion>
-    <PackageId>VentVigilante</PackageId>
-    <Product>VentVigilante</Product>
+    <PackageId>VentrixSyncDisks</PackageId>
+    <Product>VentrixSyncDisks</Product>
   </PropertyGroup>
 
   <ItemGroup>
@@ -62,6 +62,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy &quot;$(TargetDir)VentVigilante.dll&quot; &quot;%AppData%\r2modmanPlus-local\ShadowsofDoubt\profiles\Default\BepInEx\plugins\Arsonide-VentVigilante&quot;" />
+    <Exec Command="copy &quot;$(TargetDir)VentrixSyncDisks.dll&quot; &quot;%AppData%\r2modmanPlus-local\ShadowsofDoubt\profiles\Default\BepInEx\plugins\Arsonide-VentrixSyncDisks&quot;" />
   </Target>
 </Project>

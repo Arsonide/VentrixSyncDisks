@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using VentVigilante.Implementation.Common;
+using VentrixSyncDisks.Implementation.Common;
 
-namespace VentVigilante.Implementation.Mapping;
+namespace VentrixSyncDisks.Implementation.Mapping;
 
 public class DuctExplorer
 {

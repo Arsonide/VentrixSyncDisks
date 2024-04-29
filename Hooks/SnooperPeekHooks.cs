@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
-using VentVigilante.Implementation.Snooping;
+using VentrixSyncDisks.Implementation.Snooping;
 
-namespace VentVigilante.Hooks;
+namespace VentrixSyncDisks.Hooks;
 
 public class SnooperPeekHooks
 {

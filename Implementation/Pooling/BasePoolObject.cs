@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace VentVigilante.Implementation.Pooling;
+namespace VentrixSyncDisks.Implementation.Pooling;
 
 public abstract class BasePoolObject : MonoBehaviour
 {

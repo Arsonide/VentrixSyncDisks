@@ -1,10 +1,10 @@
 ﻿using HarmonyLib;
 using UnityEngine;
-using VentVigilante.Implementation.Common;
-using VentVigilante.Implementation.Disks;
-using VentVigilante.Implementation.Mapping;
+using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Disks;
+using VentrixSyncDisks.Implementation.Mapping;
 
-namespace VentVigilante.Hooks;
+namespace VentrixSyncDisks.Hooks;
 
 public class CoinThrowingHooks
 {

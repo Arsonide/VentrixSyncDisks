@@ -3,10 +3,10 @@ using System.Text;
 using SOD.Common;
 using SOD.Common.Helpers;
 using SOD.Common.Helpers.SyncDiskObjects;
-using VentVigilante.Hooks;
-using VentVigilante.Implementation.Config;
+using VentrixSyncDisks.Hooks;
+using VentrixSyncDisks.Implementation.Config;
 
-namespace VentVigilante.Implementation.Disks;
+namespace VentrixSyncDisks.Implementation.Disks;
 
 public static class DiskRegistry
 {

@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
-using VentVigilante.Implementation.Disks;
+using VentrixSyncDisks.Implementation.Disks;
 
-namespace VentVigilante.Hooks;
+namespace VentrixSyncDisks.Hooks;
 
 public class SpecterHooks
 {
