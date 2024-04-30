@@ -24,48 +24,82 @@ public static partial class VentrixConfig
     private static ConfigEntry<float> MappingCoinMultiplierFirst;
     private static ConfigEntry<float> MappingCoinMultiplierSecond;
     public static ConfigCache<float> MappingCoinMultiplier;
+    
+    public static ConfigEntry<float> MappingCentralNodeSize;
+    public static ConfigEntry<bool> MappingUseDirectionalNodes;
+    public static ConfigEntry<float> MappingDirectionalNodeLength;
+    public static ConfigEntry<float> MappingDirectionalNodeDiameter;
+    public static ConfigEntry<float> MappingDirectionalNodeOffset;
+
+    public static ConfigEntry<string> MappingNodeColorNormal;
+    public static ConfigEntry<string> MappingNodeColorVent;
+    public static ConfigEntry<string> MappingNodeColorPeek;
 
     public static ConfigEntry<string> SnoopingOutlineColorHex;
 
     private static void InitializeRecon(ConfigFile config)
     {
-        MappingEcholocationRangeBase = config.Bind($"4. {NAME_SHORT_MAPPING}", "Echolocation Range (Base Level)", 25,
+        MappingEcholocationRangeBase = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Base Level)", 25,
                                                    new ConfigDescription($"How far your echolocation pulse travels down vents with the base level of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationRangeFirst = config.Bind($"4. {NAME_SHORT_MAPPING}", "Echolocation Range (First Upgrade)", 50,
+        MappingEcholocationRangeFirst = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (First Upgrade)", 50,
                                                     new ConfigDescription($"How far your echolocation pulse travels down vents with the first upgrade of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationRangeSecond = config.Bind($"4. {NAME_SHORT_MAPPING}", "Echolocation Range (Second Upgrade)", 50,
+        MappingEcholocationRangeSecond = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Second Upgrade)", 50,
                                                      new ConfigDescription($"How far your echolocation pulse travels down vents with the second upgrade of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationSpeedBase = config.Bind($"4. {NAME_SHORT_MAPPING}", "Echolocation Speed (Base Level)", 0.1f,
+        MappingEcholocationSpeedBase = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Speed (Base Level)", 0.1f,
                                                    new ConfigDescription($"How quickly your echolocation pulse travels down vents with the base level of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationSpeedFirst = config.Bind($"4. {NAME_SHORT_MAPPING}", "Echolocation Speed (First Upgrade)", 0.1f,
+        MappingEcholocationSpeedFirst = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Speed (First Upgrade)", 0.1f,
                                                     new ConfigDescription($"How quickly your echolocation pulse travels down vents with the first upgrade of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationSpeedSecond = config.Bind($"4. {NAME_SHORT_MAPPING}", "Echolocation Speed (Second Upgrade)", 0.1f,
+        MappingEcholocationSpeedSecond = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Speed (Second Upgrade)", 0.1f,
                                                      new ConfigDescription($"How quickly your echolocation pulse travels down vents with the second upgrade of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationDurationBase = config.Bind($"4. {NAME_SHORT_MAPPING}", "Echolocation Duration (Base Level)", 1f,
+        MappingEcholocationDurationBase = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Duration (Base Level)", 1f,
                                                       new ConfigDescription($"How long it takes for your echolocation pulse to expire with the base level of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationDurationFirst = config.Bind($"4. {NAME_SHORT_MAPPING}", "Echolocation Duration (First Upgrade)", 1f,
+        MappingEcholocationDurationFirst = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Duration (First Upgrade)", 1f,
                                                        new ConfigDescription($"How long it takes for your echolocation pulse to expire with the first upgrade of {NAME_SHORT_MAPPING}."));
 
-        MappingEcholocationDurationSecond = config.Bind($"4. {NAME_SHORT_MAPPING}", "Echolocation Duration (Second Upgrade)", 1f,
+        MappingEcholocationDurationSecond = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Duration (Second Upgrade)", 1f,
                                                         new ConfigDescription($"How long it takes for your echolocation pulse to expire with the second upgrade of {NAME_SHORT_MAPPING}."));
         
-        MappingCoinMultiplierBase = config.Bind($"4. {NAME_SHORT_MAPPING}", "Coin Duration Multiplier (Base Level)", 1f,
+        MappingCoinMultiplierBase = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Coin Duration Multiplier (Base Level)", 1f,
                                                 new ConfigDescription($"Multiplier on echolocation duration while holding a coin with the base level of {NAME_SHORT_MAPPING}."));
         
-        MappingCoinMultiplierFirst = config.Bind($"4. {NAME_SHORT_MAPPING}", "Coin Duration Multiplier (First Upgrade)", 1f,
+        MappingCoinMultiplierFirst = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Coin Duration Multiplier (First Upgrade)", 1f,
                                                  new ConfigDescription($"Multiplier on echolocation duration while holding a coin with the first upgrade of {NAME_SHORT_MAPPING}."));
         
-        MappingCoinMultiplierSecond = config.Bind($"4. {NAME_SHORT_MAPPING}", "Coin Duration Multiplier (Second Upgrade)", 0.1f,
+        MappingCoinMultiplierSecond = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Coin Duration Multiplier (Second Upgrade)", 0.1f,
                                                   new ConfigDescription($"Multiplier on echolocation duration while holding a coin with the second upgrade of {NAME_SHORT_MAPPING}."));
-        
-        SnoopingOutlineColorHex = config.Bind($"5. {NAME_SHORT_SNOOPING}", "Highlight Color Multiplier", "FFFFFF",
+
+        MappingCentralNodeSize = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Central Node Size", 0.1f,
+                                             new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how large the visualized nodes are in the center of each duct."));
+
+        MappingUseDirectionalNodes = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Use Directional Nodes", true,
+                                                 new ConfigDescription($"When using  {NAME_LONG_MAPPING}, whether to render additional indicators pointing at connected air ducts."));
+
+        MappingDirectionalNodeLength = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Directional Node Length", 0.5f,
+                                                   new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how long the indicators pointing down connected ducts are."));
+
+        MappingDirectionalNodeDiameter = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Directional Node Diameter", 0.015f,
+                                                     new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how wide the indicators pointing down connected ducts are."));
+
+        MappingDirectionalNodeOffset = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Directional Node Offset", 0.525f,
+                                                   new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how far apart the indicators pointing down connected ducts are."));
+
+        MappingNodeColorNormal = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Color Normal", "0000FF",
+                                             new ConfigDescription($"When using  {NAME_LONG_MAPPING}, what color normal air ducts are visualized as."));
+
+        MappingNodeColorVent = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Color Vent", "00FF00",
+                                             new ConfigDescription($"When using  {NAME_LONG_MAPPING}, what color air vents (entrances / exits) are visualized as."));
+
+        MappingNodeColorPeek = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Color Peek", "0000FF",
+                                             new ConfigDescription($"When using  {NAME_LONG_MAPPING}, what color \"peek\" ducts are visualized as, that you can see through but not exit."));
+
+        SnoopingOutlineColorHex = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Highlight Color Multiplier", "FFFFFF",
                                               new ConfigDescription($"A hex code for what color the {NAME_SHORT_SNOOPING} outline will be multiplied by."));
 
         // Setup Caches

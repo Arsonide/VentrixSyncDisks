@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Config;
 using VentrixSyncDisks.Implementation.Pooling;
 
 namespace VentrixSyncDisks.Implementation.Mapping;
@@ -16,15 +18,15 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
         base.SetupManager();
         
         NormalDuctMaterial = new Material(Shader.Find("HDRP/Unlit"));
-        NormalDuctMaterial.SetColor("_UnlitColor", Color.blue);
+        NormalDuctMaterial.SetColor("_UnlitColor", Utilities.HexToColor(VentrixConfig.MappingNodeColorNormal.Value));
         NormalDuctMaterial.SetInt("_ZTestDepthEqualForOpaque", (int)UnityEngine.Rendering.CompareFunction.Always);
         NormalDuctMaterial.SetInt("_ZWrite", 0);
 
         PeekDuctMaterial = new Material(NormalDuctMaterial);
-        PeekDuctMaterial.SetColor("_UnlitColor", Color.yellow);
+        PeekDuctMaterial.SetColor("_UnlitColor", Utilities.HexToColor(VentrixConfig.MappingNodeColorPeek.Value));
         
         NormalVentMaterial = new Material(NormalDuctMaterial);
-        NormalVentMaterial.SetColor("_UnlitColor", Color.green);
+        NormalVentMaterial.SetColor("_UnlitColor", Utilities.HexToColor(VentrixConfig.MappingNodeColorVent.Value));
     }
 
     protected override DuctMarker CreateBaseObject()
@@ -36,6 +38,7 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
 
         DuctMarker ductMarker = cube.AddComponent<DuctMarker>();
         ductMarker.Renderer = r;
+        ductMarker.Transform = ductMarker.transform;
         
         Collider c = cube.GetComponent<Collider>();
         Object.Destroy(c);
@@ -53,9 +56,10 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
     protected override void ConfigureCopyObject(ref DuctMarker copyObject)
     {
         copyObject.Renderer = copyObject.gameObject.GetComponent<Renderer>();
+        copyObject.Transform = copyObject.transform;
     }
 
-    public void CreateMarker(DuctMarkerType type, Vector3 position, float time)
+    public void CreateMarker(DuctMarkerType type, Vector3 position, Vector3 scale, float time)
     {
         DuctMarker ventRenderer = CheckoutPoolObject();
 
@@ -71,9 +75,12 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
                 ventRenderer.Renderer.sharedMaterial = NormalVentMaterial;
                 break;
         }
+
+        Transform t = ventRenderer.transform;
+        t.SetPositionAndRotation(position, Quaternion.identity);
+        t.localScale = scale;
         
-        ventRenderer.transform.SetPositionAndRotation(position, Quaternion.identity);
-        ventRenderer.DespawnTimer = time;
+        ventRenderer.OnSpawn(scale, time);
     }
 
     public void ReleaseMarker(DuctMarker marker)

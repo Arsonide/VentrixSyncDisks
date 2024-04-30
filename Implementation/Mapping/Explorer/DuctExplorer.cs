@@ -2,7 +2,7 @@
 using UnityEngine;
 using VentrixSyncDisks.Implementation.Common;
 
-namespace VentrixSyncDisks.Implementation.Mapping;
+namespace VentrixSyncDisks.Implementation.Mapping.Explorer;
 
 public class DuctExplorer
 {
@@ -44,9 +44,12 @@ public class DuctExplorer
         {
             AirDuctGroup.AirDuctSection currentDuct = _queue.Dequeue();
             VentHelpers.GetVentInformation(currentDuct, ref _neighbors, ref _vents);
-
+            DuctExplorerConnections connections = new DuctExplorerConnections();
+            
             foreach (AirDuctGroup.AirDuctSection neighbor in _neighbors)
             {
+                connections.AddConnection(currentDuct.node.nodeCoord, neighbor.node.nodeCoord);
+                
                 if (_visited.Contains(neighbor.duct))
                 {
                     continue;
@@ -56,7 +59,7 @@ public class DuctExplorer
                 _visited.Add(neighbor.duct);
             }
 
-            _results.Add(new DuctExplorerTick(currentDuct, _vents.Count > 0, _neighbors.Count));
+            _results.Add(new DuctExplorerTick(currentDuct, _vents.Count > 0, connections));
         }
 
         return _results;

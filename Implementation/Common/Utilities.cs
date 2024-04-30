@@ -40,4 +40,33 @@ public static class Utilities
         description = higherDescription;
         return Mathf.RoundToInt((multiplier - 1) * 100);
     }
+    
+    public static Color HexToColor(string hex)
+    {
+        if (hex.StartsWith("#"))
+        {
+            hex = hex.Substring(1);
+        }
+
+        if (hex.Length != 6 && hex.Length != 8)
+        {
+            return Color.white;
+        }
+
+        byte r = 255, g = 255, b = 255, a = 255;
+
+        if (!byte.TryParse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber, null, out r) ||
+            !byte.TryParse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber, null, out g) ||
+            !byte.TryParse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber, null, out b))
+        {
+            return Color.white;
+        }
+
+        if (hex.Length == 8 && !byte.TryParse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber, null, out a))
+        {
+            return Color.white;
+        }
+
+        return new Color(r / 255f, g / 255f, b / 255f, a / 255f);
+    }
 }

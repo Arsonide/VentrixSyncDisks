@@ -1,11 +1,12 @@
-﻿namespace VentrixSyncDisks.Implementation.Mapping;
+﻿namespace VentrixSyncDisks.Implementation.Mapping.Explorer;
 
 public struct DuctExplorerTick
 {
     public readonly AirDuctGroup.AirDuctSection Duct;
     public readonly DuctMarkerType Type;
-
-    public DuctExplorerTick(AirDuctGroup.AirDuctSection duct, bool hasVent, int connections)
+    public readonly DuctExplorerConnections Connections;
+    
+    public DuctExplorerTick(AirDuctGroup.AirDuctSection duct, bool hasVent, DuctExplorerConnections connections)
     {
         Duct = duct;
         
@@ -21,5 +22,7 @@ public struct DuctExplorerTick
         {
             Type = DuctMarkerType.NormalDuct;
         }
+
+        Connections = connections;
     }
 }
