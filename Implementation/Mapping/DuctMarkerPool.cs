@@ -8,6 +8,8 @@ namespace VentrixSyncDisks.Implementation.Mapping;
 public class DuctMarkerPool : BasePoolManager<DuctMarker>
 {
     public static DuctMarkerPool Instance;
+    public static float MarkerSpawnTime = 0.2f;
+    public static float MarkerDespawnTime = 0.2f;
     
     private static Material NormalDuctMaterial;
     private static Material PeekDuctMaterial;
@@ -27,6 +29,9 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
         
         NormalVentMaterial = new Material(NormalDuctMaterial);
         NormalVentMaterial.SetColor("_UnlitColor", Utilities.HexToColor(VentrixConfig.MappingNodeColorVent.Value));
+
+        MarkerSpawnTime = VentrixConfig.MappingNodeSpawnTime.Value;
+        MarkerDespawnTime = VentrixConfig.MappingNodeDespawnTime.Value;
     }
 
     protected override DuctMarker CreateBaseObject()

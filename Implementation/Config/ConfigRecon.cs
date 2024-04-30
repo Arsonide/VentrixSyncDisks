@@ -35,6 +35,9 @@ public static partial class VentrixConfig
     public static ConfigEntry<string> MappingNodeColorVent;
     public static ConfigEntry<string> MappingNodeColorPeek;
 
+    public static ConfigEntry<float> MappingNodeSpawnTime;
+    public static ConfigEntry<float> MappingNodeDespawnTime;
+
     public static ConfigEntry<string> SnoopingOutlineColorHex;
 
     private static void InitializeRecon(ConfigFile config)
@@ -98,6 +101,12 @@ public static partial class VentrixConfig
 
         MappingNodeColorPeek = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Color Peek", "0000FF",
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, what color \"peek\" ducts are visualized as, that you can see through but not exit."));
+        
+        MappingNodeSpawnTime = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Spawn Time", 0.2f,
+                                                   new ConfigDescription($"When using  {NAME_LONG_MAPPING}, when nodes spawn in, how long it takes for them to reach full size."));
+        
+        MappingNodeDespawnTime = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Despawn Time", 0.2f,
+                                             new ConfigDescription($"When using  {NAME_LONG_MAPPING}, when nodes expire, how long it takes for them to shrink and disappear."));
 
         SnoopingOutlineColorHex = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Highlight Color Multiplier", "FFFFFF",
                                               new ConfigDescription($"A hex code for what color the {NAME_SHORT_SNOOPING} outline will be multiplied by."));

@@ -16,9 +16,6 @@ public class DuctMarker : BasePoolObject
     private float _lifetime;
     private float _timer;
     private DuctMarkerState _state;
-    
-    private const float SPAWN_DURATION = 0.2f;
-    private const float DESPAWN_DURATION = 0.2f;
 
     public void OnSpawn(Vector3 targetScale, float lifetime)
     {
@@ -83,9 +80,9 @@ public class DuctMarker : BasePoolObject
 
     private void UpdateSpawning()
     {
-        Transform.localScale = Vector3.Lerp(MINIMUM_SCALE, _targetScale, _timer / SPAWN_DURATION);
+        Transform.localScale = Vector3.Lerp(MINIMUM_SCALE, _targetScale, _timer / DuctMarkerPool.MarkerSpawnTime);
         
-        if (_timer >= SPAWN_DURATION)
+        if (_timer >= DuctMarkerPool.MarkerSpawnTime)
         {
             SetState(DuctMarkerState.Spawned);
         }
@@ -101,9 +98,9 @@ public class DuctMarker : BasePoolObject
     
     private void UpdateDespawning()
     {
-        Transform.localScale = Vector3.Lerp(_targetScale, MINIMUM_SCALE, _timer / DESPAWN_DURATION);
+        Transform.localScale = Vector3.Lerp(_targetScale, MINIMUM_SCALE, _timer / DuctMarkerPool.MarkerDespawnTime);
         
-        if (_timer >= DESPAWN_DURATION)
+        if (_timer >= DuctMarkerPool.MarkerDespawnTime)
         {
             SetState(DuctMarkerState.Despawned);
         }
