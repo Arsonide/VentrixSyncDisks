@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to Ventrix Industries, the undisputed leader in air duct and vent system maintenance in our gloriously dystopian metropolis! As our newest vent technician, you're about to embark on an exhilarating journey through the twists, turns, and occasionally, the slightly suspicious smells of our city's most intricate infrastructure. Enclosed with this orientation pamphlet, you should find your essential toolbox equipped with three cutting-edge sync disks: **Vent Runner**, **Vent Recon**, and **Vent Mischief**. These tools will be important for the tight spaces and adventures that await you!
+Welcome to Ventrix Industries, the undisputed leader in air duct and vent system maintenance in our city of towering achievements and even taller monitoring masts! As our newest vent technician, you're about to embark on an exhilarating journey through the twists, turns, and occasionally, the slightly suspicious smells of our city's most intricate infrastructure. Enclosed with this orientation pamphlet, you should find your essential toolbox equipped with three cutting-edge sync disks: **Vent Mobility**, **Vent Recon**, and **Vent Mischief**. These tools will be important for the tight spaces and adventures that await you!
 
 > A word to the wise: if you are reading this and you're not clad in a Ventrix-branded jumpsuit, chances are you've either pilfered these tools from one of our exceptionally dedicated technicians, or you've stumbled upon them in the less reputable corners of the black market. Either way, do the honorable thing and return them to Ventrix Industries immediately. Your cooperation ensures you won’t find us crawling through your ducts in search of our property!
 
