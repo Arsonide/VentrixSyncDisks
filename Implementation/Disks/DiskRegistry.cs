@@ -35,17 +35,28 @@ public static class DiskRegistry
 
     private static void Register()
     {
-        RegisterMobility();
-        RegisterRecon();
-        RegisterMischief();
-
         AllDisks.Clear();
-        AllDisks.Add(RunnerDisk);
-        AllDisks.Add(ParkourDisk);
-        AllDisks.Add(MappingDisk);
-        AllDisks.Add(SnoopingDisk);
-        AllDisks.Add(SpecterDisk);
-        AllDisks.Add(MenaceDisk);
+
+        if (VentrixConfig.MobilityEnabled.Value)
+        {
+            RegisterMobility();
+            AllDisks.Add(RunnerDisk);
+            AllDisks.Add(ParkourDisk);
+        }
+
+        if (VentrixConfig.ReconEnabled.Value)
+        {
+            RegisterRecon();
+            AllDisks.Add(MappingDisk);
+            AllDisks.Add(SnoopingDisk);
+        }
+
+        if (VentrixConfig.MischiefEnabled.Value)
+        {
+            RegisterMischief();
+            AllDisks.Add(SpecterDisk);
+            AllDisks.Add(MenaceDisk);
+        }
     }
 
     private static string GetDiskLevelDescription(int level, params ConfigCache[] caches)

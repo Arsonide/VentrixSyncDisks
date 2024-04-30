@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using SOD.Common;
 using SOD.Common.Helpers.SyncDiskObjects;
+using VentrixSyncDisks.Implementation.Config;
 
 namespace VentrixSyncDisks.Implementation.Disks;
 
@@ -15,10 +16,10 @@ public class DiskDefinition
     public void Register()
     {
         SyncDiskBuilder builder = Lib.SyncDisks.Builder(Name, MyPluginInfo.PLUGIN_GUID, true);
-        
+        builder.SetManufacturer(SyncDiskPreset.Manufacturer.KensingtonIndigo);
+
 #if EASILY_ATTAINABLE
         builder.SetPrice(0);
-        builder.SetManufacturer(SyncDiskPreset.Manufacturer.ElGen);
         builder.SetRarity(SyncDiskPreset.Rarity.common);
 
         builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.CigaretteMachine);
@@ -49,11 +50,18 @@ public class DiskDefinition
         builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketSyncClinic);
 #else
         builder.SetPrice(1000);
-        builder.SetManufacturer(SyncDiskPreset.Manufacturer.BlackMarket);
         builder.SetRarity(SyncDiskPreset.Rarity.medium);
+        
+        if (VentrixConfig.AvailableAtBlackMarkets.Value)
+        {
+            builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketTrader);
+            builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketSyncClinic);
+        }
 
-        builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketTrader);
-        builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketSyncClinic);
+        if (VentrixConfig.AvailableAtSyncDiskClinics.Value)
+        {
+            builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.SyncClinic);
+        }
 #endif
 
         foreach (DiskEffectDefinition effect in Effects)
