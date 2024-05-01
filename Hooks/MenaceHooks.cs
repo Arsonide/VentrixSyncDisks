@@ -1,5 +1,9 @@
 ﻿using HarmonyLib;
+using VentrixSyncDisks.Implementation.Common;
 using VentrixSyncDisks.Implementation.Disks;
+using VentrixSyncDisks.Implementation.Freakouts;
+using System.Linq;
+using VentrixSyncDisks.Implementation.Config;
 
 namespace VentrixSyncDisks.Hooks;
 
@@ -11,24 +15,40 @@ public class MenaceHooks
         [HarmonyPostfix]
         private static void Postfix(Player __instance, bool restoreTransform = false)
         {
-            if (DiskRegistry.MenaceDisk.Level <= 0)
+            int level = DiskRegistry.MenaceDisk.Level;
+            
+            if (level <= 0)
             {
                 return;
             }
 
             NewRoom room = Player.Instance.currentRoom;
-
+            
             // Menace doesn't scare people in public places, only where they feel safe.
-            if (room == null || !Player.Instance.isTrespassing)
+            if (room == null || room.IsAccessAllowed(Player.Instance))
             {
                 return;
             }
-
+            
             foreach (Actor actor in room.currentOccupants)
             {
-                if (!actor.isPlayer && !actor.isMachine)
+                if (actor.isPlayer || actor.isMachine)
                 {
-                    actor.AddNerve(-1000, Player.Instance);
+                    continue;
+                }
+                
+                // IL2CPP weirdness. We need the human to get their ID for serialization.
+                Human human = ((dynamic)actor).Cast<Human>();
+
+                if (human == null)
+                {
+                    continue;
+                }
+
+                // When I put on the mask, I fear no vent goblin.
+                if (!human.isEnforcer || !human.isOnDuty)
+                {
+                    FreakoutManager.StartFreakout(human, VentrixConfig.MenaceFreakoutDuration.GetLevel(level));
                 }
             }
         }

@@ -317,9 +317,9 @@ public static class DiskRegistry
             Icon = "IconPassedOut",
         };
 
-        menaceEffect.Description = GetDiskLevelDescription(1, VentrixConfig.MenaceCitizenNerve, VentrixConfig.MenaceToxicImmunity);
-        menaceEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.MenaceCitizenNerve, VentrixConfig.MenaceToxicImmunity));
-        menaceEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.MenaceCitizenNerve, VentrixConfig.MenaceToxicImmunity));
+        menaceEffect.Description = GetDiskLevelDescription(1, VentrixConfig.MenaceFreakoutDuration, VentrixConfig.MenaceToxicImmunity);
+        menaceEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.MenaceFreakoutDuration, VentrixConfig.MenaceToxicImmunity));
+        menaceEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.MenaceFreakoutDuration, VentrixConfig.MenaceToxicImmunity));
         
         // Finishing Up
         mischiefDisk.Effects.Add(specterEffect);

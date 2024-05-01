@@ -6,6 +6,7 @@ using SOD.Common.Helpers;
 using VentrixSyncDisks.Implementation.Common;
 using VentrixSyncDisks.Implementation.Config;
 using VentrixSyncDisks.Implementation.Disks;
+using VentrixSyncDisks.Implementation.Freakouts;
 using VentrixSyncDisks.Implementation.Mapping;
 using VentrixSyncDisks.Implementation.Pooling;
 using VentrixSyncDisks.Implementation.Snooping;
@@ -49,6 +50,7 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
     {
         DiskRegistry.Initialize();
         SnoopHighlighter.Initialize();
+        FreakoutManager.Initialize();
         
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
         Lib.SaveGame.OnAfterLoad += OnAfterLoad;
@@ -68,6 +70,7 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
         
         DiskRegistry.Uninitialize();
         SnoopHighlighter.Uninitialize();
+        FreakoutManager.Uninitialize();
         
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
     }
