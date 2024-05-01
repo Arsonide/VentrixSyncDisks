@@ -8,6 +8,8 @@ namespace VentrixSyncDisks.Hooks;
 
 public class CoinThrowingHooks
 {
+    public static PhysicsProfile CoinImpactPhysicsProfile;
+
     private static int LastCoinThrown;
     private static Vector3 LastCoinImpactPosition;
 
@@ -68,6 +70,11 @@ public class CoinThrowingHooks
                 return;
             }
 
+            if (CoinImpactPhysicsProfile == null)
+            {
+                CoinImpactPhysicsProfile = __instance.interactable.preset.GetPhysicsProfile();
+            }
+            
             Vector3 coinPosition = __instance.transform.position;
 
             if (LastCoinImpactPosition != Vector3.zero && Vector3.Distance(LastCoinImpactPosition, coinPosition) < IMPACT_THRESHOLD_DISTANCE)
