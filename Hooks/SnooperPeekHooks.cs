@@ -1,7 +1,6 @@
 ﻿using System;
 using HarmonyLib;
 using UnityEngine;
-using VentrixSyncDisks.Implementation.Common;
 using VentrixSyncDisks.Implementation.Snooping;
 
 namespace VentrixSyncDisks.Hooks;
@@ -14,7 +13,7 @@ public class SnooperPeekHooks
         [HarmonyPostfix]
         private static void Postfix(Player __instance)
         {
-            SnoopHighlighter.RefreshSnoopingState();
+            SnoopManager.RefreshSnoopingState();
         }
     }
     
@@ -24,7 +23,7 @@ public class SnooperPeekHooks
         [HarmonyPostfix]
         private static void Postfix(OutlineController __instance, bool val)
         {
-            SnoopHighlighter.EnforceOutlineLayer(__instance.actor);
+            SnoopManager.EnforceOutlineLayer(__instance.actor);
         }
     }
     
@@ -34,7 +33,7 @@ public class SnooperPeekHooks
         [HarmonyPostfix]
         private static void Postfix(OutlineController __instance, float val)
         {
-            SnoopHighlighter.EnforceOutlineAlpha(__instance.actor);
+            SnoopManager.EnforceOutlineAlpha(__instance.actor);
         }
     }
     
@@ -44,7 +43,7 @@ public class SnooperPeekHooks
         [HarmonyPostfix]
         private static void Postfix(Player __instance, bool restoreTransform = false)
         {
-            SnoopHighlighter.RefreshSnoopingState();
+            SnoopManager.RefreshSnoopingState();
         }
     }
     
@@ -54,7 +53,7 @@ public class SnooperPeekHooks
         [HarmonyPostfix]
         private static void Postfix(Player __instance, bool restoreTransform = false)
         {
-            SnoopHighlighter.RefreshSnoopingState();
+            SnoopManager.RefreshSnoopingState();
         }
     }
     
@@ -64,7 +63,7 @@ public class SnooperPeekHooks
         [HarmonyPostfix]
         private static void Postfix(Human __instance, MeshRenderer newMesh, bool addToOutline = true, bool forceMeshListUpdate = false, bool addToLOD1 = false, bool addToBoth = false)
         {
-            SnoopHighlighter.OnActorChangedMeshes(__instance);
+            SnoopManager.OnActorChangedMeshes(__instance);
         }
     }
     
@@ -74,7 +73,7 @@ public class SnooperPeekHooks
         [HarmonyPostfix]
         private static void Postfix(Human __instance, MeshRenderer newMesh, bool removeFromOutline = true, bool forceMeshListUpdate = false)
         {
-            SnoopHighlighter.OnActorChangedMeshes(__instance);
+            SnoopManager.OnActorChangedMeshes(__instance);
         }
     }
     
@@ -84,7 +83,7 @@ public class SnooperPeekHooks
         [HarmonyPostfix]
         private static void Postfix(Human __instance)
         {
-            SnoopHighlighter.OnActorChangedMeshes(__instance);
+            SnoopManager.OnActorChangedMeshes(__instance);
         }
     }
     
@@ -94,7 +93,7 @@ public class SnooperPeekHooks
         [HarmonyPostfix]
         private static void Postfix(Actor __instance)
         {
-            SnoopHighlighter.OnActorRoomChanged(__instance);
+            SnoopManager.OnActorRoomChanged(__instance);
         }
     }
 }

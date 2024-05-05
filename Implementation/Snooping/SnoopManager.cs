@@ -7,7 +7,7 @@ using VentrixSyncDisks.Implementation.Disks;
 
 namespace VentrixSyncDisks.Implementation.Snooping;
 
-public static class SnoopHighlighter
+public static class SnoopManager
 {
     private static NewRoom SnoopingRoom = null;
 

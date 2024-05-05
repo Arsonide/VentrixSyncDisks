@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace VentrixSyncDisks.Implementation.Snooping;
 
-public class SnoopRoomActors
+public class SnoopRoomActors : SnoopRoomBase
 {
     private static Stack<SnoopActor> ActorPool = new Stack<SnoopActor>();
     
@@ -19,47 +18,25 @@ public class SnoopRoomActors
         actor.Uninitialize();
         ActorPool.Push(actor);
     }
-    
-    public bool Initialized { get; private set; }
-    private NewRoom _room;
 
     private Dictionary<int, SnoopActor> _idToActor = new Dictionary<int, SnoopActor>();
     private List<SnoopActor> _actors = new List<SnoopActor>();
-    
-    public void Initialize(NewRoom room)
+
+    protected override void OnRoomInitialized()
     {
-        if (Initialized)
-        {
-            return;
-        }
-
-        if (room == null)
-        {
-            return;
-        }
-
-        Initialized = true;
-        _room = room;
-
+        base.OnRoomInitialized();
         CacheRoomOccupants();
     }
 
-    public void Uninitialize()
+    protected override void OnRoomUninitialized()
     {
-        if (!Initialized)
-        {
-            return;
-        }
-
-        Initialized = false;
-        _room = null;
-
+        base.OnRoomUninitialized();
         ClearActors();
     }
 
     private void CacheRoomOccupants()
     {
-        foreach (Actor actor in _room.currentOccupants)
+        foreach (Actor actor in Room.currentOccupants)
         {
             AddActor(actor);
         }

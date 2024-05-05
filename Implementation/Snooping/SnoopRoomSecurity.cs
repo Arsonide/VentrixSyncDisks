@@ -3,48 +3,26 @@ using UnityEngine;
 
 namespace VentrixSyncDisks.Implementation.Snooping;
 
-public class SnoopRoomSecurity
+public class SnoopRoomSecurity : SnoopRoomBase
 {
-    public bool Initialized { get; private set; }
-    private NewRoom _room;
-
     private readonly List<GameObject> _securityObjects = new List<GameObject>();
     private readonly Dictionary<GameObject, int> _securityLayers = new Dictionary<GameObject, int>();
 
-    public void Initialize(NewRoom room)
+    protected override void OnRoomInitialized()
     {
-        if (Initialized)
-        {
-            return;
-        }
-     
-        if (room == null)
-        {
-            return;
-        }
-        
-        Initialized = true;
-        _room = room;
-
+        base.OnRoomInitialized();
         CacheSecurityObjects();
     }
-    
-    public void Uninitialize()
+
+    protected override void OnRoomUninitialized()
     {
-        if (!Initialized)
-        {
-            return;
-        }
-        
-        Initialized = false;
-        _room = null;
-        
+        base.OnRoomUninitialized();
         ClearSecurityObjects();
     }
-
+    
     private void CacheSecurityObjects()
     {
-        foreach (KeyValuePair<InteractablePreset.SpecialCase, List<Interactable>> pair in _room.specialCaseInteractables)
+        foreach (KeyValuePair<InteractablePreset.SpecialCase, List<Interactable>> pair in Room.specialCaseInteractables)
         {
             switch (pair.Key)
             {

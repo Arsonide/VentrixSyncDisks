@@ -49,7 +49,7 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
     private void Initialize()
     {
         DiskRegistry.Initialize();
-        SnoopHighlighter.Initialize();
+        SnoopManager.Initialize();
         FreakoutManager.Initialize();
         
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
@@ -69,7 +69,7 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
         }
         
         DiskRegistry.Uninitialize();
-        SnoopHighlighter.Uninitialize();
+        SnoopManager.Uninitialize();
         FreakoutManager.Uninitialize();
         
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
