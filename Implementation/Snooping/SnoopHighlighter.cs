@@ -13,14 +13,12 @@ public static class SnoopHighlighter
 
     private static List<AirDuctGroup.AirDuctSection> Neighbors = new List<AirDuctGroup.AirDuctSection>();
     private static List<AirDuctGroup.AirVent> Vents = new List<AirDuctGroup.AirVent>();
-    
-    private static List<Actor> AllList = new List<Actor>();
-    private static HashSet<int> HumanSet = new HashSet<int>();
 
     private static MaterialPropertyBlock FullAlphaBlock = new MaterialPropertyBlock();
 
     private static SnoopRoomSecurity _securityRoom = new SnoopRoomSecurity();
-    
+    private static SnoopRoomActors _actorRoom = new SnoopRoomActors();
+
     public static void Initialize()
     {
         Reset();
@@ -28,9 +26,6 @@ public static class SnoopHighlighter
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
         Lib.SaveGame.OnAfterLoad += OnAfterLoad;
 
-        Timer.OnTick -= OnTick;
-        Timer.OnTick += OnTick;
-        
         FullAlphaBlock.SetFloat("_AlphaVal", 1f);
     }
 
@@ -38,7 +33,6 @@ public static class SnoopHighlighter
     {
         Reset();
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
-        Timer.OnTick -= OnTick;
     }
 
     private static void OnAfterLoad(object sender, SaveGameArgs args)
@@ -51,106 +45,15 @@ public static class SnoopHighlighter
         SnoopingRoom = null;
     }
 
-    private static void OnTick()
-    {
-        if (SnoopingRoom == null || DiskRegistry.SnoopingDisk.Level <= 0)
-        {
-            ClearSnoopedActors();
-            return;
-        }
-        
-        for (int i = AllList.Count - 1; i >= 0; --i)
-        {
-            Actor snooped = AllList[i];
-            
-            if (!SnoopingRoom.currentOccupants.Contains(snooped))
-            {
-                RemoveSnoopedActor(snooped);
-            }
-        }
-        
-        foreach (Actor occupant in SnoopingRoom.currentOccupants)
-        {
-            if (!IsSnoopedActor(occupant))
-            {
-                AddSnoopedActor(occupant);
-            }
-        }
-        
-        // When actors change clothes and stuff the outline gets off.
-        EnforceMeshLayers();
-    }
-
-    private static void ClearSnoopedActors()
-    {
-        int count = AllList.Count;
-
-        if (count <= 0)
-        {
-            return;
-        }
-
-        for (int i = count - 1; i >= 0; --i)
-        {
-            Actor snooped = AllList[i];
-            RemoveSnoopedActor(snooped);
-        }
-    }
-
-    public static bool IsSnoopedActor(Actor actor)
-    {
-        return HumanSet.Contains(actor.GetHashCode());
-    }
-
-    private static void AddSnoopedActor(Actor actor)
-    {
-        if (actor.isPlayer)
-        {
-            return;
-        }
-        
-        int code = actor.GetHashCode();
-        
-        if (HumanSet.Contains(code))
-        {
-            return;
-        }
-
-        AllList.Add(actor);
-        HumanSet.Add(code);
-        OnAddSnoopedActor(actor);
-    }
-
-    private static void RemoveSnoopedActor(Actor actor)
-    {
-        int code = actor.GetHashCode();
-        
-        if (!HumanSet.Contains(code))
-        {
-            return;
-        }
-        
-        AllList.Remove(actor);
-        HumanSet.Remove(code);
-        OnRemoveSnoopedActor(actor);
-    }
-
-    private static void OnAddSnoopedActor(Actor actor)
-    {
-        RefreshActorOutline(actor);
-    }
-    
-    private static void OnRemoveSnoopedActor(Actor actor)
-    {
-        RefreshActorOutline(actor);
-    }
-
     public static void RefreshSnoopingState()
     {
         SnoopingRoom = GetPlayerSnoopingRoom();
         
         _securityRoom.Uninitialize();
         _securityRoom.Initialize(SnoopingRoom);
+        
+        _actorRoom.Uninitialize();
+        _actorRoom.Initialize(SnoopingRoom);
     }
     
     private static NewRoom GetPlayerSnoopingRoom()
@@ -207,41 +110,64 @@ public static class SnoopHighlighter
 
         return section?.node?.room;
     }
-    
-    public static void RefreshActorOutline(Actor actor)
+
+    public static void OnActorRoomChanged(Actor actor)
     {
-        bool snooped = IsSnoopedActor(actor);
-        bool shouldBeOutlined = actor.outline.outlineActive || snooped;
-
-        foreach (MeshRenderer mesh in actor.outline.meshesToOutline)
+        if (!_actorRoom.Initialized || actor.isPlayer || actor.isMachine)
         {
-            if (mesh == null)
-            {
-                continue;
-            }
-
-            mesh.gameObject.layer = shouldBeOutlined ? 30 : 24;
-            
+            return;
         }
 
-        if (!snooped)
+        int snoopID = SnoopingRoom.GetInstanceID();
+        
+        if (actor.previousRoom.GetInstanceID() == snoopID)
+        {
+            _actorRoom.RemoveActor(actor);
+        }
+        else if (actor.currentRoom.GetInstanceID() == snoopID)
+        {
+            _actorRoom.AddActor(actor);
+        }
+    }
+
+    public static void OnActorChangedMeshes(Actor actor)
+    {
+        if (!_actorRoom.Initialized || actor.currentRoom.GetInstanceID() != SnoopingRoom.GetInstanceID() || !_actorRoom.TryGetSnoopActor(actor, out SnoopActor snoopActor))
+        {
+            return;
+        }
+
+        snoopActor.SynchronizeObjects();
+    }
+
+    public static void EnforceOutlineLayer(Actor actor)
+    {
+        if (!_actorRoom.Initialized || actor.currentRoom.GetInstanceID() != SnoopingRoom.GetInstanceID())
+        {
+            return;
+        }
+        
+        foreach (MeshRenderer mesh in actor.outline.meshesToOutline)
+        {
+            if (mesh != null)
+            {
+                mesh.gameObject.layer = SnoopActor.OUTLINE_LAYER;
+            }
+        }
+    }
+    
+    public static void EnforceOutlineAlpha(Actor actor)
+    {
+        if (!_actorRoom.Initialized || actor.currentRoom.GetInstanceID() != SnoopingRoom.GetInstanceID())
         {
             return;
         }
 
         foreach (MeshRenderer mesh in actor.outline.meshesToOutline)
         {
-            mesh.SetPropertyBlock(FullAlphaBlock);
-        }
-    }
-
-    private static void EnforceMeshLayers()
-    {
-        foreach (Actor actor in AllList)
-        {
-            foreach (MeshRenderer mesh in actor.outline.meshesToOutline)
+            if (mesh != null)
             {
-                mesh.gameObject.layer = 30;
+                mesh.SetPropertyBlock(FullAlphaBlock);
             }
         }
     }
