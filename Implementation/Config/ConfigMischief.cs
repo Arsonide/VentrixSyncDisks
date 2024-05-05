@@ -48,13 +48,13 @@ public static partial class VentrixConfig
         SpecterColdImmunitySecond = config.Bind($"7. {NAME_SHORT_SPECTER}", "Cold Immunity (Second Upgrade)", true,
                                           new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_SPECTER} grants you cold immunity in vents."));
 
-        MenaceFreakoutDurationBase = config.Bind($"8. {NAME_SHORT_MENACE}", "Freakout Duration (Base Level)", 3,
+        MenaceFreakoutDurationBase = config.Bind($"8. {NAME_SHORT_MENACE}", "Freakout Duration (Base Level)", 4,
                                              new ConfigDescription($"The duration a citizen freaks out when you pop out of vents in private areas with the base level of {NAME_SHORT_MENACE}."));
 
-        MenaceFreakoutDurationFirst = config.Bind($"8. {NAME_SHORT_MENACE}", "Freakout Duration (First Upgrade)", 6,
+        MenaceFreakoutDurationFirst = config.Bind($"8. {NAME_SHORT_MENACE}", "Freakout Duration (First Upgrade)", 8,
                                             new ConfigDescription($"The duration a citizen freaks out when you pop out of vents in private areas with the first upgrade of {NAME_SHORT_MENACE}."));
 
-        MenaceFreakoutDurationSecond = config.Bind($"8. {NAME_SHORT_MENACE}", "Freakout Duration (Second Upgrade)", 9,
+        MenaceFreakoutDurationSecond = config.Bind($"8. {NAME_SHORT_MENACE}", "Freakout Duration (Second Upgrade)", 12,
                                              new ConfigDescription($"The duration a citizen freaks out when you pop out of vents in private areas with the second upgrade of {NAME_SHORT_MENACE}."));
         
         MenaceToxicImmunityBase = config.Bind($"8. {NAME_SHORT_MENACE}", "Toxic Immunity (Base Level)", false,

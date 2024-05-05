@@ -1,4 +1,4 @@
-﻿#define EASILY_ATTAINABLE // Uncomment to make the Sync Disk free and at every location.
+﻿// #define EASILY_ATTAINABLE // Uncomment to make the Sync Disk free and at every location.
 
 using System.Collections.Generic;
 using SOD.Common;
@@ -51,16 +51,20 @@ public class DiskDefinition
 #else
         builder.SetPrice(1000);
         builder.SetRarity(SyncDiskPreset.Rarity.medium);
-        
-        if (VentrixConfig.AvailableAtBlackMarkets.Value)
+
+        if (VentrixConfig.AvailableAtLegitSyncDiskClinics.Value)
         {
-            builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketTrader);
+            builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.SyncClinic);
+        }
+        
+        if (VentrixConfig.AvailableAtShadySyncDiskClinics.Value)
+        {
             builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketSyncClinic);
         }
 
-        if (VentrixConfig.AvailableAtSyncDiskClinics.Value)
+        if (VentrixConfig.AvailableAtBlackMarkets.Value)
         {
-            builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.SyncClinic);
+            builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketTrader);
         }
 #endif
 

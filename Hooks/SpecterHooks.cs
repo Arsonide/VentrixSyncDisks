@@ -51,23 +51,19 @@ public class SpecterHooks
             
             int level = DiskRegistry.SpecterDisk.Level;
             
-            if (level <= 0)
+            if (level <= 0 || !VentrixConfig.SpecterColdImmunity.GetLevel(level))
             {
                 return true;
             }
-            
-            if (VentrixConfig.SpecterColdImmunity.GetLevel(level))
-            {
-                if (Player.Instance.heat < 0.5f)
-                {
-                    Player.Instance.heat = 0.5f;
-                }
-                
-                __instance.RemoveAllCounts(inst);
-                return false;
-            }
 
-            return true;
+            if (Player.Instance.heat < 0.5f)
+            {
+                Player.Instance.heat = 0.5f;
+            }
+                
+            __instance.RemoveAllCounts(inst);
+            return false;
+
         }
     }
 }

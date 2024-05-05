@@ -24,7 +24,7 @@ public static partial class VentrixConfig
     public const string NAME_SHORT_MENACE = "Menace";
     public const string NAME_LONG_MENACE = "Shaft Menace";
 
-    private const string ExpectedVersion = "74d012a7e2564fa9badbc23749a9b16c";
+    private const string ExpectedVersion = "af2cfc5492bd478c9e7ccda801b1151c";
     
     public static ConfigEntry<bool> Enabled;
     public static ConfigEntry<string> Version;
@@ -33,8 +33,9 @@ public static partial class VentrixConfig
     public static ConfigEntry<bool> ReconEnabled;
     public static ConfigEntry<bool> MischiefEnabled;
 
+    public static ConfigEntry<bool> AvailableAtLegitSyncDiskClinics;
+    public static ConfigEntry<bool> AvailableAtShadySyncDiskClinics;
     public static ConfigEntry<bool> AvailableAtBlackMarkets;
-    public static ConfigEntry<bool> AvailableAtSyncDiskClinics;
 
     public static void Initialize(ConfigFile config)
     {
@@ -52,13 +53,16 @@ public static partial class VentrixConfig
         
         MischiefEnabled = config.Bind("1. General", "Vent Mischief Enabled", true,
                                       new ConfigDescription("Whether the \"Vent Mischief\" sync disk is in the game."));
+
+        AvailableAtLegitSyncDiskClinics = config.Bind("1. General", "Available At Legit Sync Disk Clinics", false,
+                                                      new ConfigDescription("Whether Ventrix Industries sync disks are sold at legitimate sync disk clinics."));
         
-        AvailableAtBlackMarkets = config.Bind("1. General", "Available At Black Markets", true,
+        AvailableAtShadySyncDiskClinics = config.Bind("1. General", "Available At Shady Sync Disk Clinics", true,
+                                                 new ConfigDescription("Whether Ventrix Industries sync disks are sold at black market sync disk clinics."));
+        
+        AvailableAtBlackMarkets = config.Bind("1. General", "Available At Black Markets", false,
                                               new ConfigDescription("Whether Ventrix Industries sync disks are sold at black markets."));
         
-        AvailableAtSyncDiskClinics = config.Bind("1. General", "Available At Sync Disk Clinics", true,
-                                                 new ConfigDescription("Whether Ventrix Industries sync disks are sold at sync disk clinics."));
-
         InitializeMobility(config);
         InitializeRecon(config);
         InitializeMischief(config);
@@ -86,8 +90,9 @@ public static partial class VentrixConfig
         MobilityEnabled.Value = (bool)MobilityEnabled.DefaultValue;
         ReconEnabled.Value = (bool)ReconEnabled.DefaultValue;
         MischiefEnabled.Value = (bool)MischiefEnabled.DefaultValue;
+        AvailableAtLegitSyncDiskClinics.Value = (bool)AvailableAtLegitSyncDiskClinics.DefaultValue;
+        AvailableAtShadySyncDiskClinics.Value = (bool)AvailableAtShadySyncDiskClinics.DefaultValue;
         AvailableAtBlackMarkets.Value = (bool)AvailableAtBlackMarkets.DefaultValue;
-        AvailableAtSyncDiskClinics.Value = (bool)AvailableAtSyncDiskClinics.DefaultValue;
 
         ResetMobility();
         ResetRecon();

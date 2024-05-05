@@ -58,18 +58,19 @@ public class MenaceHooks
         [HarmonyPrefix]
         private static bool Prefix(StatusController __instance, StatusController.StatusInstance inst)
         {
-            if (DiskRegistry.MenaceDisk.Level >= 2 && Player.Instance.inAirVent)
+            if (!Player.Instance.inAirVent || !VentrixConfig.MenaceToxicImmunity.GetLevel(DiskRegistry.MenaceDisk.Level))
             {
-                if (Player.Instance.gasLevel > 0f)
-                {
-                    Player.Instance.gasLevel = 0f;
-                }
-                
-                __instance.RemoveAllCounts(inst);
-                return false;
+                return true;
             }
 
-            return true;
+            if (Player.Instance.gasLevel > 0f)
+            {
+                Player.Instance.gasLevel = 0f;
+            }
+                
+            __instance.RemoveAllCounts(inst);
+            return false;
+
         }
     }
 }

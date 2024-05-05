@@ -37,8 +37,6 @@ public static partial class VentrixConfig
 
     public static ConfigEntry<float> MappingNodeSpawnTime;
     public static ConfigEntry<float> MappingNodeDespawnTime;
-
-    public static ConfigEntry<string> SnoopingOutlineColorHex;
     
     private static ConfigEntry<bool> SnoopingCanSnoopCiviliansBase;
     private static ConfigEntry<bool> SnoopingCanSnoopCiviliansFirst;
@@ -57,13 +55,13 @@ public static partial class VentrixConfig
 
     private static void InitializeRecon(ConfigFile config)
     {
-        MappingEcholocationRangeBase = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Base Level)", 25,
+        MappingEcholocationRangeBase = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Base Level)", 15,
                                                    new ConfigDescription($"How far your echolocation pulse travels down vents with the base level of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationRangeFirst = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (First Upgrade)", 50,
+        MappingEcholocationRangeFirst = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (First Upgrade)", 30,
                                                     new ConfigDescription($"How far your echolocation pulse travels down vents with the first upgrade of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationRangeSecond = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Second Upgrade)", 50,
+        MappingEcholocationRangeSecond = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Second Upgrade)", 30,
                                                      new ConfigDescription($"How far your echolocation pulse travels down vents with the second upgrade of {NAME_SHORT_MAPPING}."));
         
         MappingEcholocationSpeedBase = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Speed (Base Level)", 0.1f,
@@ -108,13 +106,13 @@ public static partial class VentrixConfig
         MappingDirectionalNodeOffset = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Directional Node Offset", 0.525f,
                                                    new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how far apart the indicators pointing down connected ducts are."));
 
-        MappingNodeColorNormal = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Color Normal", "0000FF",
+        MappingNodeColorNormal = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Color Normal", "00FFFF",
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, what color normal air ducts are visualized as."));
 
-        MappingNodeColorVent = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Color Vent", "00FF00",
+        MappingNodeColorVent = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Color Vent", "FFFF00",
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, what color air vents (entrances / exits) are visualized as."));
 
-        MappingNodeColorPeek = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Color Peek", "0000FF",
+        MappingNodeColorPeek = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Color Peek", "00FFFF",
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, what color \"peek\" ducts are visualized as, that you can see through but not exit."));
         
         MappingNodeSpawnTime = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Spawn Time", 0.2f,
@@ -123,11 +121,8 @@ public static partial class VentrixConfig
         MappingNodeDespawnTime = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Node Despawn Time", 0.2f,
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, when nodes expire, how long it takes for them to shrink and disappear."));
 
-        SnoopingOutlineColorHex = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Highlight Color Multiplier", "FFFFFF",
-                                              new ConfigDescription($"A hex code for what color the {NAME_SHORT_SNOOPING} outline will be multiplied by."));
-        
         SnoopingCanSnoopCiviliansBase = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (Base Level)", true,
-                                                new ConfigDescription($"Whether you see civilians through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
+                                                    new ConfigDescription($"Whether you see civilians through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
         
         SnoopingCanSnoopCiviliansFirst = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (First Upgrade)", true,
                                                      new ConfigDescription($"Whether you see civilians through walls when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
@@ -201,7 +196,6 @@ public static partial class VentrixConfig
         MappingCoinMultiplierBase.Value = (float)MappingCoinMultiplierBase.DefaultValue;
         MappingCoinMultiplierFirst.Value = (float)MappingCoinMultiplierFirst.DefaultValue;
         MappingCoinMultiplierSecond.Value = (float)MappingCoinMultiplierSecond.DefaultValue;
-        SnoopingOutlineColorHex.Value = (string)SnoopingOutlineColorHex.DefaultValue;
         SnoopingCanSnoopCiviliansBase.Value = (bool)SnoopingCanSnoopCiviliansBase.DefaultValue;
         SnoopingCanSnoopCiviliansFirst.Value = (bool)SnoopingCanSnoopCiviliansFirst.DefaultValue;
         SnoopingCanSnoopCiviliansSecond.Value = (bool)SnoopingCanSnoopCiviliansSecond.DefaultValue;
