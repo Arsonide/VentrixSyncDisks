@@ -16,10 +16,11 @@ public static class SnoopHighlighter
     
     private static List<Actor> AllList = new List<Actor>();
     private static HashSet<int> HumanSet = new HashSet<int>();
-    private static HashSet<int> MachineSet = new HashSet<int>();
 
     private static MaterialPropertyBlock FullAlphaBlock = new MaterialPropertyBlock();
 
+    private static SnoopRoomSecurity _securityRoom = new SnoopRoomSecurity();
+    
     public static void Initialize()
     {
         Reset();
@@ -98,22 +99,10 @@ public static class SnoopHighlighter
 
     public static bool IsSnoopedActor(Actor actor)
     {
-        return actor.isMachine ? MachineSet.Contains(actor.GetHashCode()) : HumanSet.Contains(actor.GetHashCode());
+        return HumanSet.Contains(actor.GetHashCode());
     }
-    
+
     private static void AddSnoopedActor(Actor actor)
-    {
-        if (actor.isMachine)
-        {
-            AddSnoopedActor(actor, ref MachineSet);
-        }
-        else
-        {
-            AddSnoopedActor(actor, ref HumanSet);
-        }
-    }
-    
-    private static void AddSnoopedActor(Actor actor, ref HashSet<int> set)
     {
         if (actor.isPlayer)
         {
@@ -122,39 +111,27 @@ public static class SnoopHighlighter
         
         int code = actor.GetHashCode();
         
-        if (set.Contains(code))
+        if (HumanSet.Contains(code))
         {
             return;
         }
 
         AllList.Add(actor);
-        set.Add(code);
+        HumanSet.Add(code);
         OnAddSnoopedActor(actor);
     }
 
     private static void RemoveSnoopedActor(Actor actor)
     {
-        if (actor.isMachine)
-        {
-            RemoveSnoopedActor(actor, ref MachineSet);
-        }
-        else
-        {
-            RemoveSnoopedActor(actor, ref HumanSet);
-        }
-    }
-    
-    private static void RemoveSnoopedActor(Actor actor, ref HashSet<int> set)
-    {
         int code = actor.GetHashCode();
         
-        if (!set.Contains(code))
+        if (!HumanSet.Contains(code))
         {
             return;
         }
         
         AllList.Remove(actor);
-        set.Remove(code);
+        HumanSet.Remove(code);
         OnRemoveSnoopedActor(actor);
     }
 
@@ -171,6 +148,9 @@ public static class SnoopHighlighter
     public static void RefreshSnoopingState()
     {
         SnoopingRoom = GetPlayerSnoopingRoom();
+        
+        _securityRoom.Uninitialize();
+        _securityRoom.Initialize(SnoopingRoom);
     }
     
     private static NewRoom GetPlayerSnoopingRoom()
@@ -204,33 +184,28 @@ public static class SnoopHighlighter
         
         VentHelpers.GetVentInformation(section, ref Neighbors, ref Vents);
 
-        if (Vents.Count > 0)
+        if (Vents.Count <= 0)
         {
-            // Apparently parts of vent an be unassigned, sometimes...not all the time. Just search a variety of sources for a stupid room.
-            AirDuctGroup.AirVent vent = Vents[0];
-            NewRoom roomNode = vent?.roomNode?.room;
-
-            if (roomNode != null)
-            {
-                return roomNode;
-            }
-            
-            NewRoom ventRoom = vent?.room;
-
-            if (ventRoom != null)
-            {
-                return ventRoom;
-            }
-
-            NewRoom sectionRoom = section?.node?.room;
-
-            if (sectionRoom != null)
-            {
-                return sectionRoom;
-            }
+            return null;
         }
 
-        return null;
+        // Apparently parts of vent an be unassigned, sometimes...not all the time. Just search a variety of sources for a stupid room.
+        AirDuctGroup.AirVent vent = Vents[0];
+        NewRoom roomNode = vent?.roomNode?.room;
+
+        if (roomNode != null)
+        {
+            return roomNode;
+        }
+            
+        NewRoom ventRoom = vent?.room;
+
+        if (ventRoom != null)
+        {
+            return ventRoom;
+        }
+
+        return section?.node?.room;
     }
     
     public static void RefreshActorOutline(Actor actor)
