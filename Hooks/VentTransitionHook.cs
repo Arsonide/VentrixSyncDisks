@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using VentrixSyncDisks.Implementation.Common;
 using VentrixSyncDisks.Implementation.Config;
 using VentrixSyncDisks.Implementation.Disks;
 

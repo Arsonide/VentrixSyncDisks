@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using SOD.Common;
 using SOD.Common.Helpers.SyncDiskObjects;
-using VentrixSyncDisks.Implementation.Config;
 
 namespace VentrixSyncDisks.Implementation.Disks;
 

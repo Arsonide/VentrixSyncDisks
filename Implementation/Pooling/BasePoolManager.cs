@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using BepInEx.Logging;
-using VentrixSyncDisks.Implementation.Common;
 
 namespace VentrixSyncDisks.Implementation.Pooling;
 

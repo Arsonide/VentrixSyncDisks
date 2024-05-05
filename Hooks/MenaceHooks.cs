@@ -1,8 +1,6 @@
 ﻿using HarmonyLib;
-using VentrixSyncDisks.Implementation.Common;
 using VentrixSyncDisks.Implementation.Disks;
 using VentrixSyncDisks.Implementation.Freakouts;
-using System.Linq;
 using VentrixSyncDisks.Implementation.Config;
 
 namespace VentrixSyncDisks.Hooks;
