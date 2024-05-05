@@ -39,6 +39,21 @@ public static partial class VentrixConfig
     public static ConfigEntry<float> MappingNodeDespawnTime;
 
     public static ConfigEntry<string> SnoopingOutlineColorHex;
+    
+    private static ConfigEntry<bool> SnoopingCanSnoopCiviliansBase;
+    private static ConfigEntry<bool> SnoopingCanSnoopCiviliansFirst;
+    private static ConfigEntry<bool> SnoopingCanSnoopCiviliansSecond;
+    public static ConfigCache<bool> SnoopingCanSnoopCivilians;
+    
+    private static ConfigEntry<bool> SnoopingCanSnoopPeeksBase;
+    private static ConfigEntry<bool> SnoopingCanSnoopPeeksFirst;
+    private static ConfigEntry<bool> SnoopingCanSnoopPeeksSecond;
+    public static ConfigCache<bool> SnoopingCanSnoopPeeks;
+    
+    private static ConfigEntry<bool> SnoopingCanSnoopSecurityBase;
+    private static ConfigEntry<bool> SnoopingCanSnoopSecurityFirst;
+    private static ConfigEntry<bool> SnoopingCanSnoopSecuritySecond;
+    public static ConfigCache<bool> SnoopingCanSnoopSecurity;
 
     private static void InitializeRecon(ConfigFile config)
     {
@@ -110,7 +125,34 @@ public static partial class VentrixConfig
 
         SnoopingOutlineColorHex = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Highlight Color Multiplier", "FFFFFF",
                                               new ConfigDescription($"A hex code for what color the {NAME_SHORT_SNOOPING} outline will be multiplied by."));
+        
+        SnoopingCanSnoopCiviliansBase = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (Base Level)", true,
+                                                new ConfigDescription($"Whether you see civilians through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingCanSnoopCiviliansFirst = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (First Upgrade)", true,
+                                                     new ConfigDescription($"Whether you see civilians through walls when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingCanSnoopCiviliansSecond = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (Second Upgrade)", true,
+                                                      new ConfigDescription($"Whether you see civilians through walls when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
 
+        SnoopingCanSnoopPeeksBase = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Base Level)", false,
+                                                    new ConfigDescription($"Whether you see things through walls when near \"peek\" vents at the base level of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingCanSnoopPeeksFirst = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (First Upgrade)", true,
+                                                     new ConfigDescription($"Whether you see things through walls when near \"peek\" vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingCanSnoopPeeksSecond = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Second Upgrade)", true,
+                                                      new ConfigDescription($"Whether you see things through walls when near \"peek\" vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingCanSnoopSecurityBase = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (Base Level)", false,
+                                                new ConfigDescription($"Whether you see security systems through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingCanSnoopSecurityFirst = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (First Upgrade)", false,
+                                                    new ConfigDescription($"Whether you see security systems through walls when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingCanSnoopSecuritySecond = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (Second Upgrade)", true,
+                                                     new ConfigDescription($"Whether you see security systems through walls when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
+        
         // Setup Caches
         MappingEcholocationRange = new ConfigCache<int>(-1,
                                                         GetEcholocationRangeDescription,
@@ -128,6 +170,21 @@ public static partial class VentrixConfig
                                                        (level, oldValue, newValue) =>
                                                            $"You remember your \"echolocation\" pulse {Utilities.MultiplierForDescription(newValue, "longer", "shorter", out string description)}% {description} while holding a coin.",
                                                  MappingCoinMultiplierBase, MappingCoinMultiplierFirst, MappingCoinMultiplierSecond);
+        
+        SnoopingCanSnoopCivilians = new ConfigCache<bool>(false,
+                                                       (level, oldValue, newValue) =>
+                                                           $"You can now see unaware civilians through walls when near vent entrances.",
+                                                       SnoopingCanSnoopCiviliansBase, SnoopingCanSnoopCiviliansFirst, SnoopingCanSnoopCiviliansSecond);
+        
+        SnoopingCanSnoopPeeks = new ConfigCache<bool>(false,
+                                                          (level, oldValue, newValue) =>
+                                                              $"Snooping now also applies when near \"peeking\" vents in the middle of air ducts.",
+                                                          SnoopingCanSnoopPeeksBase, SnoopingCanSnoopPeeksFirst, SnoopingCanSnoopPeeksSecond);
+        
+        SnoopingCanSnoopSecurity = new ConfigCache<bool>(false,
+                                                      (level, oldValue, newValue) =>
+                                                          $"You can now see cameras, laser sensors, sentry guns, and gas dispensers through walls when near vent entrances.",
+                                                      SnoopingCanSnoopSecurityBase, SnoopingCanSnoopSecurityFirst, SnoopingCanSnoopSecuritySecond);
     }
 
     public static void ResetRecon()
@@ -145,6 +202,15 @@ public static partial class VentrixConfig
         MappingCoinMultiplierFirst.Value = (float)MappingCoinMultiplierFirst.DefaultValue;
         MappingCoinMultiplierSecond.Value = (float)MappingCoinMultiplierSecond.DefaultValue;
         SnoopingOutlineColorHex.Value = (string)SnoopingOutlineColorHex.DefaultValue;
+        SnoopingCanSnoopCiviliansBase.Value = (bool)SnoopingCanSnoopCiviliansBase.DefaultValue;
+        SnoopingCanSnoopCiviliansFirst.Value = (bool)SnoopingCanSnoopCiviliansFirst.DefaultValue;
+        SnoopingCanSnoopCiviliansSecond.Value = (bool)SnoopingCanSnoopCiviliansSecond.DefaultValue;
+        SnoopingCanSnoopPeeksBase.Value = (bool)SnoopingCanSnoopPeeksBase.DefaultValue;
+        SnoopingCanSnoopPeeksFirst.Value = (bool)SnoopingCanSnoopPeeksFirst.DefaultValue;
+        SnoopingCanSnoopPeeksSecond.Value = (bool)SnoopingCanSnoopPeeksSecond.DefaultValue;
+        SnoopingCanSnoopSecurityBase.Value = (bool)SnoopingCanSnoopSecurityBase.DefaultValue;
+        SnoopingCanSnoopSecurityFirst.Value = (bool)SnoopingCanSnoopSecurityFirst.DefaultValue;
+        SnoopingCanSnoopSecuritySecond.Value = (bool)SnoopingCanSnoopSecuritySecond.DefaultValue;
     }
 
     private static string GetEcholocationRangeDescription(int level, int oldValue, int newValue)

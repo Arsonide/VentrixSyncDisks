@@ -3,6 +3,7 @@ using SOD.Common;
 using SOD.Common.Helpers;
 using UnityEngine;
 using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Config;
 using VentrixSyncDisks.Implementation.Disks;
 
 namespace VentrixSyncDisks.Implementation.Snooping;
@@ -47,18 +48,33 @@ public static class SnoopManager
 
     public static void RefreshSnoopingState()
     {
-        SnoopingRoom = GetPlayerSnoopingRoom();
-        
         _securityRoom.Uninitialize();
-        _securityRoom.Initialize(SnoopingRoom);
-        
         _actorRoom.Uninitialize();
-        _actorRoom.Initialize(SnoopingRoom);
+        
+        int level = DiskRegistry.SnoopingDisk.Level;
+        
+        if (level <= 0)
+        {
+            SnoopingRoom = null;
+            return;
+        }
+        
+        SnoopingRoom = GetPlayerSnoopingRoom(level);
+        
+        if (VentrixConfig.SnoopingCanSnoopCivilians.GetLevel(level))
+        {
+            _actorRoom.Initialize(SnoopingRoom);
+        }
+        
+        if (VentrixConfig.SnoopingCanSnoopSecurity.GetLevel(level))
+        {
+            _securityRoom.Initialize(SnoopingRoom);
+        }
     }
     
-    private static NewRoom GetPlayerSnoopingRoom()
+    private static NewRoom GetPlayerSnoopingRoom(int level)
     {
-        if (DiskRegistry.SnoopingDisk.Level <= 0)
+        if (level <= 0)
         {
             return null;
         }
@@ -80,7 +96,7 @@ public static class SnoopManager
             return null;
         }
 
-        if (section.peekSection && DiskRegistry.SnoopingDisk.Level >= 2)
+        if (section.peekSection && VentrixConfig.SnoopingCanSnoopPeeks.GetLevel(level))
         {
             return section.node?.room;
         }
