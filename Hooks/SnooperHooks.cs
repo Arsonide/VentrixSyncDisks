@@ -5,7 +5,7 @@ using VentrixSyncDisks.Implementation.Snooping;
 
 namespace VentrixSyncDisks.Hooks;
 
-public class SnooperPeekHooks
+public class SnooperHooks
 {
     [HarmonyPatch(typeof(Player), "OnDuctSectionChange")]
     public class PlayerOnDuctSectionChangeHook

@@ -195,7 +195,7 @@ public static class DiskRegistry
 
     private static void OnLevelsModified()
     {
-        VentInteractionRangeHook.RefreshVentInteractionRanges();
+        ParkourHooks.InteractableControllerSetupHook.RefreshVentInteractionRanges();
     }
     
     #endregion

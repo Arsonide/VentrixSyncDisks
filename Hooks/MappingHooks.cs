@@ -6,7 +6,7 @@ using VentrixSyncDisks.Implementation.Mapping;
 
 namespace VentrixSyncDisks.Hooks;
 
-public class CoinThrowingHooks
+public class MappingHooks
 {
     public static PhysicsProfile CoinImpactPhysicsProfile;
 
