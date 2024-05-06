@@ -1,4 +1,4 @@
-﻿// #define EASILY_ATTAINABLE // Uncomment to make the Sync Disk free and at every location.
+﻿#define EASILY_ATTAINABLE // Uncomment to make the Sync Disk free and at every location.
 
 using System.Collections.Generic;
 using SOD.Common;
