@@ -70,10 +70,11 @@ public static class VentHelpers
     /// <summary>
     /// I did not write this convoluted logic, I needed to appropriate it to optimize it a little bit though.
     /// </summary>
-    public static void GetVentInformation(AirDuctGroup.AirDuctSection thisDuct, ref List<AirDuctGroup.AirDuctSection> neighbors, ref List<AirDuctGroup.AirVent> vents)
+    public static void GetVentInformation(AirDuctGroup.AirDuctSection thisDuct, ref List<AirDuctGroup.AirDuctSection> neighbors, ref List<Vector3Int> neighborOffsets, ref List<AirDuctGroup.AirVent> vents)
     {
-	    vents.Clear();
 	    neighbors.Clear();
+	    neighborOffsets.Clear();
+	    vents.Clear();
 
 	    foreach (Vector3Int offset in CityData.Instance.offsetArrayX6)
 	    {
@@ -89,6 +90,7 @@ public static class VentHelpers
 		    if (isNeighbor && !neighbors.Contains(offsetDuct))
 		    {
 			    neighbors.Add(offsetDuct);
+			    neighborOffsets.Add(offset);
 		    }
 	    }
 	    

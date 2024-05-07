@@ -13,6 +13,7 @@ public static class SnoopManager
     private static NewRoom SnoopingRoom = null;
 
     private static List<AirDuctGroup.AirDuctSection> Neighbors = new List<AirDuctGroup.AirDuctSection>();
+    private static List<Vector3Int> NeighborOffsets = new List<Vector3Int>();
     private static List<AirDuctGroup.AirVent> Vents = new List<AirDuctGroup.AirVent>();
 
     private static MaterialPropertyBlock FullAlphaBlock = new MaterialPropertyBlock();
@@ -101,7 +102,7 @@ public static class SnoopManager
             return section.node?.room;
         }
         
-        VentHelpers.GetVentInformation(section, ref Neighbors, ref Vents);
+        VentHelpers.GetVentInformation(section, ref Neighbors, ref NeighborOffsets, ref Vents);
 
         if (Vents.Count <= 0)
         {

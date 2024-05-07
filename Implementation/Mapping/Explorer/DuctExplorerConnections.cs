@@ -11,38 +11,31 @@ public struct DuctExplorerConnections
     public bool NegativeY;
     public bool NegativeZ;
 
-    public void AddConnection(Vector3Int from, Vector3Int to)
+    public void AddConnection(Vector3Int offset)
     {
-        if (from == to)
-        {
-            return;
-        }
-        
-        Vector3Int direction = to - from;
-        
-        if (direction.x > 0)
+        if (offset.x > 0)
         {
             PositiveX = true;
         }
-        else if (direction.x < 0)
+        else if (offset.x < 0)
         {
             NegativeX = true;
         }
 
-        if (direction.y > 0)
+        if (offset.y > 0)
         {
             PositiveY = true;
         }
-        else if (direction.y < 0)
+        else if (offset.y < 0)
         {
             NegativeY = true;
         }
 
-        if (direction.z > 0)
+        if (offset.z > 0)
         {
             PositiveZ = true;
         }
-        else if (direction.z < 0)
+        else if (offset.z < 0)
         {
             NegativeZ = true;
         }
