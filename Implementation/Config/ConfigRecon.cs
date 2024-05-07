@@ -27,6 +27,7 @@ public static partial class VentrixConfig
     
     public static ConfigEntry<float> MappingCentralNodeSize;
     public static ConfigEntry<bool> MappingUseDirectionalNodes;
+    public static ConfigEntry<bool> MappingSpecialDirectionalNodeColors;
     public static ConfigEntry<float> MappingDirectionalNodeLength;
     public static ConfigEntry<float> MappingDirectionalNodeDiameter;
     public static ConfigEntry<float> MappingDirectionalNodeOffset;
@@ -97,6 +98,9 @@ public static partial class VentrixConfig
         MappingUseDirectionalNodes = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Use Directional Nodes", true,
                                                  new ConfigDescription($"When using  {NAME_LONG_MAPPING}, whether to render additional indicators pointing at connected air ducts."));
 
+        MappingSpecialDirectionalNodeColors = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Special Directional Node Colors", false,
+                                                 new ConfigDescription($"When using  {NAME_LONG_MAPPING}, whether additional connections on vents are colored as normal ducts or as vents."));
+        
         MappingDirectionalNodeLength = config.Bind($"4. {NAME_SHORT_MAPPING} Rendering", "Directional Node Length", 0.5f,
                                                    new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how long the indicators pointing down connected ducts are."));
 
@@ -196,6 +200,19 @@ public static partial class VentrixConfig
         MappingCoinMultiplierBase.Value = (float)MappingCoinMultiplierBase.DefaultValue;
         MappingCoinMultiplierFirst.Value = (float)MappingCoinMultiplierFirst.DefaultValue;
         MappingCoinMultiplierSecond.Value = (float)MappingCoinMultiplierSecond.DefaultValue;
+
+        MappingCentralNodeSize.Value = (float)MappingCentralNodeSize.DefaultValue;
+        MappingUseDirectionalNodes.Value = (bool)MappingUseDirectionalNodes.DefaultValue;
+        MappingSpecialDirectionalNodeColors.Value = (bool)MappingSpecialDirectionalNodeColors.DefaultValue;
+        MappingDirectionalNodeLength.Value = (float)MappingDirectionalNodeLength.DefaultValue;
+        MappingDirectionalNodeDiameter.Value = (float)MappingDirectionalNodeDiameter.DefaultValue;
+        MappingDirectionalNodeOffset.Value = (float)MappingDirectionalNodeOffset.DefaultValue;
+        MappingNodeColorNormal.Value = (string)MappingNodeColorNormal.DefaultValue;
+        MappingNodeColorVent.Value = (string)MappingNodeColorVent.DefaultValue;
+        MappingNodeColorPeek.Value = (string)MappingNodeColorPeek.DefaultValue;
+        MappingNodeSpawnTime.Value = (float)MappingNodeSpawnTime.DefaultValue;
+        MappingNodeDespawnTime.Value = (float)MappingNodeDespawnTime.DefaultValue;
+        
         SnoopingCanSnoopCiviliansBase.Value = (bool)SnoopingCanSnoopCiviliansBase.DefaultValue;
         SnoopingCanSnoopCiviliansFirst.Value = (bool)SnoopingCanSnoopCiviliansFirst.DefaultValue;
         SnoopingCanSnoopCiviliansSecond.Value = (bool)SnoopingCanSnoopCiviliansSecond.DefaultValue;

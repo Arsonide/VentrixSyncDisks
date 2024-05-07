@@ -15,6 +15,7 @@ public class EcholocationPulse : BasePoolObject
     private static bool _cachedStatics = false;
     private static float _centralNodeSize = 0.1f;
     private static bool _useDirectionalNodes = true;
+    private static bool _specialDirectionalNodeColors = false;
     private static float _directionalNodeLength = 0.5f;
     private static float _directionalNodeDiameter = 0.015f;
     private static float _directionalNodeOffset = 0.525f;
@@ -30,6 +31,7 @@ public class EcholocationPulse : BasePoolObject
 
         _centralNodeSize = VentrixConfig.MappingCentralNodeSize.Value;
         _useDirectionalNodes = VentrixConfig.MappingUseDirectionalNodes.Value;
+        _specialDirectionalNodeColors = VentrixConfig.MappingSpecialDirectionalNodeColors.Value;
         _directionalNodeLength = VentrixConfig.MappingDirectionalNodeLength.Value;
         _directionalNodeDiameter = VentrixConfig.MappingDirectionalNodeDiameter.Value;
         _directionalNodeOffset = VentrixConfig.MappingDirectionalNodeOffset.Value;
@@ -109,39 +111,40 @@ public class EcholocationPulse : BasePoolObject
         {
             return;
         }
-        
+
+        DuctMarkerType directionalType = _specialDirectionalNodeColors ? result.Type : DuctMarkerType.NormalDuct;
         Vector3 directionalScaleX = new Vector3(_directionalNodeLength, _directionalNodeDiameter, _directionalNodeDiameter);
         Vector3 directionalScaleY= new Vector3(_directionalNodeDiameter, _directionalNodeLength, _directionalNodeDiameter);
         Vector3 directionalScaleZ = new Vector3(_directionalNodeDiameter, _directionalNodeDiameter, _directionalNodeLength);
 
         if (result.Connections.NegativeX)
         {
-            DuctMarkerPool.Instance.CreateMarker(result.Type, position + new Vector3(-_directionalNodeOffset, 0f, 0f), directionalScaleX, pulseDuration);
+            DuctMarkerPool.Instance.CreateMarker(directionalType, position + new Vector3(-_directionalNodeOffset, 0f, 0f), directionalScaleX, pulseDuration);
         }
                 
         if (result.Connections.PositiveX)
         {
-            DuctMarkerPool.Instance.CreateMarker(result.Type, position + new Vector3(_directionalNodeOffset, 0f, 0f), directionalScaleX, pulseDuration);
+            DuctMarkerPool.Instance.CreateMarker(directionalType, position + new Vector3(_directionalNodeOffset, 0f, 0f), directionalScaleX, pulseDuration);
         }
                 
         if (result.Connections.NegativeY)
         {
-            DuctMarkerPool.Instance.CreateMarker(result.Type, position + new Vector3(0f, 0f, -_directionalNodeOffset), directionalScaleZ, pulseDuration);
+            DuctMarkerPool.Instance.CreateMarker(directionalType, position + new Vector3(0f, 0f, -_directionalNodeOffset), directionalScaleZ, pulseDuration);
         }
                 
         if (result.Connections.PositiveY)
         {
-            DuctMarkerPool.Instance.CreateMarker(result.Type, position + new Vector3(0f, 0f, _directionalNodeOffset), directionalScaleZ, pulseDuration);
+            DuctMarkerPool.Instance.CreateMarker(directionalType, position + new Vector3(0f, 0f, _directionalNodeOffset), directionalScaleZ, pulseDuration);
         }
                 
         if (result.Connections.NegativeZ)
         {
-            DuctMarkerPool.Instance.CreateMarker(result.Type, position + new Vector3(0f, -_directionalNodeOffset, 0f), directionalScaleY, pulseDuration);
+            DuctMarkerPool.Instance.CreateMarker(directionalType, position + new Vector3(0f, -_directionalNodeOffset, 0f), directionalScaleY, pulseDuration);
         }
                 
         if (result.Connections.PositiveZ)
         {
-            DuctMarkerPool.Instance.CreateMarker(result.Type, position + new Vector3(0f, _directionalNodeOffset, 0f), directionalScaleY, pulseDuration);
+            DuctMarkerPool.Instance.CreateMarker(directionalType, position + new Vector3(0f, _directionalNodeOffset, 0f), directionalScaleY, pulseDuration);
         }
     }
 }
