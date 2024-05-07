@@ -55,13 +55,13 @@ public static partial class VentrixConfig
 
     private static void InitializeRecon(ConfigFile config)
     {
-        MappingEcholocationRangeBase = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Base Level)", 15,
+        MappingEcholocationRangeBase = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Base Level)", 10,
                                                    new ConfigDescription($"How far your echolocation pulse travels down vents with the base level of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationRangeFirst = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (First Upgrade)", 30,
+        MappingEcholocationRangeFirst = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (First Upgrade)", 20,
                                                     new ConfigDescription($"How far your echolocation pulse travels down vents with the first upgrade of {NAME_SHORT_MAPPING}."));
         
-        MappingEcholocationRangeSecond = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Second Upgrade)", 30,
+        MappingEcholocationRangeSecond = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Second Upgrade)", 20,
                                                      new ConfigDescription($"How far your echolocation pulse travels down vents with the second upgrade of {NAME_SHORT_MAPPING}."));
         
         MappingEcholocationSpeedBase = config.Bind($"4. {NAME_SHORT_MAPPING} Disk", "Echolocation Speed (Base Level)", 0.1f,

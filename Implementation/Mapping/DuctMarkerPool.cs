@@ -19,17 +19,26 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
     {
         base.SetupManager();
         
-        NormalDuctMaterial = new Material(Shader.Find("HDRP/Unlit"));
-        NormalDuctMaterial.SetColor("_UnlitColor", Utilities.HexToColor(VentrixConfig.MappingNodeColorNormal.Value));
-        NormalDuctMaterial.SetInt("_ZTestDepthEqualForOpaque", (int)UnityEngine.Rendering.CompareFunction.Always);
-        NormalDuctMaterial.SetInt("_ZWrite", 0);
+        Shader unlitShader = Shader.Find("HDRP/Unlit");
+        int unlitColor = Shader.PropertyToID("_UnlitColor");
+        int zTestDepthEqualForOpaque = Shader.PropertyToID("_ZTestDepthEqualForOpaque");
+        int zWrite = Shader.PropertyToID("_ZWrite");
+         
+        NormalDuctMaterial = new Material(unlitShader);
+        NormalDuctMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.MappingNodeColorNormal.Value));
+        NormalDuctMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
+        NormalDuctMaterial.SetInt(zWrite, 0);
 
-        PeekDuctMaterial = new Material(NormalDuctMaterial);
-        PeekDuctMaterial.SetColor("_UnlitColor", Utilities.HexToColor(VentrixConfig.MappingNodeColorPeek.Value));
+        PeekDuctMaterial = new Material(unlitShader);
+        PeekDuctMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.MappingNodeColorPeek.Value));
+        PeekDuctMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
+        PeekDuctMaterial.SetInt(zWrite, 0);
         
-        NormalVentMaterial = new Material(NormalDuctMaterial);
-        NormalVentMaterial.SetColor("_UnlitColor", Utilities.HexToColor(VentrixConfig.MappingNodeColorVent.Value));
-
+        NormalVentMaterial = new Material(unlitShader);
+        NormalVentMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.MappingNodeColorVent.Value));
+        NormalVentMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
+        NormalVentMaterial.SetInt(zWrite, 0);
+        
         MarkerSpawnTime = VentrixConfig.MappingNodeSpawnTime.Value;
         MarkerDespawnTime = VentrixConfig.MappingNodeDespawnTime.Value;
     }
