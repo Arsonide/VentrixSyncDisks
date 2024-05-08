@@ -32,27 +32,29 @@ Next up, let's break down your toolbox. We'll explore the specifics of each sync
 
 ### Vent Mobility
 
-* **Airway Runner**: Slip through the vents as smoothly as a TV dinner after midnight. This sync disk makes you move faster through vents by secreting a sleek, friction reducing coating. ***Reminder***: Vent racing is against company policy.
+* **Chute Scoot**: Slip through the vents as smoothly as a TV dinner after midnight. This sync disk makes you move faster through vents by secreting a sleek, friction reducing coating. ***Reminder***: Vent racing is strictly prohibited by Ventrix company policy.
 
-*  **Ductwork Parkour**: Get in and out of vents with the flair of a circus acrobat grace of a ballet dancer, thanks to being able to enter and exit them further away, more quickly, and have them automatically close behind you.
+* **Duct Parkour**: Sometimes the job calls for a grand entrance, or quick exit! Get in and out of vents with the flair of a circus acrobat and the grace of a ballet dancer. You will be able to enter and exit vents further away, faster than ever before, and have them automatically close behind you.
 
 ### Vent Recon
 
-* **Acoustic Mapping**: Initially designed to sense sound waves emitted by tapping a small specialized metal rod on the vent, technicians have found that throwing money away also works. Throwing a coin against air ducts sends out an echolocation pulse like a bat, allowing you to see air ducts through walls.
-* **Grill Snooping**: When near vent exits, highlight nearby customers in the room through walls even if they are not aware of you. Remember, this is to enhance your customer service, not craft your next horror novel. Use responsibly!
+* **Acoustic Mapping**: Initially designed to sense sound waves emitted by tapping a small specialized metal rod on the vent, technicians have found that throwing money away also works! Throwing a coin against air ducts sends out an echolocation pulse like a bat! This is visualized for you to see air ducts and vents through walls.
+* **Grate Snooping**: When working near vent exits, this disk not only highlights customers and potentially hazardous devices through walls, but also allows you to fast-forward time! Perfect for those extended repair sessions. While Ventrix officially discourages extended shifts, we understand sometimes the job knows no clock.
 
 ### Vent Mischief
 
-* **Crawlspace Specter**: Avoid disturbing customers with footsteps or shivering during long maintenance sessions - this disk dramatically lowers the chance of you making noises when as you move vents, and makes you immune to the cold in vents.
-* **Shaft Menace**: This disk was designed for breaking out of vents in toxic gas emergencies. It lets you loudly burst forth from air vents in a way that will probably startle onlooking customers in private areas. It also makes you immune to toxic gas in vents. Use with caution - this disk may unleash your inner vent goblin.
+* **Shaft Specter**: Avoid disturbing customers with footsteps or chattering teeth during long maintenance sessions - this disk dramatically lowers the chance of you making noises when as you move through vents, and makes you immune to the cold while performing vent maintenance.
+* **Tunnel Terror**: This disk was designed for breaking out of vents in toxic gas emergencies. It lets you loudly burst forth from air vents in a way that will probably startle onlooking customers in private areas. It also makes you immune to toxic gas in vents. Use with caution - this disk may unleash your inner vent goblin.
 
 ## Configuration
 
 In r2modman you should see "Config editor" on the left, in the "Other" section. If you click on that and then open up BepInEx\config\VentrixSyncDisks.cfg and click "Edit config", you will have many options available to you to configure Ventrix Sync Disks to your liking. Just click "Save" when you are done.
 
-> Ventrix Sync Disks starts with default settings that are balanced for a fun vanilla gameplay experience. There are a lot of options, but you don't need to change them unless you want to. You can skip everything below and go play the game now if you want.
+> Ventrix Sync Disks starts with default settings that are balanced for a fun vanilla gameplay experience. There are a LOT of options below, but you don't need to change them unless you want to. You can skip everything below and go play the game now if you want.
 
 Each sync disk has extensive configuration options allowing you to change everything about the behavior of them. These changes will be reflected in the skill descriptions in-game, but be warned that you can absolutely break the game by, for example, making yourself move through vents 500x faster.
+
+You will see many options that say (All Upgrades) below, this is just to keep this document shorter. What this means is that this option is actually three options: one reflecting the sync disk with no upgrades, one for the first upgrade, and one for the second upgrade. For many options you can adjust these for each level individually.
 
 > If you do not see VentrixSyncDisks.cfg in your options, click "Start modded" to launch the game, then close both the game and r2modman. When you launch r2modman again, the config file will be there.
 
