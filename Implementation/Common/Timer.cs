@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using VentrixSyncDisks.Implementation.Snooping;
 
 namespace VentrixSyncDisks.Implementation.Common;
 
@@ -43,5 +44,7 @@ public class Timer : MonoBehaviour
             OnTick?.Invoke();
             _timer = TICK_TIME;
         }
+
+        SnoopWarp.OnUpdate();
     }
 }

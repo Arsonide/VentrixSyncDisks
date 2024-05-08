@@ -21,6 +21,8 @@ public static class SnoopManager
     private static SnoopRoomSecurity _securityRoom = new SnoopRoomSecurity();
     private static SnoopRoomActors _actorRoom = new SnoopRoomActors();
 
+    public static bool IsSnooping => SnoopingRoom != null;
+    
     public static void Initialize()
     {
         Reset();
@@ -29,12 +31,15 @@ public static class SnoopManager
         Lib.SaveGame.OnAfterLoad += OnAfterLoad;
 
         FullAlphaBlock.SetFloat("_AlphaVal", 1f);
+        
+        SnoopWarp.Initialize();
     }
 
     public static void Uninitialize()
     {
         Reset();
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
+        SnoopWarp.Uninitialize();
     }
 
     private static void OnAfterLoad(object sender, SaveGameArgs args)

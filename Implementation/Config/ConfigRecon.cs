@@ -53,6 +53,14 @@ public static partial class VentrixConfig
     private static ConfigEntry<bool> SnoopingCanSnoopSecurityFirst;
     private static ConfigEntry<bool> SnoopingCanSnoopSecuritySecond;
     public static ConfigCache<bool> SnoopingCanSnoopSecurity;
+    
+    private static ConfigEntry<bool> SnoopingCanPassTimeBase;
+    private static ConfigEntry<bool> SnoopingCanPassTimeFirst;
+    private static ConfigEntry<bool> SnoopingCanPassTimeSecond;
+    public static ConfigCache<bool> SnoopingCanPassTime;
+
+    public static ConfigEntry<float> SnoopingPassTimeWarpDelay;
+    public static ConfigEntry<float> SnoopingPassTimeNotificationDelay;
 
     private static void InitializeRecon(ConfigFile config)
     {
@@ -137,20 +145,35 @@ public static partial class VentrixConfig
         SnoopingCanSnoopPeeksBase = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Base Level)", false,
                                                     new ConfigDescription($"Whether you see things through walls when near \"peek\" vents at the base level of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanSnoopPeeksFirst = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (First Upgrade)", true,
+        SnoopingCanSnoopPeeksFirst = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (First Upgrade)", false,
                                                      new ConfigDescription($"Whether you see things through walls when near \"peek\" vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanSnoopPeeksSecond = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Second Upgrade)", true,
+        SnoopingCanSnoopPeeksSecond = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Second Upgrade)", false,
                                                       new ConfigDescription($"Whether you see things through walls when near \"peek\" vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
         
         SnoopingCanSnoopSecurityBase = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (Base Level)", false,
                                                 new ConfigDescription($"Whether you see security systems through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanSnoopSecurityFirst = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (First Upgrade)", false,
+        SnoopingCanSnoopSecurityFirst = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (First Upgrade)", true,
                                                     new ConfigDescription($"Whether you see security systems through walls when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
         
         SnoopingCanSnoopSecuritySecond = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (Second Upgrade)", true,
                                                      new ConfigDescription($"Whether you see security systems through walls when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingCanPassTimeBase = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (Base Level)", false,
+                                                   new ConfigDescription($"Whether you can stare at your watch to pass time when near vents at the base level of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingCanPassTimeFirst = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (First Upgrade)", false,
+                                              new ConfigDescription($"Whether you can stare at your watch to pass time when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingCanPassTimeSecond = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (Second Upgrade)", true,
+                                              new ConfigDescription($"Whether you can stare at your watch to pass time when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
+        
+        SnoopingPassTimeWarpDelay = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Pass Time Warp Delay", 10f,
+                                             new ConfigDescription($"When using {NAME_LONG_SNOOPING}, how long you must stare at your watch to pass time near vents."));
+        
+        SnoopingPassTimeNotificationDelay = config.Bind($"6. {NAME_SHORT_SNOOPING}", "Pass Time Notification Delay", 5f,
+                                             new ConfigDescription($"When using {NAME_LONG_SNOOPING}, when to notify you while staring at your watch that you are about to pass time near vents. (Set to negative number for no notification.)"));
         
         // Setup Caches
         MappingEcholocationRange = new ConfigCache<int>(-1,
@@ -184,6 +207,11 @@ public static partial class VentrixConfig
                                                       (level, oldValue, newValue) =>
                                                           $"You can now see cameras, laser sensors, sentry guns, and gas dispensers through walls when near vent entrances.",
                                                       SnoopingCanSnoopSecurityBase, SnoopingCanSnoopSecurityFirst, SnoopingCanSnoopSecuritySecond);
+        
+        SnoopingCanPassTime = new ConfigCache<bool>(false,
+                                                         (level, oldValue, newValue) =>
+                                                             $"When in air ducts near vents, you can now stare at your watch to pass time faster.",
+                                                         SnoopingCanPassTimeBase, SnoopingCanPassTimeFirst, SnoopingCanPassTimeSecond);
     }
 
     public static void ResetRecon()
@@ -222,6 +250,11 @@ public static partial class VentrixConfig
         SnoopingCanSnoopSecurityBase.Value = (bool)SnoopingCanSnoopSecurityBase.DefaultValue;
         SnoopingCanSnoopSecurityFirst.Value = (bool)SnoopingCanSnoopSecurityFirst.DefaultValue;
         SnoopingCanSnoopSecuritySecond.Value = (bool)SnoopingCanSnoopSecuritySecond.DefaultValue;
+        SnoopingCanPassTimeBase.Value = (bool)SnoopingCanPassTimeBase.DefaultValue;
+        SnoopingCanPassTimeFirst.Value = (bool)SnoopingCanPassTimeFirst.DefaultValue;
+        SnoopingCanPassTimeSecond.Value = (bool)SnoopingCanPassTimeSecond.DefaultValue;
+        SnoopingPassTimeWarpDelay.Value = (float)SnoopingPassTimeWarpDelay.DefaultValue;
+        SnoopingPassTimeNotificationDelay.Value = (float)SnoopingPassTimeNotificationDelay.DefaultValue;
     }
 
     private static string GetEcholocationRangeDescription(int level, int oldValue, int newValue)
