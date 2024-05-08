@@ -272,11 +272,10 @@ public static class DiskRegistry
             Icon = "IconOpticalCammo",
         };
 
-        // TODO Make these dynamic.
-        snoopingEffect.Description = "When near vent entrances and exits you mark citizens in that room through walls.";
-        snoopingEffect.Upgrades.Add("Your marks now also appear when near \"peeking\" vents in air ducts.");
-        snoopingEffect.Upgrades.Add("Your marks now also apply to any security devices in that room.");
-        
+        snoopingEffect.Description = GetDiskLevelDescription(1, VentrixConfig.SnoopingCanSnoopCivilians, VentrixConfig.SnoopingCanSnoopSecurity, VentrixConfig.SnoopingCanPassTime, VentrixConfig.SnoopingCanSnoopPeeks);
+        snoopingEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.SnoopingCanSnoopCivilians, VentrixConfig.SnoopingCanSnoopSecurity, VentrixConfig.SnoopingCanPassTime, VentrixConfig.SnoopingCanSnoopPeeks));
+        snoopingEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.SnoopingCanSnoopCivilians, VentrixConfig.SnoopingCanSnoopSecurity, VentrixConfig.SnoopingCanPassTime, VentrixConfig.SnoopingCanSnoopPeeks));
+
         // Finishing Up
         reconDisk.Effects.Add(mappingEffect);
         reconDisk.Effects.Add(snoopingEffect);
