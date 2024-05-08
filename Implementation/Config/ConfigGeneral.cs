@@ -6,24 +6,6 @@ namespace VentrixSyncDisks.Implementation.Config;
 
 public static partial class VentrixConfig
 {
-    public const string NAME_SHORT_RUNNER = "Runner";
-    public const string NAME_LONG_RUNNER = "Airway Runner";
-
-    public const string NAME_SHORT_PARKOUR = "Parkour";
-    public const string NAME_LONG_PARKOUR = "Ductwork Parkour";
-
-    public const string NAME_SHORT_MAPPING = "Mapping";
-    public const string NAME_LONG_MAPPING = "Acoustic Mapping";
-
-    public const string NAME_SHORT_SNOOPING = "Snooping";
-    public const string NAME_LONG_SNOOPING = "Grill Snooping";
-
-    public const string NAME_SHORT_SPECTER = "Specter";
-    public const string NAME_LONG_SPECTER = "Crawlspace Specter";
-    
-    public const string NAME_SHORT_MENACE = "Menace";
-    public const string NAME_LONG_MENACE = "Shaft Menace";
-
     private const string ExpectedVersion = "af2cfc5492bd478c9e7ccda801b1151c";
     
     public static ConfigEntry<bool> Enabled;
@@ -40,10 +22,10 @@ public static partial class VentrixConfig
     public static void Initialize(ConfigFile config)
     {
         Enabled = config.Bind("1. General", "Enabled", true,
-                              new ConfigDescription("Another method of enabling and disabling Babbler."));
+                              new ConfigDescription("Another method of enabling and disabling Ventrix Sync Disks."));
 
         Version = config.Bind("1. General", "Version", string.Empty,
-                              new ConfigDescription("Babbler uses this to reset your configuration between major versions. Don't modify it or it will reset your configuration!"));
+                              new ConfigDescription("Ventrix Sync Disks uses this to reset your configuration between major versions. Don't modify it or it will reset your configuration!"));
 
         MobilityEnabled = config.Bind("1. General", "Vent Mobility Enabled", true,
                                               new ConfigDescription("Whether the \"Vent Mobility\" sync disk is in the game."));
@@ -63,9 +45,15 @@ public static partial class VentrixConfig
         AvailableAtBlackMarkets = config.Bind("1. General", "Available At Black Markets", false,
                                               new ConfigDescription("Whether Ventrix Industries sync disks are sold at black markets."));
         
-        InitializeMobility(config);
-        InitializeRecon(config);
-        InitializeMischief(config);
+        InitializeRunner(config);
+        InitializeParkour(config);
+
+        InitializeMappingDisk(config);
+        InitializeMappingRendering(config);
+        InitializeSnooping(config);
+        
+        InitializeSpecter(config);
+        InitializeMenace(config);
 
         ProcessUpgrades();
         
@@ -94,8 +82,14 @@ public static partial class VentrixConfig
         AvailableAtShadySyncDiskClinics.Value = (bool)AvailableAtShadySyncDiskClinics.DefaultValue;
         AvailableAtBlackMarkets.Value = (bool)AvailableAtBlackMarkets.DefaultValue;
 
-        ResetMobility();
-        ResetRecon();
-        ResetMischief();
+        ResetRunner();
+        ResetParkour();
+        
+        ResetMappingDisk();
+        ResetMappingRendering();
+        ResetSnooping();
+        
+        ResetSpecter();
+        ResetMenace();
     }
 }
