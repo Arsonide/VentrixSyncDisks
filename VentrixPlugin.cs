@@ -34,6 +34,7 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
         ClassInjector.RegisterTypeInIl2Cpp<BasePoolObject>();
         ClassInjector.RegisterTypeInIl2Cpp<DuctMarker>();
         ClassInjector.RegisterTypeInIl2Cpp<EcholocationPulse>();
+        ClassInjector.RegisterTypeInIl2Cpp<SnoopHighlighter>();
         ClassInjector.RegisterTypeInIl2Cpp<Timer>();
         Utilities.Log($"Plugin {MyPluginInfo.PLUGIN_GUID} has added custom types!");
         
@@ -63,6 +64,11 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
             EcholocationPulsePool.Instance.Uninitialize();
         }
         
+        if (SnoopHighlighterPool.Instance != null)
+        {
+            SnoopHighlighterPool.Instance.Uninitialize();
+        }
+        
         if (DuctMarkerPool.Instance != null)
         {
             DuctMarkerPool.Instance.Uninitialize();
@@ -81,6 +87,12 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
         {
             EcholocationPulsePool.Instance = new EcholocationPulsePool();
             EcholocationPulsePool.Instance.Initialize();
+        }
+        
+        if (SnoopHighlighterPool.Instance == null)
+        {
+            SnoopHighlighterPool.Instance = new SnoopHighlighterPool();
+            SnoopHighlighterPool.Instance.Initialize();
         }
         
         if (DuctMarkerPool.Instance == null)

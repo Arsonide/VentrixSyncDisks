@@ -10,18 +10,12 @@ namespace VentrixSyncDisks.Implementation.Snooping;
 
 public static class SnoopManager
 {
-    private static NewRoom SnoopingRoom = null;
+    public static bool IsSnooping;
+    public static NewRoom SnoopingRoom = null;
 
     private static List<AirDuctGroup.AirDuctSection> Neighbors = new List<AirDuctGroup.AirDuctSection>();
     private static List<Vector3Int> NeighborOffsets = new List<Vector3Int>();
     private static List<AirDuctGroup.AirVent> Vents = new List<AirDuctGroup.AirVent>();
-
-    private static MaterialPropertyBlock FullAlphaBlock = new MaterialPropertyBlock();
-
-    private static SnoopRoomSecurity _securityRoom = new SnoopRoomSecurity();
-    private static SnoopRoomActors _actorRoom = new SnoopRoomActors();
-
-    public static bool IsSnooping => SnoopingRoom != null;
     
     public static void Initialize()
     {
@@ -29,8 +23,6 @@ public static class SnoopManager
 
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
         Lib.SaveGame.OnAfterLoad += OnAfterLoad;
-
-        FullAlphaBlock.SetFloat("_AlphaVal", 1f);
         
         SnoopWarp.Initialize();
     }
@@ -49,32 +41,40 @@ public static class SnoopManager
     
     public static void Reset()
     {
+        IsSnooping = false;
         SnoopingRoom = null;
     }
 
     public static void RefreshSnoopingState()
     {
-        _securityRoom.Uninitialize();
-        _actorRoom.Uninitialize();
-        
         int level = DiskRegistry.SnoopingDisk.Level;
         
         if (level <= 0)
         {
+            IsSnooping = false;
             SnoopingRoom = null;
             return;
         }
-        
-        SnoopingRoom = GetPlayerSnoopingRoom(level);
-        
-        if (VentrixConfig.SnoopingCanSnoopCivilians.GetLevel(level))
+
+        NewRoom oldRoom = SnoopingRoom;
+        NewRoom newRoom = GetPlayerSnoopingRoom(level);
+
+        if (RoomsEqual(oldRoom, newRoom))
         {
-            _actorRoom.Initialize(SnoopingRoom);
+            return;
         }
-        
-        if (VentrixConfig.SnoopingCanSnoopSecurity.GetLevel(level))
+
+        SnoopingRoom = newRoom;
+        IsSnooping = SnoopingRoom != null;
+
+        if (oldRoom != null)
         {
-            _securityRoom.Initialize(SnoopingRoom);
+            OnLeaveSnooping(oldRoom, level);
+        }
+
+        if (newRoom != null)
+        {
+            OnEnterSnooping(newRoom, level);
         }
     }
     
@@ -135,61 +135,124 @@ public static class SnoopManager
 
     public static void OnActorRoomChanged(Actor actor)
     {
-        if (!_actorRoom.Initialized || actor.isPlayer || actor.isMachine)
+        if (!IsSnooping || actor.isPlayer || actor.isMachine)
         {
             return;
         }
 
         int snoopID = SnoopingRoom.GetInstanceID();
         
-        if (actor.previousRoom.GetInstanceID() == snoopID)
-        {
-            _actorRoom.RemoveActor(actor);
-        }
-        else if (actor.currentRoom.GetInstanceID() == snoopID)
-        {
-            _actorRoom.AddActor(actor);
-        }
-    }
-
-    public static void OnActorChangedMeshes(Actor actor)
-    {
-        if (!_actorRoom.Initialized || actor.currentRoom.GetInstanceID() != SnoopingRoom.GetInstanceID() || !_actorRoom.TryGetSnoopActor(actor, out SnoopActor snoopActor))
-        {
-            return;
-        }
-
-        snoopActor.SynchronizeObjects();
-    }
-
-    public static void EnforceOutlineLayer(Actor actor)
-    {
-        if (!_actorRoom.Initialized || actor.currentRoom.GetInstanceID() != SnoopingRoom.GetInstanceID())
+        if (actor.currentRoom.GetInstanceID() != snoopID)
         {
             return;
         }
         
-        foreach (MeshRenderer mesh in actor.outline.meshesToOutline)
-        {
-            if (mesh != null)
-            {
-                mesh.gameObject.layer = SnoopActor.OUTLINE_LAYER;
-            }
-        }
-    }
-    
-    public static void EnforceOutlineAlpha(Actor actor)
-    {
-        if (!_actorRoom.Initialized || actor.currentRoom.GetInstanceID() != SnoopingRoom.GetInstanceID())
+        if (!VentrixConfig.SnoopingCanSnoopCivilians.GetLevel(DiskRegistry.SnoopingDisk.Level))
         {
             return;
         }
+        
+        SnoopHighlighter highlight = SnoopHighlighterPool.Instance.CheckoutPoolObject();
+        highlight.Setup(SnoopingRoom, actor);
+    }
 
-        foreach (MeshRenderer mesh in actor.outline.meshesToOutline)
+    private static bool RoomsEqual(NewRoom a, NewRoom b)
+    {
+        bool aNull = a == null;
+        bool bNull = b == null;
+        
+        if (aNull && bNull)
         {
-            if (mesh != null)
+            return false;
+        }
+
+        int aID = aNull ? -1 : a.GetInstanceID();
+        int bID = bNull ? -1 : b.GetInstanceID();
+        
+        return aID == bID;
+    }
+
+    private static void OnEnterSnooping(NewRoom room, int level)
+    {
+        if (VentrixConfig.SnoopingCanSnoopCivilians.GetLevel(level))
+        {
+            SnoopActorsInRoom(room);
+        }
+        
+        if (VentrixConfig.SnoopingCanSnoopSecurity.GetLevel(level))
+        {
+            SnoopSecurityInRoom(room);
+        }
+    }
+
+    private static void OnLeaveSnooping(NewRoom room, int level)
+    {
+        
+    }
+
+    private static void SnoopActorsInRoom(NewRoom room)
+    {
+        foreach (Actor actor in room.currentOccupants)
+        {
+            SnoopHighlighter highlight = SnoopHighlighterPool.Instance.CheckoutPoolObject();
+            highlight.Setup(room, actor);
+        }
+    }
+
+    private static void SnoopSecurityInRoom(NewRoom room)
+    {
+        foreach (Il2CppSystem.Collections.Generic.KeyValuePair<InteractablePreset.SpecialCase, Il2CppSystem.Collections.Generic.List<Interactable>> pair in room.specialCaseInteractables)
+        {
+            switch (pair.Key)
             {
-                mesh.SetPropertyBlock(FullAlphaBlock);
+                case InteractablePreset.SpecialCase.securityCamera:
+                case InteractablePreset.SpecialCase.gasReleaseSystem:
+                case InteractablePreset.SpecialCase.sentryGun:
+                case InteractablePreset.SpecialCase.otherSecuritySystem:
+                    foreach(Interactable interactable in pair.Value)
+                    {
+                        if (interactable == null || interactable.controller == null)
+                        {
+                            continue;
+                        }
+
+                        SnoopHighlighter highlight = null;
+                        
+                        switch (pair.Key)
+                        {
+                            case InteractablePreset.SpecialCase.securityCamera:
+                                highlight = SnoopHighlighterPool.Instance.CheckoutPoolObject();
+                                highlight.Setup(room, interactable.controller.isActor);
+                                break;
+                            case InteractablePreset.SpecialCase.sentryGun:
+                                highlight = SnoopHighlighterPool.Instance.CheckoutPoolObject();
+                                highlight.Setup(room, interactable.controller.securitySystem.rend.gameObject);
+                                break;
+                            case InteractablePreset.SpecialCase.gasReleaseSystem:
+                                highlight = SnoopHighlighterPool.Instance.CheckoutPoolObject();
+                                highlight.Setup(room, interactable.controller.gameObject);
+                                break;
+                            case InteractablePreset.SpecialCase.otherSecuritySystem:
+                                if (!interactable.preset.presetName.ToLowerInvariant().Contains("scout"))
+                                {
+                                    continue;
+                                }
+
+                                GameObject scoutObject = interactable.controller.gameObject;
+                                
+                                // Hopefully they never change this hierarchy. These references aren't stored anywhere easily accessible.
+                                Transform scoutTransform = scoutObject.transform;
+                                Transform laserTransform = scoutTransform?.GetChild(0)?.GetChild(0);
+                                GameObject laserObject = laserTransform?.gameObject;
+
+                                highlight = SnoopHighlighterPool.Instance.CheckoutPoolObject();
+                                highlight.Setup(room, scoutObject, laserObject);
+                                
+                                break;
+                        }
+                    }
+                    
+                    break;
             }
         }
     }
