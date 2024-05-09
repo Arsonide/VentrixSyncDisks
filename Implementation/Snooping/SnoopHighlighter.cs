@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using SOD.Common;
+using SOD.Common.Helpers;
 using UnityEngine;
 using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Config;
+using VentrixSyncDisks.Implementation.Disks;
 using VentrixSyncDisks.Implementation.Pooling;
 
 namespace VentrixSyncDisks.Implementation.Snooping;
@@ -12,9 +16,29 @@ public class SnoopHighlighter : BasePoolObject
     
     private List<GameObject> _highlightObjects = new List<GameObject>();
     private List<int> _highlightLayers = new List<int>();
-    private Actor _actor;
-    private NewRoom _room;
+    
     private bool _isActor;
+    private Actor _actor;
+    private NewRoom _startRoom;
+    
+    private void OnEnable()
+    {
+        Lib.SaveGame.OnBeforeLoad -= OnLoadEvent;
+        Lib.SaveGame.OnBeforeLoad += OnLoadEvent;
+        Lib.SaveGame.OnAfterLoad -= OnLoadEvent;
+        Lib.SaveGame.OnAfterLoad += OnLoadEvent;
+    }
+
+    private void OnDisable()
+    {
+        Lib.SaveGame.OnBeforeLoad -= OnLoadEvent;
+        Lib.SaveGame.OnAfterLoad -= OnLoadEvent;
+    }
+
+    private void OnLoadEvent(object sender, SaveGameArgs args)
+    {
+        SnoopHighlighterPool.Instance.CheckinPoolObject(this);
+    }
     
     public override void OnCheckout()
     {
@@ -33,22 +57,21 @@ public class SnoopHighlighter : BasePoolObject
     {
         _highlightObjects.Clear();
         _highlightLayers.Clear();
-        _room = null;
-        _actor = null;
+        
         _isActor = false;
+        _actor = null;
+        _startRoom = null;
     }
 
     public void Setup(NewRoom room, Actor actor)
     {
-        _room = room;
-        _actor = actor;
         _isActor = true;
+        _actor = actor;
+        _startRoom = room;
     }
     
     public void Setup(NewRoom room, GameObject staticObject)
     {
-        _room = room;
-        
         if (staticObject != null)
         {
             _highlightObjects.Add(staticObject);
@@ -57,12 +80,11 @@ public class SnoopHighlighter : BasePoolObject
         }
 
         _isActor = false;
+        _startRoom = room;
     }
     
     public void Setup(NewRoom room, GameObject staticObject, GameObject auxObject)
     {
-        _room = room;
-        
         if (staticObject != null)
         {
             _highlightObjects.Add(staticObject);
@@ -78,6 +100,7 @@ public class SnoopHighlighter : BasePoolObject
         }
 
         _isActor = false;
+        _startRoom = room;
     }
 
     private void Cleanup()
@@ -110,21 +133,14 @@ public class SnoopHighlighter : BasePoolObject
 
     private void LateUpdate()
     {
-        if (_isActor)
-        {
-            UpdateActor();
-        }
-        else
-        {
-            UpdateStatic();
-        }
-    }
-
-    private void UpdateActor()
-    {
-        if (_actor == null || _actor.outline == null || SnoopManager.SnoopingRoom == null || _actor.currentRoom == null || SnoopManager.SnoopingRoom.GetInstanceID() != _actor.currentRoom.GetInstanceID())
+        if (ShouldReturnToPool())
         {
             SnoopHighlighterPool.Instance.CheckinPoolObject(this);
+            return;
+        }
+
+        if (!_isActor)
+        {
             return;
         }
 
@@ -154,12 +170,36 @@ public class SnoopHighlighter : BasePoolObject
             renderer.SetPropertyBlock(SnoopHighlighterPool.FullAlphaBlock);
         }
     }
-    
-    private void UpdateStatic()
+
+    private bool ShouldReturnToPool()
     {
-        if (SnoopManager.SnoopingRoom == null || SnoopManager.SnoopingRoom.GetInstanceID() != _room.GetInstanceID())
+        if (!SnoopManager.IsSnooping || SnoopManager.SnoopingRoom == null)
         {
-            SnoopHighlighterPool.Instance.CheckinPoolObject(this);
+            return true;
         }
+        
+        int level = DiskRegistry.SnoopingDisk.Level;
+
+        if (level <= 0 || SnoopManager.SnoopingRoom == null)
+        {
+            return true;
+        }
+
+        if (_isActor)
+        {
+            if (!VentrixConfig.SnoopingCanSnoopCivilians.GetLevel(level))
+            {
+                return true;
+            }
+            
+            return _actor == null || _actor.outline == null ||  _actor.currentRoom == null || !Utilities.RoomsEqual(SnoopManager.SnoopingRoom, _actor.currentRoom);
+        }
+
+        if (!VentrixConfig.SnoopingCanSnoopSecurity.GetLevel(level))
+        {
+            return true;
+        }
+
+        return !Utilities.RoomsEqual(SnoopManager.SnoopingRoom, _startRoom);
     }
 }

@@ -69,4 +69,20 @@ public static class Utilities
 
         return new Color(r / 255f, g / 255f, b / 255f, a / 255f);
     }
+    
+    public static bool RoomsEqual(NewRoom a, NewRoom b)
+    {
+        bool aNull = a == null;
+        bool bNull = b == null;
+        
+        if (aNull && bNull)
+        {
+            return false;
+        }
+
+        int aID = aNull ? -1 : a.GetInstanceID();
+        int bID = bNull ? -1 : b.GetInstanceID();
+        
+        return aID == bID;
+    }
 }

@@ -11,7 +11,7 @@ namespace VentrixSyncDisks.Implementation.Snooping;
 public static class SnoopManager
 {
     public static bool IsSnooping;
-    public static NewRoom SnoopingRoom = null;
+    public static NewRoom SnoopingRoom;
 
     private static List<AirDuctGroup.AirDuctSection> Neighbors = new List<AirDuctGroup.AirDuctSection>();
     private static List<Vector3Int> NeighborOffsets = new List<Vector3Int>();
@@ -59,18 +59,13 @@ public static class SnoopManager
         NewRoom oldRoom = SnoopingRoom;
         NewRoom newRoom = GetPlayerSnoopingRoom(level);
 
-        if (RoomsEqual(oldRoom, newRoom))
+        if (Utilities.RoomsEqual(oldRoom, newRoom))
         {
             return;
         }
 
         SnoopingRoom = newRoom;
         IsSnooping = SnoopingRoom != null;
-
-        if (oldRoom != null)
-        {
-            OnLeaveSnooping(oldRoom, level);
-        }
 
         if (newRoom != null)
         {
@@ -139,10 +134,8 @@ public static class SnoopManager
         {
             return;
         }
-
-        int snoopID = SnoopingRoom.GetInstanceID();
         
-        if (actor.currentRoom.GetInstanceID() != snoopID)
+        if (!Utilities.RoomsEqual(actor.currentRoom, SnoopingRoom))
         {
             return;
         }
@@ -156,22 +149,6 @@ public static class SnoopManager
         highlight.Setup(SnoopingRoom, actor);
     }
 
-    private static bool RoomsEqual(NewRoom a, NewRoom b)
-    {
-        bool aNull = a == null;
-        bool bNull = b == null;
-        
-        if (aNull && bNull)
-        {
-            return false;
-        }
-
-        int aID = aNull ? -1 : a.GetInstanceID();
-        int bID = bNull ? -1 : b.GetInstanceID();
-        
-        return aID == bID;
-    }
-
     private static void OnEnterSnooping(NewRoom room, int level)
     {
         if (VentrixConfig.SnoopingCanSnoopCivilians.GetLevel(level))
@@ -183,11 +160,6 @@ public static class SnoopManager
         {
             SnoopSecurityInRoom(room);
         }
-    }
-
-    private static void OnLeaveSnooping(NewRoom room, int level)
-    {
-        
     }
 
     private static void SnoopActorsInRoom(NewRoom room)
