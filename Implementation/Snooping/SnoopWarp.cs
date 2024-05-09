@@ -81,6 +81,7 @@ public static class SnoopWarp
                 break;
             case SnoopWarpState.TimeWarping:
                 PushOutPlayerAlarm();
+                DisableLoitering();
                 break;
         }
     }
@@ -123,5 +124,13 @@ public static class SnoopWarp
     private static void ResetPlayerAlarm()
     {
         Player.Instance.alarm = SessionData.Instance.gameTime - 1f;
+    }
+    
+    private static void DisableLoitering()
+    {
+        if (Player.Instance?.currentRoom?.gameLocation != null)
+        {
+            Player.Instance.currentRoom.gameLocation.ResetLoiteringTimer();
+        }
     }
 }
