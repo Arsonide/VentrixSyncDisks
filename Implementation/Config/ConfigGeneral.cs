@@ -50,22 +50,22 @@ public static partial class VentrixConfig
                               new ConfigDescription("Ventrix Sync Disks uses this to reset your configuration between major versions. Don't modify it or it will reset your configuration!"));
 
         _mobilityEnabled = config.Bind(section, "Vent Mobility Enabled", true,
-                                       new ConfigDescription("Whether the \"Vent Mobility\" sync disk is in the game."));
+                                       new ConfigDescription("Whether or not the \"Vent Mobility\" sync disk is available in the game."));
         
         _reconEnabled = config.Bind(section, "Vent Recon Enabled", true,
-                                    new ConfigDescription("Whether the \"Vent Recon\" sync disk is in the game."));
+                                    new ConfigDescription("Whether or not the \"Vent Recon\" sync disk is available in the game."));
         
         _mischiefEnabled = config.Bind(section, "Vent Mischief Enabled", true,
-                                       new ConfigDescription("Whether the \"Vent Mischief\" sync disk is in the game."));
+                                       new ConfigDescription("Whether or not the \"Vent Mischief\" sync disk is available in the game."));
 
         _availableAtLegitSyncDiskClinics = config.Bind(section, "Available At Legit Sync Disk Clinics", false,
-                                                       new ConfigDescription("Whether Ventrix Industries sync disks are sold at legitimate sync disk clinics."));
+                                                       new ConfigDescription("The sync disks appear in the world, but with this, they will also be purchasable at legitimate sync clinics."));
         
         _availableAtShadySyncDiskClinics = config.Bind(section, "Available At Shady Sync Disk Clinics", true,
-                                                       new ConfigDescription("Whether Ventrix Industries sync disks are sold at black market sync disk clinics."));
+                                                       new ConfigDescription("The sync disks appear in the world, but with this, they will also be purchasable at black market sync clinics."));
         
-        _availableAtBlackMarkets = config.Bind(section, "Available At Black Markets", false,
-                                               new ConfigDescription("Whether Ventrix Industries sync disks are sold at black markets."));
+        _availableAtBlackMarkets = config.Bind(section, "Available At Black Market Traders", false,
+                                               new ConfigDescription("The sync disks appear in the world, but with this, they will also be purchasable at black market traders."));
         
         InitializeScooting(config);
         InitializeParkour(config);

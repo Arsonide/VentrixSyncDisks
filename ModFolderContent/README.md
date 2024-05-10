@@ -10,6 +10,28 @@ Welcome to Ventrix Industries, the undisputed leader in air duct and vent system
 
 At Ventrix Industries, we pride ourselves on being more than just a company; we're a cornerstone of innovation and control in a world teeming with opportunities and, admittedly, a few too many competitors. Founded by the visionary yet enigmatic Dr. Arsonide in the roaring 50s, we swiftly rose to dominate the ventilation industry, ensuring every breath our citizens take is a breath of Ventrix-filtered air. Our vents and ducts form the unseen veins of our city, pulsing with secrets and potential. With presidential aspirations, and the robust backing of Kensington Indigo, we're not just powering the airflow - we're setting the stage for a Ventrix-led future where efficiency, security, and governance are as reliable as our world-class ventilation systems.
 
+## Your Toolbox
+
+Next up, let's break down your toolbox. We'll explore the specifics of each sync disk, each equipped with two unique but related upgrade paths to boost your efficiency in the field.
+
+### Vent Mobility
+
+* **Chute Scoot**: Slip through the vents as smoothly as a TV dinner after midnight. This sync disk makes you move faster through vents by secreting a sleek, friction reducing coating. ***Reminder***: Vent racing is strictly prohibited by Ventrix company policy.
+
+* **Duct Parkour**: Sometimes the job calls for a grand entrance, or quick exit! Get in and out of vents with the flair of a circus acrobat and the grace of a ballet dancer. You will be able to enter and exit vents further away, faster than ever before, and have them automatically close behind you.
+
+### Vent Recon
+
+* **Acoustic Mapping**: Initially designed to sense sound waves emitted by tapping a small specialized metal rod on the vent, technicians have found that throwing money away also works! Throwing a coin against air ducts sends out an echolocation pulse (like a bat). This is visualized for you to see air ducts and vents through walls.
+
+* **Grate Snooping**: When working near vent exits, this disk not only highlights customers and potentially hazardous security devices through walls, but also allows you to fast-forward time! Perfect for those extended repair sessions. While Ventrix officially discourages extended shifts, we understand sometimes the job knows no clock. Bring snacks.
+
+### Vent Mischief
+
+* **Shaft Specter**: Avoid disturbing customers with footsteps or chattering teeth during long maintenance sessions - this disk dramatically lowers the chance of you making noises when as you move through vents, and makes you immune to the cold while performing vent maintenance.
+
+* **Tunnel Terror**: This disk was designed for breaking out of vents in toxic gas emergencies. It lets you loudly burst forth from air vents in a way that will probably startle onlooking customers in private areas. It also makes you immune to toxic gas in vents. Use with caution - this disk may unleash your inner vent goblin.
+
 ## Installation
 
 ### r2modman or Thunderstore Mod Manager installation
@@ -25,26 +47,6 @@ Follow these steps:
 3. Launch the game, load the main menu, and then exit the game.
 4. Download the latest version of the mod from the Releases page on either Thunderstore or Github. Unzip the files and place them in corresponding directories within "Shadows of Doubt\BepInEx...". Also, download the [SOD.Common](https://thunderstore.io/c/shadows-of-doubt/p/Venomaus/SODCommon/) dependency.
 5. Start the game.
-
-## Toolbox
-
-Next up, let's break down your toolbox. We'll explore the specifics of each sync disk, each equipped with two unique but related upgrade paths to boost your efficiency in the field.
-
-### Vent Mobility
-
-* **Chute Scoot**: Slip through the vents as smoothly as a TV dinner after midnight. This sync disk makes you move faster through vents by secreting a sleek, friction reducing coating. ***Reminder***: Vent racing is strictly prohibited by Ventrix company policy.
-
-* **Duct Parkour**: Sometimes the job calls for a grand entrance, or quick exit! Get in and out of vents with the flair of a circus acrobat and the grace of a ballet dancer. You will be able to enter and exit vents further away, faster than ever before, and have them automatically close behind you.
-
-### Vent Recon
-
-* **Acoustic Mapping**: Initially designed to sense sound waves emitted by tapping a small specialized metal rod on the vent, technicians have found that throwing money away also works! Throwing a coin against air ducts sends out an echolocation pulse like a bat! This is visualized for you to see air ducts and vents through walls.
-* **Grate Snooping**: When working near vent exits, this disk not only highlights customers and potentially hazardous devices through walls, but also allows you to fast-forward time! Perfect for those extended repair sessions. While Ventrix officially discourages extended shifts, we understand sometimes the job knows no clock.
-
-### Vent Mischief
-
-* **Shaft Specter**: Avoid disturbing customers with footsteps or chattering teeth during long maintenance sessions - this disk dramatically lowers the chance of you making noises when as you move through vents, and makes you immune to the cold while performing vent maintenance.
-* **Tunnel Terror**: This disk was designed for breaking out of vents in toxic gas emergencies. It lets you loudly burst forth from air vents in a way that will probably startle onlooking customers in private areas. It also makes you immune to toxic gas in vents. Use with caution - this disk may unleash your inner vent goblin.
 
 ## Configuration
 
@@ -66,78 +68,78 @@ You will see many options that say (All Upgrades) below, this is just to keep th
 
 - **Enabled**: Another method of enabling and disabling Ventrix Sync Disks.
 - **Version**: Ventrix Sync Disks uses this to reset your configuration between major versions. Don't modify it or it will reset your configuration!
-- **Vent Mobility Enabled**: Whether or not the Vent Mobility sync disk is enabled in-game.
-- **Vent Recon Enabled**: Whether or not the Vent Recon sync disk is enabled in-game.
-- **Vent Mischief Enabled**: Whether or not the Vent Mischief sync disk is enabled in-game.
-- **Available At Black Markets**: The sync disks appear in the world, but with this, they will also be purchasable at black markets and black market sync clinics.
-- **Available At Sync Disk Clinics**: The sync disks appear in the world, but with this, they will also be purchasable at legitimate sync clinics.
+- **Vent Mobility Enabled**: Whether or not the "Vent Mobility" sync disk is available in the game.
+- **Vent Recon Enabled**: Whether or not the "Vent Recon" sync disk is available in the game.
+- **Vent Mischief Enabled**: Whether or not the "Vent Mischief" sync disk is available in the game.
+- **Available At Legit Sync Disk Clinics**: The sync disks appear in the world, but with this, they will also be purchasable at legitimate sync clinics.
+- **Available At Shady Sync Disk Clinics**: The sync disks appear in the world, but with this, they will also be purchasable at black market sync clinics.
+- **Available At Black Market Traders**: The sync disks appear in the world, but with this, they will also be purchasable at black market traders.
 
 ---
 
 ### 2. Scooting
 
-- **Vent Speed Multiplier (Base Level)**: A multiplier applied to your speed in vents with this sync disk installed and no upgrades.
-- **Vent Speed Multiplier (First Upgrade)**: A multiplier applied to your speed in vents with this sync disk installed and one upgrade.
-- **Vent Speed Multiplier (Second Upgrade)**: A multiplier applied to your speed in vents with this sync disk installed and two upgrades.
+- **Vent Speed Multiplier (All Upgrades)**: The multiplier on your movement speed when in vents with each upgrade.
 
 ---
 
 ### 3. Parkour
 
-- **Added Interaction Range (Base Level)**: This many meters are added to your vent interaction range with this sync disk installed and no upgrades.
-- **Added Interaction Range (First Upgrade)**: This many meters are added to your vent interaction range with this sync disk installed and one upgrade.
-- **Added Interaction Range (Second Upgrade)**: This many meters are added to your vent interaction range with this sync disk installed and two upgrades.
-- **Transition Speed Multiplier (Base Level)**: A multiplier applied to your vent transition (enter / exit) time with this sync disk installed and no upgrades. Smaller is shorter.
-- **Transition Speed Multiplier (First Upgrade)**: A multiplier applied to your vent transition (enter / exit) time with this sync disk installed and one upgrade. Smaller is shorter.
-- **Transition Speed Multiplier (Second Upgrade)**: A multiplier applied to your vent transition (enter / exit) time with this sync disk installed and two upgrades. Smaller is shorter.
-- **Auto Close Vents (Base Level)**: Whether vents automatically close after you enter / exit them with this sync disk installed and no upgrades.
-- **Auto Close Vents (First Upgrade)**: Whether vents automatically close after you enter / exit them with this sync disk installed and one upgrade.
-- **Auto Close Vents (Second Upgrade)**: Whether vents automatically close after you enter / exit them with this sync disk installed and two upgrades.
+- **Added Interaction Range (All Upgrades)**: How much further you can reach vents with each upgrade.
+- **Transition Speed Multiplier (All Upgrades)**: A multiplier on the speed you enter and exit vents with each upgrade.
+- **Auto Close Vents (All Upgrades)**: Whether vents close behind you automatically when you enter or exit them with each upgrade.
 
 ---
 
 ### 4. Mapping
 
-- **Echolocation Range (Base Level)**: How many ducts your echolocation pulse travels with this sync disk installed and no upgrades.
-- **Echolocation Range (First Upgrade)**: How many ducts your echolocation pulse travels with this sync disk installed and one upgrade.
-- **Echolocation Range (Second Upgrade)**: How many ducts your echolocation pulse travels with this sync disk installed and two upgrades.
-- **Echolocation Speed (Base Level)**: How many seconds it takes your echolocation pulse to travel one duct with this sync disk installed and no upgrades.
-- **Echolocation Speed (First Upgrade)**: How many seconds it takes your echolocation pulse to travel one duct with this sync disk installed and one upgrade.
-- **Echolocation Speed (Second Upgrade)**: How many seconds it takes your echolocation pulse to travel one duct with this sync disk installed and two upgrades.
-- **Echolocation Duration (Base Level)**: How many seconds each "dot" of your echolocation pulse lasts before it expires with this sync disk installed and no upgrades.
-- **Echolocation Duration (First Upgrade)**: How many seconds each "dot" of your echolocation pulse lasts before it expires with this sync disk installed and one upgrade.
-- **Echolocation Duration (Second Upgrade)**: How many seconds each "dot" of your echolocation pulse lasts before it expires with this sync disk installed and two upgrades.
-- **Coin Duration Multiplier (Base Level)**: A multiplier applied to your echolocation "dot" expiration time while you are holding your coin with this sync disk installed and no upgrades. Smaller makes them last longer.
-- **Coin Duration Multiplier (First Upgrade)**: A multiplier applied to your echolocation "dot" expiration time while you are holding your coin with this sync disk installed and one upgrade. Smaller makes them last longer.
-- **Coin Duration Multiplier (Second Upgrade)**: A multiplier applied to your echolocation "dot" expiration time while you are holding your coin with this sync disk installed and two upgrades. Smaller makes them last longer.
+- **Echolocation Range (All Upgrades)**: How far your echolocation pulse travels down vents with each upgrade.
+- **Echolocation Speed (All Upgrades)**: How quickly your echolocation pulse travels down vents with each upgrade.
+- **Echolocation Duration (All Upgrades)**: How long it takes for your echolocation pulse to expire with each upgrade.
+- **Coin Duration Multiplier (All Upgrades)**: A multiplier on echolocation duration while holding a coin with each upgrade.
 
 ---
 
 ### 5. Snooping
 
-- **Highlight Color Multiplier**: A hex code for what color the Snooping outline will be multiplied by.
+- **Can Snoop Civilians (All Upgrades)**: Whether you see civilians through walls when near vents with each upgrade.
+- **Can Snoop Peek Vents (All Upgrades)**: Whether you see things through walls when near "peek" vents with each upgrade.
+- **Can Snoop Security Systems (All Upgrades)**: Whether you see security systems through walls when near vents with each upgrade.
+- **Can Pass Time Near Vents (All Upgrades)**: Whether you can stare at your watch to pass time when near vents with each upgrade.
+- **Pass Time Warp Delay**: When you can pass time near vents, how long you must stare at your watch to pass time.
+- **Pass Time Notification Delay**: When about to pass time near vents, when to notify you while staring at your watch that you are about to pass time. (Set to negative number for no notification.)
 
 ---
 
 ### 6. Specter
 
-- **Footstep Chance (Base Level)**: The chance you play footstep sounds when traveling in vents, when you normally would, with this sync disk installed and no upgrades.
-- **Footstep Chance (First Upgrade)**: The chance you play footstep sounds when traveling in vents, when you normally would, with this sync disk installed and one upgrade.
-- **Footstep Chance (Second Upgrade)**: The chance you play footstep sounds when traveling in vents, when you normally would, with this sync disk installed and two upgrades.
-- **Cold Immunity (Base Level)**: Whether you are immune to cold in vents with this sync disk installed and no upgrades.
-- **Cold Immunity (First Upgrade)**: Whether you are immune to cold in vents with this sync disk installed and one upgrade.
-- **Cold Immunity (Second Upgrade)**: Whether you are immune to cold in vents with this sync disk installed and two upgrades.
+- **Footstep Chance (All Upgrades)**: The chance you play footstep sounds when travelling in vents, when you normally would, with each upgrade.
+- **Cold Immunity (All Upgrades)**: Whether you are granted cold immunity in vents with each upgrade.
 
 ---
 
 ### 7. Terror
 
-- **Citizen Nerve (Base Level)**: The amount a citizen's nerve stat is damaged when you pop out of vents in private areas with this sync disk installed and no upgrades.
-- **Citizen Nerve (First Upgrade)**: The amount a citizen's nerve stat is damaged when you pop out of vents in private areas with this sync disk installed and one upgrade.
-- **Citizen Nerve (Second Upgrade)**: The amount a citizen's nerve stat is damaged when you pop out of vents in private areas with this sync disk installed and two upgrades.
-- **Toxic Gas Immunity (Base Level)**: Whether you are immune to toxic gas in vents with this sync disk installed and no upgrades.
-- **Toxic Gas Immunity (First Upgrade)**: Whether you are immune to toxic gas in vents with this sync disk installed and one upgrade.
-- **Toxic Gas Immunity (Second Upgrade)**: Whether you are immune to toxic gas in vents with this sync disk installed and two upgrades.
+- **Freakout Duration (All Upgrades)**: The duration a citizen freaks out when you pop out of vents in private areas with each upgrade.
+- **Toxic Immunity (All Upgrades)**: Whether you are granted toxic gas immunity in vents with each upgrade.
+- **Scareable Citizens (Residence)**: How many citizens can be scared when you pop out of vents in private residence areas at one time.
+- **Scareable Citizens (Workplace)**: How many citizens can be scared when you pop out of vents in workplace areas at one time.
+
+---
+
+### 8. Rendering
+
+- **Central Node Size**: When rendering vent networks, how large the visualized nodes are in the center of each duct.
+- **Use Directional Nodes**: When rendering vent networks, whether to render additional indicators pointing at connected air ducts.
+- **Special Directional Node Colors**: When rendering vent networks, whether additional connections on vents are colored as normal ducts or as vents.
+- **Directional Node Length**: When rendering vent networks, how long the indicators pointing down connected ducts are.
+- **Directional Node Diameter**: When rendering vent networks, how wide the indicators pointing down connected ducts are.
+- **Directional Node Offset**: When rendering vent networks, how far apart the indicators pointing down connected ducts are.
+- **Node Color Normal**: When rendering vent networks, what color normal air ducts are visualized as.
+- **Node Color Vent**: When rendering vent networks, what color air vents (entrances / exits) are visualized as.
+- **Node Color Peek**: When rendering vent networks, what color \"peek\" ducts are visualized as, that you can see through but not exit.
+- **Node Spawn Time**: When rendering vent networks, when nodes spawn in, how long it takes for them to reach full size.
+- **Node Despawn Time**: When rendering vent networks, when nodes expire, how long it takes for them to shrink and disappear.
 
 ## License
 All code in this project is distributed under the MIT License. Feel free to use, modify, and distribute as needed. That license can be found in **License.txt**. Attribution and licenses for all third party libraries and assets used in the creation of Ventrix Sync Disks can be found in **Attribution.txt**.

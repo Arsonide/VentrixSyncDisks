@@ -54,10 +54,10 @@ public static partial class VentrixConfig
                                                  new ConfigDescription($"{GAS_IMMUNITY_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_TERROR}."));
         
         _terrorScareableCitizensResidence = config.Bind(section, "Scareable Citizens (Residence)", 999,
-                                                 new ConfigDescription($"When scaring citizens with {NAME_SHORT_TERROR}, how many can be scared when you pop out of vents in private residence rooms."));
+                                                 new ConfigDescription($"How many citizens can be scared when you pop out of vents in private residence areas at one time."));
         
         _terrorScareableCitizensWorkplace = config.Bind(section, "Scareable Citizens (Workplace)", 2,
-                                                        new ConfigDescription($"When scaring citizens with {NAME_SHORT_TERROR}, how many can be scared when you pop out of vents in private workplace rooms."));
+                                                        new ConfigDescription($"How many citizens can be scared when you pop out of vents in workplace areas at one time."));
     }
     
     private static void CacheTerror()

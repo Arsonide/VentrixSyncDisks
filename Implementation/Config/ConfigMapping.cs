@@ -71,7 +71,7 @@ public static partial class VentrixConfig
                                                         new ConfigDescription($"{ECHOLOCATION_DURATION_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_MAPPING}."));
         
         const string COIN_DURATION_MULTIPLIER_TITLE = "Coin Duration Multiplier";
-        const string COIN_DURATION_MULTIPLIER_DESCRIPTION = "Multiplier on echolocation duration while holding a coin";
+        const string COIN_DURATION_MULTIPLIER_DESCRIPTION = "A multiplier on echolocation duration while holding a coin";
         
         _mappingCoinMultiplierBase = config.Bind(section, $"{COIN_DURATION_MULTIPLIER_TITLE} {LEVEL_1_TITLE}", 1f,
                                                 new ConfigDescription($"{COIN_DURATION_MULTIPLIER_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_MAPPING}."));

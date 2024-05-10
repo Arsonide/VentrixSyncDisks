@@ -20,7 +20,7 @@ public static partial class VentrixConfig
         string section = $"{ID_SCOOTING}. {NAME_SHORT_SCOOTING}";
 
         const string VENT_SPEED_MULTIPLIER_TITLE = "Vent Speed Multiplier";
-        const string VENT_SPEED_MULTIPLIER_DESCRIPTION = "The multiplier on your movement speed in vents";
+        const string VENT_SPEED_MULTIPLIER_DESCRIPTION = "The multiplier on your movement speed when in vents";
         
         _scootingSpeedMultiplierBase = config.Bind(section, $"{VENT_SPEED_MULTIPLIER_TITLE} {LEVEL_1_TITLE}", 1.5f,
                                                    new ConfigDescription($"{VENT_SPEED_MULTIPLIER_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_SCOOTING}."));

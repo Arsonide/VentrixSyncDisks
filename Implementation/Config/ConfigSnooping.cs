@@ -88,10 +88,10 @@ public static partial class VentrixConfig
                                               new ConfigDescription($"{CAN_PASS_TIME_NEAR_VENTS_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
         
         _snoopingPassTimeWarpDelay = config.Bind(section, "Pass Time Warp Delay", 10f,
-                                             new ConfigDescription($"When using {NAME_LONG_SNOOPING}, how long you must stare at your watch to pass time near vents."));
+                                             new ConfigDescription($"When you can pass time near vents, how long you must stare at your watch to pass time."));
         
         _snoopingPassTimeNotificationDelay = config.Bind(section, "Pass Time Notification Delay", 5f,
-                                             new ConfigDescription($"When using {NAME_LONG_SNOOPING}, when to notify you while staring at your watch that you are about to pass time near vents. (Set to negative number for no notification.)"));
+                                             new ConfigDescription($"When about to pass time near vents, when to notify you while staring at your watch that you are about to pass time. (Set to negative number for no notification.)"));
     }
     
     private static void CacheSnooping()
