@@ -53,8 +53,10 @@ public static partial class VentrixConfig
         
         ParkourAutoCloseSecond = config.Bind($"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}", "Auto Close Vents (Second Upgrade)", true,
                                              new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_PARKOUR} auto closes vents you enter and exit."));
-
-        // Setup Caches
+    }
+    
+    private static void SetupParkourCaches()
+    {
         ParkourInteractRange = new ConfigCache<float>(0f,
                                                       (level, oldValue, newValue) => $"You can now reach vents {newValue}m further away.",
                                                       ParkourInteractRangeBase, ParkourInteractRangeFirst, ParkourInteractRangeSecond);
@@ -64,11 +66,11 @@ public static partial class VentrixConfig
                                                         ParkourTransitionSpeedBase, ParkourTransitionSpeedFirst, ParkourTransitionSpeedSecond);
         
         ParkourAutoClose = new ConfigCache<bool>(false,
-                                                        (level, oldValue, newValue) => $"Vents {(newValue ? "now" : "no longer")} automatically close when entering or exiting them.",
-                                                        ParkourAutoCloseBase, ParkourAutoCloseFirst, ParkourAutoCloseSecond);
+                                                 (level, oldValue, newValue) => $"Vents {(newValue ? "now" : "no longer")} automatically close when entering or exiting them.",
+                                                 ParkourAutoCloseBase, ParkourAutoCloseFirst, ParkourAutoCloseSecond);
     }
 
-    public static void ResetParkour()
+    private static void ResetParkour()
     {
         ParkourInteractRangeBase.Value = (float)ParkourInteractRangeBase.DefaultValue;
         ParkourInteractRangeFirst.Value = (float)ParkourInteractRangeFirst.DefaultValue;

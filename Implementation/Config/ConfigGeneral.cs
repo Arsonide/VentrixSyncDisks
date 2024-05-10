@@ -47,15 +47,20 @@ public static partial class VentrixConfig
         
         InitializeScooting(config);
         InitializeParkour(config);
-
-        InitializeMappingDisk(config);
-        InitializeMappingRendering(config);
+        InitializeMapping(config);
         InitializeSnooping(config);
-        
         InitializeSpecter(config);
         InitializeTerror(config);
-
+        InitializeRendering(config);
+        
         ProcessUpgrades();
+        
+        SetupScootingCaches();
+        SetupParkourCaches();
+        SetupMappingCaches();
+        SetupSnoopingCaches();
+        SetupSpecterCaches();
+        SetupTerrorCaches();
         
         Utilities.Log("VentrixConfig has initialized!", LogLevel.Debug);
     }
@@ -85,8 +90,8 @@ public static partial class VentrixConfig
         ResetScooting();
         ResetParkour();
         
-        ResetMappingDisk();
-        ResetMappingRendering();
+        ResetMapping();
+        ResetRendering();
         ResetSnooping();
         
         ResetSpecter();

@@ -29,7 +29,7 @@ public static partial class VentrixConfig
     private static ConfigEntry<float> MappingCoinMultiplierSecond;
     public static ConfigCache<float> MappingCoinMultiplier;
 
-    private static void InitializeMappingDisk(ConfigFile config)
+    private static void InitializeMapping(ConfigFile config)
     {
         MappingEcholocationRangeBase = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Base Level)", 10,
                                                    new ConfigDescription($"How far your echolocation pulse travels down vents with the base level of {NAME_SHORT_MAPPING}."));
@@ -66,8 +66,10 @@ public static partial class VentrixConfig
         
         MappingCoinMultiplierSecond = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Coin Duration Multiplier (Second Upgrade)", 0.1f,
                                                   new ConfigDescription($"Multiplier on echolocation duration while holding a coin with the second upgrade of {NAME_SHORT_MAPPING}."));
-
-        // Setup Caches
+    }
+    
+    private static void SetupMappingCaches()
+    {
         MappingEcholocationRange = new ConfigCache<int>(-1,
                                                         GetEcholocationRangeDescription,
                                                         MappingEcholocationRangeBase, MappingEcholocationRangeFirst, MappingEcholocationRangeSecond);
@@ -83,10 +85,10 @@ public static partial class VentrixConfig
         MappingCoinMultiplier = new ConfigCache<float>(1f,
                                                        (level, oldValue, newValue) =>
                                                            $"You remember your \"echolocation\" pulse {Utilities.MultiplierForDescription(newValue, "longer", "shorter", out string description)}% {description} while holding a coin.",
-                                                 MappingCoinMultiplierBase, MappingCoinMultiplierFirst, MappingCoinMultiplierSecond);
+                                                       MappingCoinMultiplierBase, MappingCoinMultiplierFirst, MappingCoinMultiplierSecond);
     }
 
-    public static void ResetMappingDisk()
+    private static void ResetMapping()
     {
         MappingEcholocationRangeBase.Value = (int)MappingEcholocationRangeBase.DefaultValue;
         MappingEcholocationRangeFirst.Value = (int)MappingEcholocationRangeFirst.DefaultValue;

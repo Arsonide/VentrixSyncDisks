@@ -38,8 +38,10 @@ public static partial class VentrixConfig
         
         TerrorToxicImmunitySecond = config.Bind($"{ID_TERROR}. {NAME_SHORT_TERROR}", "Toxic Immunity (Second Upgrade)", true,
                                               new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_TERROR} grants you toxic gas immunity in vents."));
-        
-        // Setup Caches
+    }
+    
+    private static void SetupTerrorCaches()
+    {
         TerrorFreakoutDuration = new ConfigCache<int>(1,
                                                       (level, oldValue, newValue) => $"Popping out of vents in private rooms makes citizens awake in that room freak out for {newValue} seconds.",
                                                       TerrorFreakoutDurationBase, TerrorFreakoutDurationFirst, TerrorFreakoutDurationSecond);
@@ -49,7 +51,7 @@ public static partial class VentrixConfig
                                                     TerrorToxicImmunityBase, TerrorToxicImmunityFirst, TerrorToxicImmunitySecond);
     }
 
-    public static void ResetTerror()
+    private static void ResetTerror()
     {
         TerrorFreakoutDurationBase.Value = (int)TerrorFreakoutDurationBase.DefaultValue;
         TerrorFreakoutDurationFirst.Value = (int)TerrorFreakoutDurationFirst.DefaultValue;

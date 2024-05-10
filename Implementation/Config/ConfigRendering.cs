@@ -21,7 +21,7 @@ public static partial class VentrixConfig
     public static ConfigEntry<float> MappingNodeSpawnTime;
     public static ConfigEntry<float> MappingNodeDespawnTime;
 
-    private static void InitializeMappingRendering(ConfigFile config)
+    private static void InitializeRendering(ConfigFile config)
     {
         MappingCentralNodeSize = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Central Node Size", 0.1f,
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how large the visualized nodes are in the center of each duct."));
@@ -57,7 +57,7 @@ public static partial class VentrixConfig
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, when nodes expire, how long it takes for them to shrink and disappear."));
     }
 
-    public static void ResetMappingRendering()
+    private static void ResetRendering()
     {
         MappingCentralNodeSize.Value = (float)MappingCentralNodeSize.DefaultValue;
         MappingUseDirectionalNodes.Value = (bool)MappingUseDirectionalNodes.DefaultValue;

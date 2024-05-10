@@ -25,14 +25,16 @@ public static partial class VentrixConfig
         
         ScootingSpeedMultiplierSecond = config.Bind($"{ID_SCOOTING}. {NAME_SHORT_SCOOTING}", "Vent Speed Multiplier (Second Upgrade)", 2.5f,
                                                   new ConfigDescription($"The multiplier on your movement speed in vents with the second upgrade of {NAME_SHORT_SCOOTING}."));
-
-        // Setup Caches
-        ScootingSpeedMultiplier = new ConfigCache<float>(1f,
-                                                       (level, oldValue, newValue) => $"You now move {Utilities.MultiplierForDescription(newValue, "slower", "faster", out string description)}% {description} through vents.",
-                                                       ScootingSpeedMultiplierBase, ScootingSpeedMultiplierFirst, ScootingSpeedMultiplierSecond);
     }
 
-    public static void ResetScooting()
+    private static void SetupScootingCaches()
+    {
+        ScootingSpeedMultiplier = new ConfigCache<float>(1f,
+                                                         (level, oldValue, newValue) => $"You now move {Utilities.MultiplierForDescription(newValue, "slower", "faster", out string description)}% {description} through vents.",
+                                                         ScootingSpeedMultiplierBase, ScootingSpeedMultiplierFirst, ScootingSpeedMultiplierSecond);
+    }
+
+    private static void ResetScooting()
     {
         ScootingSpeedMultiplierBase.Value = (float)ScootingSpeedMultiplierBase.DefaultValue;
         ScootingSpeedMultiplierFirst.Value = (float)ScootingSpeedMultiplierFirst.DefaultValue;

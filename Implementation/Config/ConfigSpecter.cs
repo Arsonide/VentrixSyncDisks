@@ -41,18 +41,20 @@ public static partial class VentrixConfig
         
         SpecterColdImmunitySecond = config.Bind($"{ID_SPECTER}. {NAME_SHORT_SPECTER}", "Cold Immunity (Second Upgrade)", true,
                                           new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_SPECTER} grants you cold immunity in vents."));
-
-        // Setup Caches
+    }
+    
+    private static void SetupSpecterCaches()
+    {
         SpecterFootstepChance = new ConfigCache<float>(1f,
                                                        (level, oldValue, newValue) => $"You make {Utilities.MultiplierForDescription(newValue, "less", "more", out string description)}% {description} noise moving through vents.",
                                                        SpecterFootstepChanceBase, SpecterFootstepChanceFirst, SpecterFootstepChanceSecond);
         
         SpecterColdImmunity = new ConfigCache<bool>(false,
-                                                     (level, oldValue, newValue) => $"You {(newValue ? "no longer" : "now")} get cold when in vents.",
-                                                     SpecterColdImmunityBase, SpecterColdImmunityFirst, SpecterColdImmunitySecond);
+                                                    (level, oldValue, newValue) => $"You {(newValue ? "no longer" : "now")} get cold when in vents.",
+                                                    SpecterColdImmunityBase, SpecterColdImmunityFirst, SpecterColdImmunitySecond);
     }
 
-    public static void ResetSpecter()
+    private static void ResetSpecter()
     {
         SpecterFootstepChanceBase.Value = (float)SpecterFootstepChanceBase.DefaultValue;
         SpecterFootstepChanceFirst.Value = (float)SpecterFootstepChanceFirst.DefaultValue;

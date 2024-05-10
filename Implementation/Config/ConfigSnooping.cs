@@ -75,30 +75,32 @@ public static partial class VentrixConfig
         
         SnoopingPassTimeNotificationDelay = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Pass Time Notification Delay", 5f,
                                              new ConfigDescription($"When using {NAME_LONG_SNOOPING}, when to notify you while staring at your watch that you are about to pass time near vents. (Set to negative number for no notification.)"));
-        
-        // Setup Caches
+    }
+    
+    private static void SetupSnoopingCaches()
+    {
         SnoopingCanSnoopCivilians = new ConfigCache<bool>(false,
                                                           (level, oldValue, newValue) =>
                                                               $"You can now see unaware civilians through walls when near vent entrances.",
                                                           SnoopingCanSnoopCiviliansBase, SnoopingCanSnoopCiviliansFirst, SnoopingCanSnoopCiviliansSecond);
         
         SnoopingCanSnoopPeeks = new ConfigCache<bool>(false,
-                                                          (level, oldValue, newValue) =>
-                                                              $"Snooping now also applies when near \"peeking\" vents in the middle of air ducts.",
-                                                          SnoopingCanSnoopPeeksBase, SnoopingCanSnoopPeeksFirst, SnoopingCanSnoopPeeksSecond);
+                                                      (level, oldValue, newValue) =>
+                                                          $"Snooping now also applies when near \"peeking\" vents in the middle of air ducts.",
+                                                      SnoopingCanSnoopPeeksBase, SnoopingCanSnoopPeeksFirst, SnoopingCanSnoopPeeksSecond);
         
         SnoopingCanSnoopSecurity = new ConfigCache<bool>(false,
-                                                      (level, oldValue, newValue) =>
-                                                          $"You can now see cameras, laser sensors, sentry guns, and gas dispensers through walls when near vent entrances.",
-                                                      SnoopingCanSnoopSecurityBase, SnoopingCanSnoopSecurityFirst, SnoopingCanSnoopSecuritySecond);
+                                                         (level, oldValue, newValue) =>
+                                                             $"You can now see cameras, laser sensors, sentry guns, and gas dispensers through walls when near vent entrances.",
+                                                         SnoopingCanSnoopSecurityBase, SnoopingCanSnoopSecurityFirst, SnoopingCanSnoopSecuritySecond);
         
         SnoopingCanPassTime = new ConfigCache<bool>(false,
-                                                         (level, oldValue, newValue) =>
-                                                             $"When in air ducts near vents, you can now stare at your watch to pass time faster.",
-                                                         SnoopingCanPassTimeBase, SnoopingCanPassTimeFirst, SnoopingCanPassTimeSecond);
+                                                    (level, oldValue, newValue) =>
+                                                        $"When in air ducts near vents, you can now stare at your watch to pass time faster.",
+                                                    SnoopingCanPassTimeBase, SnoopingCanPassTimeFirst, SnoopingCanPassTimeSecond);
     }
 
-    public static void ResetSnooping()
+    private static void ResetSnooping()
     {
         SnoopingCanSnoopCiviliansBase.Value = (bool)SnoopingCanSnoopCiviliansBase.DefaultValue;
         SnoopingCanSnoopCiviliansFirst.Value = (bool)SnoopingCanSnoopCiviliansFirst.DefaultValue;
