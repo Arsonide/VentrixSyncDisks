@@ -44,7 +44,7 @@ public class DuctExplorer
         for (int i = 0; i < nodesInCurrentLevel; i++)
         {
             AirDuctGroup.AirDuctSection currentDuct = _queue.Dequeue();
-            VentHelpers.GetVentInformation(currentDuct, ref _neighbors, ref _neighborOffsets, ref _vents);
+            Utilities.GetVentInformation(currentDuct, ref _neighbors, ref _neighborOffsets, ref _vents);
             DuctExplorerConnections connections = new DuctExplorerConnections();
 
             for (int j = 0; j < _neighbors.Count; ++j)

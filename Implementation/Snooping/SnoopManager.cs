@@ -102,7 +102,7 @@ public static class SnoopManager
             return section.node?.room;
         }
         
-        VentHelpers.GetVentInformation(section, ref Neighbors, ref NeighborOffsets, ref Vents);
+        Utilities.GetVentInformation(section, ref Neighbors, ref NeighborOffsets, ref Vents);
 
         if (Vents.Count <= 0)
         {

@@ -1,5 +1,4 @@
 ﻿using BepInEx.Configuration;
-using VentrixSyncDisks.Implementation.Common;
 
 namespace VentrixSyncDisks.Implementation.Config;
 

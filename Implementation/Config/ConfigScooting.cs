@@ -1,5 +1,4 @@
 ﻿using BepInEx.Configuration;
-using UnityEngine;
 using VentrixSyncDisks.Implementation.Common;
 
 namespace VentrixSyncDisks.Implementation.Config;

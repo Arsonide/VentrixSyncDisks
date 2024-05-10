@@ -83,7 +83,7 @@ public class MappingHooks
             }
 
             LastCoinImpactPosition = coinPosition;
-            AirDuctGroup.AirDuctSection startDuct = VentHelpers.PositionToAirDuct(coinPosition);
+            AirDuctGroup.AirDuctSection startDuct = Utilities.PositionToAirDuct(coinPosition);
 
             if (startDuct == null)
             {

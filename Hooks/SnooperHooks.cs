@@ -1,6 +1,4 @@
-﻿using System;
-using HarmonyLib;
-using UnityEngine;
+﻿using HarmonyLib;
 using VentrixSyncDisks.Implementation.Snooping;
 
 namespace VentrixSyncDisks.Hooks;

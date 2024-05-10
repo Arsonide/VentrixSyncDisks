@@ -67,7 +67,7 @@ public class EcholocationPulse : BasePoolObject
 
             foreach (DuctExplorerTick result in results)
             {
-                Vector3 position = VentHelpers.AirDuctToPosition(result.Duct);
+                Vector3 position = Utilities.AirDuctToPosition(result.Duct);
                 SpawnNodes(result, position, pulseDuration);
             }
 
