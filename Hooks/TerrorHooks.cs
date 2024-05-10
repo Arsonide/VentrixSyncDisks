@@ -5,7 +5,7 @@ using VentrixSyncDisks.Implementation.Config;
 
 namespace VentrixSyncDisks.Hooks;
 
-public class MenaceHooks
+public class TerrorHooks
 {
     [HarmonyPatch(typeof(Player), "ExitVent")]
     public class PlayerExitVentHook
@@ -13,7 +13,7 @@ public class MenaceHooks
         [HarmonyPostfix]
         private static void Postfix(Player __instance, bool restoreTransform = false)
         {
-            int level = DiskRegistry.MenaceDisk.Level;
+            int level = DiskRegistry.TerrorDisk.Level;
             
             if (level <= 0)
             {
@@ -22,7 +22,7 @@ public class MenaceHooks
 
             NewRoom room = Player.Instance.currentRoom;
             
-            // Menace doesn't scare people in public places, only where they feel safe.
+            // Terror doesn't scare people in public places, only where they feel safe.
             if (room == null || room.IsAccessAllowed(Player.Instance))
             {
                 return;
@@ -46,7 +46,7 @@ public class MenaceHooks
                 // When I put on the mask, I fear no vent goblin.
                 if (!human.isEnforcer || !human.isOnDuty)
                 {
-                    FreakoutManager.StartFreakout(human, VentrixConfig.MenaceFreakoutDuration.GetLevel(level));
+                    FreakoutManager.StartFreakout(human, VentrixConfig.TerrorFreakoutDuration.GetLevel(level));
                 }
             }
         }
@@ -58,7 +58,7 @@ public class MenaceHooks
         [HarmonyPrefix]
         private static bool Prefix(StatusController __instance, StatusController.StatusInstance inst)
         {
-            if (!Player.Instance.inAirVent || !VentrixConfig.MenaceToxicImmunity.GetLevel(DiskRegistry.MenaceDisk.Level))
+            if (!Player.Instance.inAirVent || !VentrixConfig.TerrorToxicImmunity.GetLevel(DiskRegistry.TerrorDisk.Level))
             {
                 return true;
             }

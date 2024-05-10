@@ -6,7 +6,7 @@ namespace VentrixSyncDisks.Implementation.Config;
 
 public static partial class VentrixConfig
 {
-    public const string NAME_LONG_PARKOUR = "Ductwork Parkour";
+    public const string NAME_LONG_PARKOUR = "Duct Parkour";
     private const string NAME_SHORT_PARKOUR = "Parkour";
     private const int ID_PARKOUR = 3;
 

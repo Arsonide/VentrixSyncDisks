@@ -11,12 +11,12 @@ namespace VentrixSyncDisks.Implementation.Disks;
 public static class DiskRegistry
 {
     // These could be a dictionary but I feel that would slow down access for no reason.
-    public static DiskCache RunnerDisk;
+    public static DiskCache ScootingDisk;
     public static DiskCache ParkourDisk;
     public static DiskCache MappingDisk;
     public static DiskCache SnoopingDisk;
     public static DiskCache SpecterDisk;
-    public static DiskCache MenaceDisk;
+    public static DiskCache TerrorDisk;
 
     private static List<DiskCache> AllDisks = new List<DiskCache>();
     private static List<string> CacheDescriptions = new List<string>();
@@ -40,7 +40,7 @@ public static class DiskRegistry
         if (VentrixConfig.MobilityEnabled.Value)
         {
             RegisterMobility();
-            AllDisks.Add(RunnerDisk);
+            AllDisks.Add(ScootingDisk);
             AllDisks.Add(ParkourDisk);
         }
 
@@ -55,7 +55,7 @@ public static class DiskRegistry
         {
             RegisterMischief();
             AllDisks.Add(SpecterDisk);
-            AllDisks.Add(MenaceDisk);
+            AllDisks.Add(TerrorDisk);
         }
     }
 
@@ -211,15 +211,15 @@ public static class DiskRegistry
         };
 
         // Effect A Properties
-        DiskEffectDefinition runnerEffect = new DiskEffectDefinition
+        DiskEffectDefinition scootingEffect = new DiskEffectDefinition
         {
-            Name = VentrixConfig.NAME_LONG_RUNNER,
+            Name = VentrixConfig.NAME_LONG_SCOOTING,
             Icon = "IconRun",
         };
 
-        runnerEffect.Description = GetDiskLevelDescription(1, VentrixConfig.RunnerSpeedMultiplier);
-        runnerEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.RunnerSpeedMultiplier));
-        runnerEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.RunnerSpeedMultiplier));
+        scootingEffect.Description = GetDiskLevelDescription(1, VentrixConfig.ScootingSpeedMultiplier);
+        scootingEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.ScootingSpeedMultiplier));
+        scootingEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.ScootingSpeedMultiplier));
         
         // Effect B Properties
         DiskEffectDefinition parkourEffect = new DiskEffectDefinition
@@ -233,12 +233,12 @@ public static class DiskRegistry
         parkourEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.ParkourTransitionSpeed, VentrixConfig.ParkourInteractRange, VentrixConfig.ParkourAutoClose));
         
         // Finishing Up
-        mobilityDisk.Effects.Add(runnerEffect);
+        mobilityDisk.Effects.Add(scootingEffect);
         mobilityDisk.Effects.Add(parkourEffect);
 
         mobilityDisk.Register();
 
-        RunnerDisk = new DiskCache(runnerEffect.EffectId, runnerEffect.OptionIds);
+        ScootingDisk = new DiskCache(scootingEffect.EffectId, scootingEffect.OptionIds);
         ParkourDisk = new DiskCache(parkourEffect.EffectId, parkourEffect.OptionIds);
     }
     
@@ -310,24 +310,24 @@ public static class DiskRegistry
         specterEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.SpecterFootstepChance, VentrixConfig.SpecterColdImmunity));
         
         // Effect B Properties
-        DiskEffectDefinition menaceEffect = new DiskEffectDefinition
+        DiskEffectDefinition terrorEffect = new DiskEffectDefinition
         {
-            Name = VentrixConfig.NAME_LONG_MENACE,
+            Name = VentrixConfig.NAME_LONG_TERROR,
             Icon = "IconPassedOut",
         };
 
-        menaceEffect.Description = GetDiskLevelDescription(1, VentrixConfig.MenaceFreakoutDuration, VentrixConfig.MenaceToxicImmunity);
-        menaceEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.MenaceFreakoutDuration, VentrixConfig.MenaceToxicImmunity));
-        menaceEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.MenaceFreakoutDuration, VentrixConfig.MenaceToxicImmunity));
+        terrorEffect.Description = GetDiskLevelDescription(1, VentrixConfig.TerrorFreakoutDuration, VentrixConfig.TerrorToxicImmunity);
+        terrorEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.TerrorFreakoutDuration, VentrixConfig.TerrorToxicImmunity));
+        terrorEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.TerrorFreakoutDuration, VentrixConfig.TerrorToxicImmunity));
         
         // Finishing Up
         mischiefDisk.Effects.Add(specterEffect);
-        mischiefDisk.Effects.Add(menaceEffect);
+        mischiefDisk.Effects.Add(terrorEffect);
 
         mischiefDisk.Register();
 
         SpecterDisk = new DiskCache(specterEffect.EffectId, specterEffect.OptionIds);
-        MenaceDisk = new DiskCache(menaceEffect.EffectId, menaceEffect.OptionIds);
+        TerrorDisk = new DiskCache(terrorEffect.EffectId, terrorEffect.OptionIds);
     }
 
     #endregion

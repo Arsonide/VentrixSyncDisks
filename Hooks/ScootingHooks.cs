@@ -7,7 +7,7 @@ using VentrixSyncDisks.Implementation.Disks;
 
 namespace VentrixSyncDisks.Hooks;
 
-public class RunnerHooks
+public class ScootingHooks
 {
     [HarmonyPatch(typeof(CharacterController), "Move")]
     public class CharacterControllerMoveHook
@@ -20,7 +20,7 @@ public class RunnerHooks
                 return true;
             }
 
-            int level = DiskRegistry.RunnerDisk.Level;
+            int level = DiskRegistry.ScootingDisk.Level;
 
             if (level <= 0)
             {
@@ -34,7 +34,7 @@ public class RunnerHooks
         return true;
 #endif
 
-            motion *= VentrixConfig.RunnerSpeedMultiplier.GetLevel(level);
+            motion *= VentrixConfig.ScootingSpeedMultiplier.GetLevel(level);
             return true;
 
 #pragma warning restore 0162

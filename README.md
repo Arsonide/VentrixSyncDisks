@@ -74,7 +74,7 @@ You will see many options that say (All Upgrades) below, this is just to keep th
 
 ---
 
-### 2. Runner
+### 2. Scooting
 
 - **Vent Speed Multiplier (Base Level)**: A multiplier applied to your speed in vents with this sync disk installed and no upgrades.
 - **Vent Speed Multiplier (First Upgrade)**: A multiplier applied to your speed in vents with this sync disk installed and one upgrade.
@@ -130,7 +130,7 @@ You will see many options that say (All Upgrades) below, this is just to keep th
 
 ---
 
-### 7. Menace
+### 7. Terror
 
 - **Citizen Nerve (Base Level)**: The amount a citizen's nerve stat is damaged when you pop out of vents in private areas with this sync disk installed and no upgrades.
 - **Citizen Nerve (First Upgrade)**: The amount a citizen's nerve stat is damaged when you pop out of vents in private areas with this sync disk installed and one upgrade.

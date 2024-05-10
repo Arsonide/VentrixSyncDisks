@@ -45,7 +45,7 @@ public static partial class VentrixConfig
         AvailableAtBlackMarkets = config.Bind("1. General", "Available At Black Markets", false,
                                               new ConfigDescription("Whether Ventrix Industries sync disks are sold at black markets."));
         
-        InitializeRunner(config);
+        InitializeScooting(config);
         InitializeParkour(config);
 
         InitializeMappingDisk(config);
@@ -53,7 +53,7 @@ public static partial class VentrixConfig
         InitializeSnooping(config);
         
         InitializeSpecter(config);
-        InitializeMenace(config);
+        InitializeTerror(config);
 
         ProcessUpgrades();
         
@@ -82,7 +82,7 @@ public static partial class VentrixConfig
         AvailableAtShadySyncDiskClinics.Value = (bool)AvailableAtShadySyncDiskClinics.DefaultValue;
         AvailableAtBlackMarkets.Value = (bool)AvailableAtBlackMarkets.DefaultValue;
 
-        ResetRunner();
+        ResetScooting();
         ResetParkour();
         
         ResetMappingDisk();
@@ -90,6 +90,6 @@ public static partial class VentrixConfig
         ResetSnooping();
         
         ResetSpecter();
-        ResetMenace();
+        ResetTerror();
     }
 }

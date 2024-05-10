@@ -5,7 +5,7 @@ namespace VentrixSyncDisks.Implementation.Config;
 
 public static partial class VentrixConfig
 {
-    public const string NAME_LONG_SPECTER = "Crawlspace Specter";
+    public const string NAME_LONG_SPECTER = "Shaft Specter";
     private const string NAME_SHORT_SPECTER = "Specter";
     private const int ID_SPECTER = 7;
 

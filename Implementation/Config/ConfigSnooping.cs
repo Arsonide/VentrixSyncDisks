@@ -5,7 +5,7 @@ namespace VentrixSyncDisks.Implementation.Config;
 
 public static partial class VentrixConfig
 {
-    public const string NAME_LONG_SNOOPING = "Grill Snooping";
+    public const string NAME_LONG_SNOOPING = "Grate Snooping";
     private const string NAME_SHORT_SNOOPING = "Snooping";
     private const int ID_SNOOPING = 6;
 
