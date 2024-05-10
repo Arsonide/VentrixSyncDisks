@@ -139,7 +139,7 @@ public static class FreakoutManager
     private static string GetSavePath(SaveGameArgs args)
     {
         string saveCode = Lib.SaveGame.GetUniqueString(args.FilePath);
-        string fileName = $"ModJsonData_{saveCode}_VentrixFreakouts.json";
+        string fileName = $"ModJsonData_{saveCode}_VentrixFreakouts.jsonc";
         return Lib.SaveGame.GetSavestoreDirectoryPath(Assembly.GetExecutingAssembly(), fileName);
     }
     
