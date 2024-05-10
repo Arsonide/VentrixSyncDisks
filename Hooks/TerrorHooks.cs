@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using HarmonyLib;
 using VentrixSyncDisks.Implementation.Disks;
 using VentrixSyncDisks.Implementation.Freakouts;
 using VentrixSyncDisks.Implementation.Config;
@@ -7,6 +8,8 @@ namespace VentrixSyncDisks.Hooks;
 
 public class TerrorHooks
 {
+    private static List<Human> _terrorTargets = new List<Human>();
+    
     [HarmonyPatch(typeof(Player), "ExitVent")]
     public class PlayerExitVentHook
     {
@@ -23,13 +26,24 @@ public class TerrorHooks
             NewRoom room = Player.Instance.currentRoom;
             
             // Terror doesn't scare people in public places, only where they feel safe.
-            if (room == null || room.IsAccessAllowed(Player.Instance))
+            int scareable = GetScareablePeopleInRoom(room);
+            
+            if (scareable <= 0)
             {
                 return;
             }
             
+            _terrorTargets.Clear();
+            int targetCount = 0;
+            
+            // Apparently freaking out can cause them to immediately disappear from their current room, so we will create a list of targets first, before freaking them out.
             foreach (Actor actor in room.currentOccupants)
             {
+                if (targetCount >= scareable)
+                {
+                    break;
+                }
+                
                 if (actor.isPlayer || actor.isMachine)
                 {
                     continue;
@@ -46,8 +60,14 @@ public class TerrorHooks
                 // When I put on the mask, I fear no vent goblin.
                 if (!human.isEnforcer || !human.isOnDuty)
                 {
-                    FreakoutManager.StartFreakout(human, VentrixConfig.TerrorFreakoutDuration.GetLevel(level));
+                    _terrorTargets.Add(human);
+                    targetCount++;
                 }
+            }
+
+            foreach (Human human in _terrorTargets)
+            {
+                FreakoutManager.StartFreakout(human, VentrixConfig.TerrorFreakoutDuration.GetLevel(level));
             }
         }
     }
@@ -72,5 +92,27 @@ public class TerrorHooks
             return false;
 
         }
+    }
+
+    private static int GetScareablePeopleInRoom(NewRoom room)
+    {
+        if (room == null)
+        {
+            return 0;
+        }
+        
+        NewGameLocation location = room.gameLocation;
+        
+        if (location == null)
+        {
+            return 0;
+        }
+
+        if (room.IsAccessAllowed(Player.Instance) || room.gameLocation.isLobby || room.gameLocation.isOutside)
+        {
+            return 0;
+        }
+        
+        return location.access == AddressPreset.AccessType.residents ? VentrixConfig.TerrorScareableCitizensResidence.Value : VentrixConfig.TerrorScareableCitizensWorkplace.Value;
     }
 }

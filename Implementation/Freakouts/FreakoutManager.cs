@@ -62,7 +62,7 @@ public static class FreakoutManager
     
     public static void StartFreakout(Human human, int seconds)
     {
-        // Only scare people once per day.
+        // Only scare people once per hour.
         if (human == null || human.ai == null || Freakouts.Hourly.Contains(human.humanID))
         {
             return;
@@ -82,6 +82,8 @@ public static class FreakoutManager
 
     private static void ForceSetNerve(Human human, float nerve)
     {
+        human.ai.SetPersuit(val: false);
+        human.ai.ResetInvestigate();
         human.ai.CancelCombat();
         human.SetNerve(Mathf.Clamp(nerve, 0f, human.maxNerve));
         human.ai.AITick(true, true);
