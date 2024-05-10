@@ -19,14 +19,17 @@ public static partial class VentrixConfig
     {
         string section = $"{ID_SCOOTING}. {NAME_SHORT_SCOOTING}";
 
-        _scootingSpeedMultiplierBase = config.Bind(section, "Vent Speed Multiplier (Base Level)", 1.5f,
-                                                   new ConfigDescription($"The multiplier on your movement speed in vents with the base level of {NAME_SHORT_SCOOTING}."));
+        const string VENT_SPEED_MULTIPLIER_TITLE = "Vent Speed Multiplier";
+        const string VENT_SPEED_MULTIPLIER_DESCRIPTION = "The multiplier on your movement speed in vents";
         
-        _scootingSpeedMultiplierFirst = config.Bind(section, "Vent Speed Multiplier (First Upgrade)", 2f,
-                                                    new ConfigDescription($"The multiplier on your movement speed in vents with the first upgrade of {NAME_SHORT_SCOOTING}."));
+        _scootingSpeedMultiplierBase = config.Bind(section, $"{VENT_SPEED_MULTIPLIER_TITLE} {LEVEL_1_TITLE}", 1.5f,
+                                                   new ConfigDescription($"{VENT_SPEED_MULTIPLIER_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_SCOOTING}."));
         
-        _scootingSpeedMultiplierSecond = config.Bind(section, "Vent Speed Multiplier (Second Upgrade)", 2.5f,
-                                                     new ConfigDescription($"The multiplier on your movement speed in vents with the second upgrade of {NAME_SHORT_SCOOTING}."));
+        _scootingSpeedMultiplierFirst = config.Bind(section, $"{VENT_SPEED_MULTIPLIER_TITLE} {LEVEL_2_TITLE}", 2f,
+                                                    new ConfigDescription($"{VENT_SPEED_MULTIPLIER_DESCRIPTION} {LEVEL_2_DESCRIPTION} {NAME_SHORT_SCOOTING}."));
+        
+        _scootingSpeedMultiplierSecond = config.Bind(section, $"{VENT_SPEED_MULTIPLIER_TITLE} {LEVEL_3_TITLE}", 2.5f,
+                                                     new ConfigDescription($"{VENT_SPEED_MULTIPLIER_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_SCOOTING}."));
     }
 
     private static void CacheScooting()

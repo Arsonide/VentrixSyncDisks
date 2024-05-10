@@ -23,27 +23,33 @@ public static partial class VentrixConfig
     private static void InitializeSpecter(ConfigFile config)
     {
         string section = $"{ID_SPECTER}. {NAME_SHORT_SPECTER}";
-
-        _specterFootstepChanceBase = config.Bind(section, "Footstep Chance (Base Level)", 0.68f,
-                                                new ConfigDescription($"The chance you play footstep sounds when travelling in vents, when you normally would, with the base level of {NAME_SHORT_SPECTER}.",
+        
+        const string FOOTSTEP_CHANCE_TITLE = "Footstep Chance";
+        const string FOOTSTEP_CHANCE_DESCRIPTION = "The chance you play footstep sounds when travelling in vents, when you normally would,";
+        
+        _specterFootstepChanceBase = config.Bind(section, $"{FOOTSTEP_CHANCE_TITLE} {LEVEL_1_TITLE}", 0.68f,
+                                                new ConfigDescription($"{FOOTSTEP_CHANCE_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_SPECTER}.",
                                                                       new AcceptableValueRange<float>(0f, 1f)));
 
-        _specterFootstepChanceFirst = config.Bind(section, "Footstep Chance (First Upgrade)", 0.36f,
-                                                 new ConfigDescription($"The chance you play footstep sounds when travelling in vents, when you normally would, with the first upgrade of {NAME_SHORT_SPECTER}.",
+        _specterFootstepChanceFirst = config.Bind(section, $"{FOOTSTEP_CHANCE_TITLE} {LEVEL_2_TITLE}", 0.36f,
+                                                 new ConfigDescription($"{FOOTSTEP_CHANCE_DESCRIPTION} {LEVEL_2_DESCRIPTION} {NAME_SHORT_SPECTER}.",
                                                                        new AcceptableValueRange<float>(0f, 1f)));
 
-        _specterFootstepChanceSecond = config.Bind(section, "Footstep Chance (Second Upgrade)", 0.04f,
-                                                  new ConfigDescription($"The chance you play footstep sounds when travelling in vents, when you normally would, with the second upgrade of {NAME_SHORT_SPECTER}.",
+        _specterFootstepChanceSecond = config.Bind(section, $"{FOOTSTEP_CHANCE_TITLE} {LEVEL_3_TITLE}", 0.04f,
+                                                  new ConfigDescription($"{FOOTSTEP_CHANCE_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_SPECTER}.",
                                                                         new AcceptableValueRange<float>(0f, 1f)));
 
-        _specterColdImmunityBase = config.Bind(section, "Cold Immunity (Base Level)", false,
-                                          new ConfigDescription($"Whether the base level of {NAME_SHORT_SPECTER} grants you cold immunity in vents."));
+        const string COLD_IMMUNITY_TITLE = "Cold Immunity";
+        const string COLD_IMMUNITY_DESCRIPTION = "Whether you are granted cold immunity in vents";
         
-        _specterColdImmunityFirst = config.Bind(section, "Cold Immunity (First Upgrade)", true,
-                                          new ConfigDescription($"Whether the first upgrade of {NAME_SHORT_SPECTER} grants you cold immunity in vents."));
+        _specterColdImmunityBase = config.Bind(section, $"{COLD_IMMUNITY_TITLE} {LEVEL_1_TITLE}", false,
+                                          new ConfigDescription($"{COLD_IMMUNITY_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_SPECTER}."));
         
-        _specterColdImmunitySecond = config.Bind(section, "Cold Immunity (Second Upgrade)", true,
-                                          new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_SPECTER} grants you cold immunity in vents."));
+        _specterColdImmunityFirst = config.Bind(section, $"{COLD_IMMUNITY_TITLE} {LEVEL_2_TITLE}", true,
+                                                new ConfigDescription($"{COLD_IMMUNITY_DESCRIPTION} {LEVEL_2_DESCRIPTION} {NAME_SHORT_SPECTER}."));
+        
+        _specterColdImmunitySecond = config.Bind(section, $"{COLD_IMMUNITY_TITLE} {LEVEL_3_TITLE}", true,
+                                                 new ConfigDescription($"{COLD_IMMUNITY_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_SPECTER}."));
     }
     
     private static void CacheSpecter()

@@ -39,41 +39,53 @@ public static partial class VentrixConfig
     {
         string section = $"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}";
 
-        _snoopingCanSnoopCiviliansBase = config.Bind(section, "Can Snoop Civilians (Base Level)", true,
-                                                    new ConfigDescription($"Whether you see civilians through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
+        const string CAN_SNOOP_CIVILIANS_TITLE = "Can Snoop Civilians";
+        const string CAN_SNOOP_CIVILIANS_DESCRIPTION = "Whether you see civilians through walls when near vents";
         
-        _snoopingCanSnoopCiviliansFirst = config.Bind(section, "Can Snoop Civilians (First Upgrade)", true,
-                                                     new ConfigDescription($"Whether you see civilians through walls when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
+        _snoopingCanSnoopCiviliansBase = config.Bind(section, $"{CAN_SNOOP_CIVILIANS_TITLE} {LEVEL_1_TITLE}", true,
+                                                    new ConfigDescription($"{CAN_SNOOP_CIVILIANS_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopCiviliansSecond = config.Bind(section, "Can Snoop Civilians (Second Upgrade)", true,
-                                                      new ConfigDescription($"Whether you see civilians through walls when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
+        _snoopingCanSnoopCiviliansFirst = config.Bind(section, $"{CAN_SNOOP_CIVILIANS_TITLE} {LEVEL_2_TITLE}", true,
+                                                     new ConfigDescription($"{CAN_SNOOP_CIVILIANS_DESCRIPTION} {LEVEL_2_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
+        
+        _snoopingCanSnoopCiviliansSecond = config.Bind(section, $"{CAN_SNOOP_CIVILIANS_TITLE} {LEVEL_3_TITLE}", true,
+                                                      new ConfigDescription($"{CAN_SNOOP_CIVILIANS_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
+        
+        const string CAN_SNOOP_PEEKS_TITLE = "Can Snoop Peek Vents";
+        const string CAN_SNOOP_PEEKS_DESCRIPTION = "Whether you see things through walls when near \"peek\" vents";
 
-        _snoopingCanSnoopPeeksBase = config.Bind(section, "Can Snoop Peek Vents (Base Level)", false,
-                                                    new ConfigDescription($"Whether you see things through walls when near \"peek\" vents at the base level of {NAME_SHORT_SNOOPING}."));
+        _snoopingCanSnoopPeeksBase = config.Bind(section, $"{CAN_SNOOP_PEEKS_TITLE} {LEVEL_1_TITLE}", false,
+                                                    new ConfigDescription($"{CAN_SNOOP_PEEKS_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopPeeksFirst = config.Bind(section, "Can Snoop Peek Vents (First Upgrade)", false,
-                                                     new ConfigDescription($"Whether you see things through walls when near \"peek\" vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
+        _snoopingCanSnoopPeeksFirst = config.Bind(section, $"{CAN_SNOOP_PEEKS_TITLE} {LEVEL_2_TITLE}", false,
+                                                     new ConfigDescription($"{CAN_SNOOP_PEEKS_DESCRIPTION} {LEVEL_2_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopPeeksSecond = config.Bind(section, "Can Snoop Peek Vents (Second Upgrade)", false,
-                                                      new ConfigDescription($"Whether you see things through walls when near \"peek\" vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
+        _snoopingCanSnoopPeeksSecond = config.Bind(section, $"{CAN_SNOOP_PEEKS_TITLE} {LEVEL_3_TITLE}", false,
+                                                      new ConfigDescription($"{CAN_SNOOP_PEEKS_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopSecurityBase = config.Bind(section, "Can Snoop Security Systems (Base Level)", false,
-                                                new ConfigDescription($"Whether you see security systems through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
+        const string CAN_SNOOP_SECURITY_TITLE = "Can Snoop Security Systems";
+        const string CAN_SNOOP_SECURITY_DESCRIPTION = "Whether you see security systems through walls when near vents";
         
-        _snoopingCanSnoopSecurityFirst = config.Bind(section, "Can Snoop Security Systems (First Upgrade)", true,
-                                                    new ConfigDescription($"Whether you see security systems through walls when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
+        _snoopingCanSnoopSecurityBase = config.Bind(section, $"{CAN_SNOOP_SECURITY_TITLE} {LEVEL_1_TITLE}", false,
+                                                new ConfigDescription($"{CAN_SNOOP_SECURITY_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopSecuritySecond = config.Bind(section, "Can Snoop Security Systems (Second Upgrade)", true,
-                                                     new ConfigDescription($"Whether you see security systems through walls when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
+        _snoopingCanSnoopSecurityFirst = config.Bind(section, $"{CAN_SNOOP_SECURITY_TITLE} {LEVEL_2_TITLE}", true,
+                                                    new ConfigDescription($"{CAN_SNOOP_SECURITY_DESCRIPTION} {LEVEL_2_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanPassTimeBase = config.Bind(section, "Can Pass Time Near Vents (Base Level)", false,
-                                                   new ConfigDescription($"Whether you can stare at your watch to pass time when near vents at the base level of {NAME_SHORT_SNOOPING}."));
+        _snoopingCanSnoopSecuritySecond = config.Bind(section, $"{CAN_SNOOP_SECURITY_TITLE} {LEVEL_3_TITLE}", true,
+                                                     new ConfigDescription($"{CAN_SNOOP_SECURITY_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanPassTimeFirst = config.Bind(section, "Can Pass Time Near Vents (First Upgrade)", false,
-                                              new ConfigDescription($"Whether you can stare at your watch to pass time when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
+        const string CAN_PASS_TIME_NEAR_VENTS_TITLE = "Can Pass Time Near Vents";
+        const string CAN_PASS_TIME_NEAR_VENTS_DESCRIPTION = "Whether you can stare at your watch to pass time when near vents";
         
-        _snoopingCanPassTimeSecond = config.Bind(section, "Can Pass Time Near Vents (Second Upgrade)", true,
-                                              new ConfigDescription($"Whether you can stare at your watch to pass time when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
+        _snoopingCanPassTimeBase = config.Bind(section, $"{CAN_PASS_TIME_NEAR_VENTS_TITLE} {LEVEL_1_TITLE}", false,
+                                                   new ConfigDescription($"{CAN_PASS_TIME_NEAR_VENTS_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
+        
+        _snoopingCanPassTimeFirst = config.Bind(section, $"{CAN_PASS_TIME_NEAR_VENTS_TITLE} {LEVEL_2_TITLE}", false,
+                                              new ConfigDescription($"{CAN_PASS_TIME_NEAR_VENTS_DESCRIPTION} {LEVEL_2_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
+        
+        _snoopingCanPassTimeSecond = config.Bind(section, $"{CAN_PASS_TIME_NEAR_VENTS_TITLE} {LEVEL_3_TITLE}", true,
+                                              new ConfigDescription($"{CAN_PASS_TIME_NEAR_VENTS_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_SNOOPING}."));
         
         _snoopingPassTimeWarpDelay = config.Bind(section, "Pass Time Warp Delay", 10f,
                                              new ConfigDescription($"When using {NAME_LONG_SNOOPING}, how long you must stare at your watch to pass time near vents."));

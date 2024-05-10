@@ -29,23 +29,29 @@ public static partial class VentrixConfig
     {
         string section = $"{ID_TERROR}. {NAME_SHORT_TERROR}";
 
-        _terrorFreakoutDurationBase = config.Bind(section, "Freakout Duration (Base Level)", 10,
-                                                 new ConfigDescription($"The duration a citizen freaks out when you pop out of vents in private areas with the base level of {NAME_SHORT_TERROR}."));
+        const string FREAKOUT_DURATION_TITLE = "Freakout Duration";
+        const string FREAKOUT_DURATION_DESCRIPTION = "The duration a citizen freaks out when you pop out of vents in private areas";
+        
+        _terrorFreakoutDurationBase = config.Bind(section, $"{FREAKOUT_DURATION_TITLE} {LEVEL_1_TITLE}", 10,
+                                                 new ConfigDescription($"{FREAKOUT_DURATION_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_TERROR}."));
 
-        _terrorFreakoutDurationFirst = config.Bind(section, "Freakout Duration (First Upgrade)", 15,
-                                            new ConfigDescription($"The duration a citizen freaks out when you pop out of vents in private areas with the first upgrade of {NAME_SHORT_TERROR}."));
+        _terrorFreakoutDurationFirst = config.Bind(section, $"{FREAKOUT_DURATION_TITLE} {LEVEL_2_TITLE}", 15,
+                                            new ConfigDescription($"{FREAKOUT_DURATION_DESCRIPTION} {LEVEL_2_DESCRIPTION} {NAME_SHORT_TERROR}."));
 
-        _terrorFreakoutDurationSecond = config.Bind(section, "Freakout Duration (Second Upgrade)", 20,
-                                             new ConfigDescription($"The duration a citizen freaks out when you pop out of vents in private areas with the second upgrade of {NAME_SHORT_TERROR}."));
+        _terrorFreakoutDurationSecond = config.Bind(section, $"{FREAKOUT_DURATION_TITLE} {LEVEL_3_TITLE}", 20,
+                                             new ConfigDescription($"{FREAKOUT_DURATION_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_TERROR}."));
         
-        _terrorToxicImmunityBase = config.Bind(section, "Toxic Immunity (Base Level)", false,
-                                          new ConfigDescription($"Whether the base level of {NAME_SHORT_TERROR} grants you toxic gas immunity in vents."));
+        const string GAS_IMMUNITY_TITLE = "Toxic Immunity";
+        const string GAS_IMMUNITY_DESCRIPTION = "Whether you are granted toxic gas immunity in vents";
         
-        _terrorToxicImmunityFirst = config.Bind(section, "Toxic Immunity (First Upgrade)", true,
-                                              new ConfigDescription($"Whether the first upgrade of {NAME_SHORT_TERROR} grants you toxic gas immunity in vents."));
+        _terrorToxicImmunityBase = config.Bind(section, $"{GAS_IMMUNITY_TITLE} {LEVEL_1_TITLE}", false,
+                                               new ConfigDescription($"{GAS_IMMUNITY_DESCRIPTION} {LEVEL_1_DESCRIPTION} {NAME_SHORT_TERROR}."));
         
-        _terrorToxicImmunitySecond = config.Bind(section, "Toxic Immunity (Second Upgrade)", true,
-                                              new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_TERROR} grants you toxic gas immunity in vents."));
+        _terrorToxicImmunityFirst = config.Bind(section, $"{GAS_IMMUNITY_TITLE} {LEVEL_2_TITLE}", true,
+                                                new ConfigDescription($"{GAS_IMMUNITY_DESCRIPTION} {LEVEL_2_DESCRIPTION} {NAME_SHORT_TERROR}."));
+        
+        _terrorToxicImmunitySecond = config.Bind(section, $"{GAS_IMMUNITY_TITLE} {LEVEL_3_TITLE}", true,
+                                                 new ConfigDescription($"{GAS_IMMUNITY_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_TERROR}."));
         
         _terrorScareableCitizensResidence = config.Bind(section, "Scareable Citizens (Residence)", 999,
                                                  new ConfigDescription($"When scaring citizens with {NAME_SHORT_TERROR}, how many can be scared when you pop out of vents in private residence rooms."));

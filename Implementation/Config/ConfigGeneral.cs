@@ -8,9 +8,17 @@ public static partial class VentrixConfig
 {
     private const string ExpectedVersion = "af2cfc5492bd478c9e7ccda801b1151c";
     
+    private const string LEVEL_1_TITLE = "(No Upgrades)";
+    private const string LEVEL_2_TITLE = "(First Upgrade)";
+    private const string LEVEL_3_TITLE = "(Second Upgrade)";
+
+    private const string LEVEL_1_DESCRIPTION = "with no upgrades in";
+    private const string LEVEL_2_DESCRIPTION = "with the first upgrade of";
+    private const string LEVEL_3_DESCRIPTION = "with the second upgrade of";
+
     private const string NAME_SHORT_GENERAL = "General";
     private const int ID_GENERAL = 1;
-    
+
     // These aren't used often and they are needed immediately so I'm not tangling them up in caches.
     public static ConfigEntry<bool> Enabled;
     public static ConfigEntry<string> Version;
