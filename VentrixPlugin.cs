@@ -1,4 +1,5 @@
-﻿using Il2CppInterop.Runtime.Injection;
+﻿using System;
+using Il2CppInterop.Runtime.Injection;
 using BepInEx;
 using SOD.Common;
 using SOD.Common.BepInEx;
@@ -18,6 +19,8 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
 {
     public static bool JumpPressed;
     public static bool CrouchPressed;
+
+    public static Action OnLoaded;
     
     public override void Load()
     {
@@ -62,7 +65,7 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
         Lib.InputDetection.OnButtonStateChanged -= OnButtonStateChanged;
         Lib.InputDetection.OnButtonStateChanged += OnButtonStateChanged;
     }
-    
+
     private void Uninitialize()
     {
         if (EcholocationPulsePool.Instance != null)
@@ -109,6 +112,8 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
         }
         
         Timer.Create();
+
+        OnLoaded?.Invoke();
     }
     
     private void OnButtonStateChanged(object sender, InputDetectionEventArgs args)

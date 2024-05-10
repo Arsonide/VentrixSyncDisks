@@ -23,19 +23,16 @@ public class SnoopHighlighter : BasePoolObject
     
     private void OnEnable()
     {
-        Lib.SaveGame.OnBeforeLoad -= OnLoadEvent;
-        Lib.SaveGame.OnBeforeLoad += OnLoadEvent;
-        Lib.SaveGame.OnAfterLoad -= OnLoadEvent;
-        Lib.SaveGame.OnAfterLoad += OnLoadEvent;
+        VentrixPlugin.OnLoaded -= OnLoaded;
+        VentrixPlugin.OnLoaded += OnLoaded;
     }
 
     private void OnDisable()
     {
-        Lib.SaveGame.OnBeforeLoad -= OnLoadEvent;
-        Lib.SaveGame.OnAfterLoad -= OnLoadEvent;
+        VentrixPlugin.OnLoaded -= OnLoaded;
     }
 
-    private void OnLoadEvent(object sender, SaveGameArgs args)
+    private void OnLoaded()
     {
         SnoopHighlighterPool.Instance.CheckinPoolObject(this);
     }
