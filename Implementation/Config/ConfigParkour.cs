@@ -27,31 +27,33 @@ public static partial class VentrixConfig
 
     private static void InitializeParkour(ConfigFile config)
     {
-        _parkourInteractRangeBase = config.Bind($"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}", "Added Interaction Range (Base Level)", 0f,
+        string section = $"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}";
+        
+        _parkourInteractRangeBase = config.Bind(section, "Added Interaction Range (Base Level)", 0f,
                                                new ConfigDescription($"How much further you can reach vents with the base level of {NAME_SHORT_PARKOUR}."));
         
-        _parkourInteractRangeFirst = config.Bind($"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}", "Added Interaction Range (First Upgrade)", 1f,
+        _parkourInteractRangeFirst = config.Bind(section, "Added Interaction Range (First Upgrade)", 1f,
                                                 new ConfigDescription($"How much further you can reach vents with the first upgrade of {NAME_SHORT_PARKOUR}."));
         
-        _parkourInteractRangeSecond = config.Bind($"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}", "Added Interaction Range (Second Upgrade)", 1f,
+        _parkourInteractRangeSecond = config.Bind(section, "Added Interaction Range (Second Upgrade)", 1f,
                                                  new ConfigDescription($"How much further you can reach vents with the second upgrade of {NAME_SHORT_PARKOUR}."));
         
-        _parkourTransitionSpeedBase = config.Bind($"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}", "Transition Speed Multiplier (Base Level)", 0.8f,
+        _parkourTransitionSpeedBase = config.Bind(section, "Transition Speed Multiplier (Base Level)", 0.8f,
                                                  new ConfigDescription($"A multiplier on the speed you enter and exit vents with the base level of {NAME_SHORT_PARKOUR}."));
 
-        _parkourTransitionSpeedFirst = config.Bind($"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}", "Transition Speed Multiplier (First Upgrade)", 0.6f,
+        _parkourTransitionSpeedFirst = config.Bind(section, "Transition Speed Multiplier (First Upgrade)", 0.6f,
                                                   new ConfigDescription($"A multiplier on the speed you enter and exit vents with the first upgrade of {NAME_SHORT_PARKOUR}."));
         
-        _parkourTransitionSpeedSecond = config.Bind($"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}", "Transition Speed Multiplier (Second Upgrade)", 0.6f,
+        _parkourTransitionSpeedSecond = config.Bind(section, "Transition Speed Multiplier (Second Upgrade)", 0.6f,
                                                    new ConfigDescription($"A multiplier on the speed you enter and exit vents with the second upgrade of {NAME_SHORT_PARKOUR}."));
         
-        _parkourAutoCloseBase = config.Bind($"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}", "Auto Close Vents (Base Level)", false,
+        _parkourAutoCloseBase = config.Bind(section, "Auto Close Vents (Base Level)", false,
                                            new ConfigDescription($"Whether the base level of {NAME_SHORT_PARKOUR} auto closes vents you enter and exit."));
         
-        _parkourAutoCloseFirst = config.Bind($"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}", "Auto Close Vents (First Upgrade)", false,
+        _parkourAutoCloseFirst = config.Bind(section, "Auto Close Vents (First Upgrade)", false,
                                             new ConfigDescription($"Whether the first upgrade of {NAME_SHORT_PARKOUR} auto closes vents you enter and exit."));
         
-        _parkourAutoCloseSecond = config.Bind($"{ID_PARKOUR}. {NAME_SHORT_PARKOUR}", "Auto Close Vents (Second Upgrade)", true,
+        _parkourAutoCloseSecond = config.Bind(section, "Auto Close Vents (Second Upgrade)", true,
                                              new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_PARKOUR} auto closes vents you enter and exit."));
     }
     

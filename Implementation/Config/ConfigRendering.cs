@@ -4,7 +4,8 @@ namespace VentrixSyncDisks.Implementation.Config;
 
 public static partial class VentrixConfig
 {
-    private const int ID_RENDERING = 4;
+    private const string NAME_SHORT_RENDERING = "Rendering";
+    private const int ID_RENDERING = 8;
 
     public static ConfigCacheSimple<float> RenderingCentralNodeSize;
     public static ConfigCacheSimple<bool> RenderingUseDirectionalNodes;
@@ -36,37 +37,39 @@ public static partial class VentrixConfig
 
     private static void InitializeRendering(ConfigFile config)
     {
-        _renderingCentralNodeSize = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Central Node Size", 0.1f,
+        string section = $"{ID_RENDERING}. {NAME_SHORT_RENDERING}";
+
+        _renderingCentralNodeSize = config.Bind(section, "Central Node Size", 0.1f,
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how large the visualized nodes are in the center of each duct."));
 
-        _renderingUseDirectionalNodes = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Use Directional Nodes", true,
+        _renderingUseDirectionalNodes = config.Bind(section, "Use Directional Nodes", true,
                                                  new ConfigDescription($"When using  {NAME_LONG_MAPPING}, whether to render additional indicators pointing at connected air ducts."));
 
-        _renderingSpecialDirectionalNodeColors = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Special Directional Node Colors", false,
+        _renderingSpecialDirectionalNodeColors = config.Bind(section, "Special Directional Node Colors", false,
                                                  new ConfigDescription($"When using  {NAME_LONG_MAPPING}, whether additional connections on vents are colored as normal ducts or as vents."));
         
-        _renderingDirectionalNodeLength = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Directional Node Length", 0.5f,
+        _renderingDirectionalNodeLength = config.Bind(section, "Directional Node Length", 0.5f,
                                                    new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how long the indicators pointing down connected ducts are."));
 
-        _renderingDirectionalNodeDiameter = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Directional Node Diameter", 0.015f,
+        _renderingDirectionalNodeDiameter = config.Bind(section, "Directional Node Diameter", 0.015f,
                                                      new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how wide the indicators pointing down connected ducts are."));
 
-        _renderingDirectionalNodeOffset = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Directional Node Offset", 0.525f,
+        _renderingDirectionalNodeOffset = config.Bind(section, "Directional Node Offset", 0.525f,
                                                    new ConfigDescription($"When using  {NAME_LONG_MAPPING}, how far apart the indicators pointing down connected ducts are."));
 
-        _renderingNodeColorNormal = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Node Color Normal", "00FFFF",
+        _renderingNodeColorNormal = config.Bind(section, "Node Color Normal", "00FFFF",
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, what color normal air ducts are visualized as."));
 
-        _renderingNodeColorVent = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Node Color Vent", "FFFF00",
+        _renderingNodeColorVent = config.Bind(section, "Node Color Vent", "FFFF00",
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, what color air vents (entrances / exits) are visualized as."));
 
-        _renderingNodeColorPeek = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Node Color Peek", "00FFFF",
+        _renderingNodeColorPeek = config.Bind(section, "Node Color Peek", "00FFFF",
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, what color \"peek\" ducts are visualized as, that you can see through but not exit."));
         
-        _renderingNodeSpawnTime = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Node Spawn Time", 0.2f,
+        _renderingNodeSpawnTime = config.Bind(section, "Node Spawn Time", 0.2f,
                                                    new ConfigDescription($"When using  {NAME_LONG_MAPPING}, when nodes spawn in, how long it takes for them to reach full size."));
         
-        _renderingNodeDespawnTime = config.Bind($"{ID_RENDERING}. {NAME_SHORT_MAPPING} Rendering", "Node Despawn Time", 0.2f,
+        _renderingNodeDespawnTime = config.Bind(section, "Node Despawn Time", 0.2f,
                                              new ConfigDescription($"When using  {NAME_LONG_MAPPING}, when nodes expire, how long it takes for them to shrink and disappear."));
     }
 

@@ -17,14 +17,16 @@ public static partial class VentrixConfig
 
     private static void InitializeScooting(ConfigFile config)
     {
-        _scootingSpeedMultiplierBase = config.Bind($"{ID_SCOOTING}. {NAME_SHORT_SCOOTING}", "Vent Speed Multiplier (Base Level)", 1.5f,
-                                                new ConfigDescription($"The multiplier on your movement speed in vents with the base level of {NAME_SHORT_SCOOTING}."));
+        string section = $"{ID_SCOOTING}. {NAME_SHORT_SCOOTING}";
+
+        _scootingSpeedMultiplierBase = config.Bind(section, "Vent Speed Multiplier (Base Level)", 1.5f,
+                                                   new ConfigDescription($"The multiplier on your movement speed in vents with the base level of {NAME_SHORT_SCOOTING}."));
         
-        _scootingSpeedMultiplierFirst = config.Bind($"{ID_SCOOTING}. {NAME_SHORT_SCOOTING}", "Vent Speed Multiplier (First Upgrade)", 2f,
-                                                 new ConfigDescription($"The multiplier on your movement speed in vents with the first upgrade of {NAME_SHORT_SCOOTING}."));
+        _scootingSpeedMultiplierFirst = config.Bind(section, "Vent Speed Multiplier (First Upgrade)", 2f,
+                                                    new ConfigDescription($"The multiplier on your movement speed in vents with the first upgrade of {NAME_SHORT_SCOOTING}."));
         
-        _scootingSpeedMultiplierSecond = config.Bind($"{ID_SCOOTING}. {NAME_SHORT_SCOOTING}", "Vent Speed Multiplier (Second Upgrade)", 2.5f,
-                                                  new ConfigDescription($"The multiplier on your movement speed in vents with the second upgrade of {NAME_SHORT_SCOOTING}."));
+        _scootingSpeedMultiplierSecond = config.Bind(section, "Vent Speed Multiplier (Second Upgrade)", 2.5f,
+                                                     new ConfigDescription($"The multiplier on your movement speed in vents with the second upgrade of {NAME_SHORT_SCOOTING}."));
     }
 
     private static void CacheScooting()

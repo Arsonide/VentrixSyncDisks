@@ -8,6 +8,9 @@ public static partial class VentrixConfig
 {
     private const string ExpectedVersion = "af2cfc5492bd478c9e7ccda801b1151c";
     
+    private const string NAME_SHORT_GENERAL = "General";
+    private const int ID_GENERAL = 1;
+    
     // These aren't used often and they are needed immediately so I'm not tangling them up in caches.
     public static ConfigEntry<bool> Enabled;
     public static ConfigEntry<string> Version;
@@ -30,29 +33,31 @@ public static partial class VentrixConfig
 
     public static void Initialize(ConfigFile config)
     {
-        Enabled = config.Bind("1. General", "Enabled", true,
+        string section = $"{ID_GENERAL}. {NAME_SHORT_GENERAL}";
+        
+        Enabled = config.Bind(section, "Enabled", true,
                               new ConfigDescription("Another method of enabling and disabling Ventrix Sync Disks."));
 
-        Version = config.Bind("1. General", "Version", string.Empty,
+        Version = config.Bind(section, "Version", string.Empty,
                               new ConfigDescription("Ventrix Sync Disks uses this to reset your configuration between major versions. Don't modify it or it will reset your configuration!"));
 
-        _mobilityEnabled = config.Bind("1. General", "Vent Mobility Enabled", true,
-                                              new ConfigDescription("Whether the \"Vent Mobility\" sync disk is in the game."));
+        _mobilityEnabled = config.Bind(section, "Vent Mobility Enabled", true,
+                                       new ConfigDescription("Whether the \"Vent Mobility\" sync disk is in the game."));
         
-        _reconEnabled = config.Bind("1. General", "Vent Recon Enabled", true,
-                                      new ConfigDescription("Whether the \"Vent Recon\" sync disk is in the game."));
+        _reconEnabled = config.Bind(section, "Vent Recon Enabled", true,
+                                    new ConfigDescription("Whether the \"Vent Recon\" sync disk is in the game."));
         
-        _mischiefEnabled = config.Bind("1. General", "Vent Mischief Enabled", true,
-                                      new ConfigDescription("Whether the \"Vent Mischief\" sync disk is in the game."));
+        _mischiefEnabled = config.Bind(section, "Vent Mischief Enabled", true,
+                                       new ConfigDescription("Whether the \"Vent Mischief\" sync disk is in the game."));
 
-        _availableAtLegitSyncDiskClinics = config.Bind("1. General", "Available At Legit Sync Disk Clinics", false,
-                                                      new ConfigDescription("Whether Ventrix Industries sync disks are sold at legitimate sync disk clinics."));
+        _availableAtLegitSyncDiskClinics = config.Bind(section, "Available At Legit Sync Disk Clinics", false,
+                                                       new ConfigDescription("Whether Ventrix Industries sync disks are sold at legitimate sync disk clinics."));
         
-        _availableAtShadySyncDiskClinics = config.Bind("1. General", "Available At Shady Sync Disk Clinics", true,
-                                                 new ConfigDescription("Whether Ventrix Industries sync disks are sold at black market sync disk clinics."));
+        _availableAtShadySyncDiskClinics = config.Bind(section, "Available At Shady Sync Disk Clinics", true,
+                                                       new ConfigDescription("Whether Ventrix Industries sync disks are sold at black market sync disk clinics."));
         
-        _availableAtBlackMarkets = config.Bind("1. General", "Available At Black Markets", false,
-                                              new ConfigDescription("Whether Ventrix Industries sync disks are sold at black markets."));
+        _availableAtBlackMarkets = config.Bind(section, "Available At Black Markets", false,
+                                               new ConfigDescription("Whether Ventrix Industries sync disks are sold at black markets."));
         
         InitializeScooting(config);
         InitializeParkour(config);

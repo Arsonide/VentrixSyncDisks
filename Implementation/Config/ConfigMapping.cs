@@ -32,40 +32,42 @@ public static partial class VentrixConfig
 
     private static void InitializeMapping(ConfigFile config)
     {
-        _mappingEcholocationRangeBase = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Base Level)", 10,
+        string section = $"{ID_MAPPING}. {NAME_SHORT_MAPPING}";
+
+        _mappingEcholocationRangeBase = config.Bind(section, "Echolocation Range (Base Level)", 10,
                                                    new ConfigDescription($"How far your echolocation pulse travels down vents with the base level of {NAME_SHORT_MAPPING}."));
         
-        _mappingEcholocationRangeFirst = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (First Upgrade)", 20,
+        _mappingEcholocationRangeFirst = config.Bind(section, "Echolocation Range (First Upgrade)", 20,
                                                     new ConfigDescription($"How far your echolocation pulse travels down vents with the first upgrade of {NAME_SHORT_MAPPING}."));
         
-        _mappingEcholocationRangeSecond = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Echolocation Range (Second Upgrade)", 20,
+        _mappingEcholocationRangeSecond = config.Bind(section, "Echolocation Range (Second Upgrade)", 20,
                                                      new ConfigDescription($"How far your echolocation pulse travels down vents with the second upgrade of {NAME_SHORT_MAPPING}."));
         
-        _mappingEcholocationSpeedBase = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Echolocation Speed (Base Level)", 0.1f,
+        _mappingEcholocationSpeedBase = config.Bind(section, "Echolocation Speed (Base Level)", 0.1f,
                                                    new ConfigDescription($"How quickly your echolocation pulse travels down vents with the base level of {NAME_SHORT_MAPPING}."));
         
-        _mappingEcholocationSpeedFirst = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Echolocation Speed (First Upgrade)", 0.1f,
+        _mappingEcholocationSpeedFirst = config.Bind(section, "Echolocation Speed (First Upgrade)", 0.1f,
                                                     new ConfigDescription($"How quickly your echolocation pulse travels down vents with the first upgrade of {NAME_SHORT_MAPPING}."));
         
-        _mappingEcholocationSpeedSecond = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Echolocation Speed (Second Upgrade)", 0.1f,
+        _mappingEcholocationSpeedSecond = config.Bind(section, "Echolocation Speed (Second Upgrade)", 0.1f,
                                                      new ConfigDescription($"How quickly your echolocation pulse travels down vents with the second upgrade of {NAME_SHORT_MAPPING}."));
         
-        _mappingEcholocationDurationBase = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Echolocation Duration (Base Level)", 1f,
+        _mappingEcholocationDurationBase = config.Bind(section, "Echolocation Duration (Base Level)", 1f,
                                                       new ConfigDescription($"How long it takes for your echolocation pulse to expire with the base level of {NAME_SHORT_MAPPING}."));
         
-        _mappingEcholocationDurationFirst = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Echolocation Duration (First Upgrade)", 1f,
+        _mappingEcholocationDurationFirst = config.Bind(section, "Echolocation Duration (First Upgrade)", 1f,
                                                        new ConfigDescription($"How long it takes for your echolocation pulse to expire with the first upgrade of {NAME_SHORT_MAPPING}."));
 
-        _mappingEcholocationDurationSecond = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Echolocation Duration (Second Upgrade)", 1f,
+        _mappingEcholocationDurationSecond = config.Bind(section, "Echolocation Duration (Second Upgrade)", 1f,
                                                         new ConfigDescription($"How long it takes for your echolocation pulse to expire with the second upgrade of {NAME_SHORT_MAPPING}."));
         
-        _mappingCoinMultiplierBase = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Coin Duration Multiplier (Base Level)", 1f,
+        _mappingCoinMultiplierBase = config.Bind(section, "Coin Duration Multiplier (Base Level)", 1f,
                                                 new ConfigDescription($"Multiplier on echolocation duration while holding a coin with the base level of {NAME_SHORT_MAPPING}."));
         
-        _mappingCoinMultiplierFirst = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Coin Duration Multiplier (First Upgrade)", 1f,
+        _mappingCoinMultiplierFirst = config.Bind(section, "Coin Duration Multiplier (First Upgrade)", 1f,
                                                  new ConfigDescription($"Multiplier on echolocation duration while holding a coin with the first upgrade of {NAME_SHORT_MAPPING}."));
         
-        _mappingCoinMultiplierSecond = config.Bind($"{ID_MAPPING}. {NAME_SHORT_MAPPING} Disk", "Coin Duration Multiplier (Second Upgrade)", 0.1f,
+        _mappingCoinMultiplierSecond = config.Bind(section, "Coin Duration Multiplier (Second Upgrade)", 0.1f,
                                                   new ConfigDescription($"Multiplier on echolocation duration while holding a coin with the second upgrade of {NAME_SHORT_MAPPING}."));
     }
     

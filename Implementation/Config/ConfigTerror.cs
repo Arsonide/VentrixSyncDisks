@@ -6,7 +6,7 @@ public static partial class VentrixConfig
 {
     public const string NAME_LONG_TERROR = "Tunnel Terror";
     private const string NAME_SHORT_TERROR = "Terror";
-    private const int ID_TERROR = 8;
+    private const int ID_TERROR = 7;
     
     public static ConfigCacheDiskEffect<int> TerrorFreakoutDuration;
     public static ConfigCacheDiskEffect<bool> TerrorToxicImmunity;
@@ -21,22 +21,24 @@ public static partial class VentrixConfig
 
     private static void InitializeTerror(ConfigFile config)
     {
-        _terrorFreakoutDurationBase = config.Bind($"{ID_TERROR}. {NAME_SHORT_TERROR}", "Freakout Duration (Base Level)", 4,
+        string section = $"{ID_TERROR}. {NAME_SHORT_TERROR}";
+
+        _terrorFreakoutDurationBase = config.Bind(section, "Freakout Duration (Base Level)", 4,
                                                  new ConfigDescription($"The duration a citizen freaks out when you pop out of vents in private areas with the base level of {NAME_SHORT_TERROR}."));
 
-        _terrorFreakoutDurationFirst = config.Bind($"{ID_TERROR}. {NAME_SHORT_TERROR}", "Freakout Duration (First Upgrade)", 8,
+        _terrorFreakoutDurationFirst = config.Bind(section, "Freakout Duration (First Upgrade)", 8,
                                             new ConfigDescription($"The duration a citizen freaks out when you pop out of vents in private areas with the first upgrade of {NAME_SHORT_TERROR}."));
 
-        _terrorFreakoutDurationSecond = config.Bind($"{ID_TERROR}. {NAME_SHORT_TERROR}", "Freakout Duration (Second Upgrade)", 12,
+        _terrorFreakoutDurationSecond = config.Bind(section, "Freakout Duration (Second Upgrade)", 12,
                                              new ConfigDescription($"The duration a citizen freaks out when you pop out of vents in private areas with the second upgrade of {NAME_SHORT_TERROR}."));
         
-        _terrorToxicImmunityBase = config.Bind($"{ID_TERROR}. {NAME_SHORT_TERROR}", "Toxic Immunity (Base Level)", false,
+        _terrorToxicImmunityBase = config.Bind(section, "Toxic Immunity (Base Level)", false,
                                           new ConfigDescription($"Whether the base level of {NAME_SHORT_TERROR} grants you toxic gas immunity in vents."));
         
-        _terrorToxicImmunityFirst = config.Bind($"{ID_TERROR}. {NAME_SHORT_TERROR}", "Toxic Immunity (First Upgrade)", true,
+        _terrorToxicImmunityFirst = config.Bind(section, "Toxic Immunity (First Upgrade)", true,
                                               new ConfigDescription($"Whether the first upgrade of {NAME_SHORT_TERROR} grants you toxic gas immunity in vents."));
         
-        _terrorToxicImmunitySecond = config.Bind($"{ID_TERROR}. {NAME_SHORT_TERROR}", "Toxic Immunity (Second Upgrade)", true,
+        _terrorToxicImmunitySecond = config.Bind(section, "Toxic Immunity (Second Upgrade)", true,
                                               new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_TERROR} grants you toxic gas immunity in vents."));
     }
     

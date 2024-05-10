@@ -6,7 +6,7 @@ public static partial class VentrixConfig
 {
     public const string NAME_LONG_SNOOPING = "Grate Snooping";
     private const string NAME_SHORT_SNOOPING = "Snooping";
-    private const int ID_SNOOPING = 6;
+    private const int ID_SNOOPING = 5;
     
     public static ConfigCacheSimple<float> SnoopingPassTimeWarpDelay;
     public static ConfigCacheSimple<float> SnoopingPassTimeNotificationDelay;
@@ -37,46 +37,48 @@ public static partial class VentrixConfig
     
     private static void InitializeSnooping(ConfigFile config)
     {
-        _snoopingCanSnoopCiviliansBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (Base Level)", true,
+        string section = $"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}";
+
+        _snoopingCanSnoopCiviliansBase = config.Bind(section, "Can Snoop Civilians (Base Level)", true,
                                                     new ConfigDescription($"Whether you see civilians through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopCiviliansFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (First Upgrade)", true,
+        _snoopingCanSnoopCiviliansFirst = config.Bind(section, "Can Snoop Civilians (First Upgrade)", true,
                                                      new ConfigDescription($"Whether you see civilians through walls when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopCiviliansSecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (Second Upgrade)", true,
+        _snoopingCanSnoopCiviliansSecond = config.Bind(section, "Can Snoop Civilians (Second Upgrade)", true,
                                                       new ConfigDescription($"Whether you see civilians through walls when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
 
-        _snoopingCanSnoopPeeksBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Base Level)", false,
+        _snoopingCanSnoopPeeksBase = config.Bind(section, "Can Snoop Peek Vents (Base Level)", false,
                                                     new ConfigDescription($"Whether you see things through walls when near \"peek\" vents at the base level of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopPeeksFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (First Upgrade)", false,
+        _snoopingCanSnoopPeeksFirst = config.Bind(section, "Can Snoop Peek Vents (First Upgrade)", false,
                                                      new ConfigDescription($"Whether you see things through walls when near \"peek\" vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopPeeksSecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Second Upgrade)", false,
+        _snoopingCanSnoopPeeksSecond = config.Bind(section, "Can Snoop Peek Vents (Second Upgrade)", false,
                                                       new ConfigDescription($"Whether you see things through walls when near \"peek\" vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopSecurityBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (Base Level)", false,
+        _snoopingCanSnoopSecurityBase = config.Bind(section, "Can Snoop Security Systems (Base Level)", false,
                                                 new ConfigDescription($"Whether you see security systems through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopSecurityFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (First Upgrade)", true,
+        _snoopingCanSnoopSecurityFirst = config.Bind(section, "Can Snoop Security Systems (First Upgrade)", true,
                                                     new ConfigDescription($"Whether you see security systems through walls when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanSnoopSecuritySecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (Second Upgrade)", true,
+        _snoopingCanSnoopSecuritySecond = config.Bind(section, "Can Snoop Security Systems (Second Upgrade)", true,
                                                      new ConfigDescription($"Whether you see security systems through walls when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanPassTimeBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (Base Level)", false,
+        _snoopingCanPassTimeBase = config.Bind(section, "Can Pass Time Near Vents (Base Level)", false,
                                                    new ConfigDescription($"Whether you can stare at your watch to pass time when near vents at the base level of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanPassTimeFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (First Upgrade)", false,
+        _snoopingCanPassTimeFirst = config.Bind(section, "Can Pass Time Near Vents (First Upgrade)", false,
                                               new ConfigDescription($"Whether you can stare at your watch to pass time when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingCanPassTimeSecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (Second Upgrade)", true,
+        _snoopingCanPassTimeSecond = config.Bind(section, "Can Pass Time Near Vents (Second Upgrade)", true,
                                               new ConfigDescription($"Whether you can stare at your watch to pass time when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
         
-        _snoopingPassTimeWarpDelay = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Pass Time Warp Delay", 10f,
+        _snoopingPassTimeWarpDelay = config.Bind(section, "Pass Time Warp Delay", 10f,
                                              new ConfigDescription($"When using {NAME_LONG_SNOOPING}, how long you must stare at your watch to pass time near vents."));
         
-        _snoopingPassTimeNotificationDelay = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Pass Time Notification Delay", 5f,
+        _snoopingPassTimeNotificationDelay = config.Bind(section, "Pass Time Notification Delay", 5f,
                                              new ConfigDescription($"When using {NAME_LONG_SNOOPING}, when to notify you while staring at your watch that you are about to pass time near vents. (Set to negative number for no notification.)"));
     }
     

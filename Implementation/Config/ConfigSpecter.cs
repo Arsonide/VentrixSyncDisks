@@ -7,7 +7,7 @@ public static partial class VentrixConfig
 {
     public const string NAME_LONG_SPECTER = "Shaft Specter";
     private const string NAME_SHORT_SPECTER = "Specter";
-    private const int ID_SPECTER = 7;
+    private const int ID_SPECTER = 6;
 
     public static ConfigCacheDiskEffect<float> SpecterFootstepChance;
     public static ConfigCacheDiskEffect<bool> SpecterColdImmunity;
@@ -22,25 +22,27 @@ public static partial class VentrixConfig
 
     private static void InitializeSpecter(ConfigFile config)
     {
-        _specterFootstepChanceBase = config.Bind($"{ID_SPECTER}. {NAME_SHORT_SPECTER}", "Footstep Chance (Base Level)", 0.68f,
+        string section = $"{ID_SPECTER}. {NAME_SHORT_SPECTER}";
+
+        _specterFootstepChanceBase = config.Bind(section, "Footstep Chance (Base Level)", 0.68f,
                                                 new ConfigDescription($"The chance you play footstep sounds when travelling in vents, when you normally would, with the base level of {NAME_SHORT_SPECTER}.",
                                                                       new AcceptableValueRange<float>(0f, 1f)));
 
-        _specterFootstepChanceFirst = config.Bind($"{ID_SPECTER}. {NAME_SHORT_SPECTER}", "Footstep Chance (First Upgrade)", 0.36f,
+        _specterFootstepChanceFirst = config.Bind(section, "Footstep Chance (First Upgrade)", 0.36f,
                                                  new ConfigDescription($"The chance you play footstep sounds when travelling in vents, when you normally would, with the first upgrade of {NAME_SHORT_SPECTER}.",
                                                                        new AcceptableValueRange<float>(0f, 1f)));
 
-        _specterFootstepChanceSecond = config.Bind($"{ID_SPECTER}. {NAME_SHORT_SPECTER}", "Footstep Chance (Second Upgrade)", 0.04f,
+        _specterFootstepChanceSecond = config.Bind(section, "Footstep Chance (Second Upgrade)", 0.04f,
                                                   new ConfigDescription($"The chance you play footstep sounds when travelling in vents, when you normally would, with the second upgrade of {NAME_SHORT_SPECTER}.",
                                                                         new AcceptableValueRange<float>(0f, 1f)));
 
-        _specterColdImmunityBase = config.Bind($"{ID_SPECTER}. {NAME_SHORT_SPECTER}", "Cold Immunity (Base Level)", false,
+        _specterColdImmunityBase = config.Bind(section, "Cold Immunity (Base Level)", false,
                                           new ConfigDescription($"Whether the base level of {NAME_SHORT_SPECTER} grants you cold immunity in vents."));
         
-        _specterColdImmunityFirst = config.Bind($"{ID_SPECTER}. {NAME_SHORT_SPECTER}", "Cold Immunity (First Upgrade)", true,
+        _specterColdImmunityFirst = config.Bind(section, "Cold Immunity (First Upgrade)", true,
                                           new ConfigDescription($"Whether the first upgrade of {NAME_SHORT_SPECTER} grants you cold immunity in vents."));
         
-        _specterColdImmunitySecond = config.Bind($"{ID_SPECTER}. {NAME_SHORT_SPECTER}", "Cold Immunity (Second Upgrade)", true,
+        _specterColdImmunitySecond = config.Bind(section, "Cold Immunity (Second Upgrade)", true,
                                           new ConfigDescription($"Whether the second upgrade of {NAME_SHORT_SPECTER} grants you cold immunity in vents."));
     }
     
