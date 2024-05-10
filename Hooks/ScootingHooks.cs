@@ -20,6 +20,27 @@ public class ScootingHooks
                 return true;
             }
 
+            if (VentrixPlugin.JumpPressed || VentrixPlugin.CrouchPressed)
+            {
+                Transform cam = Camera.main?.transform;
+                float speed = Player.Instance.fps.m_WalkSpeed * 0.3f;
+                speed *= StatusController.Instance.movementSpeedMultiplier;
+                speed *= Game.Instance.movementSpeed;
+                speed *= Time.smoothDeltaTime;
+
+                if (cam != null)
+                {
+                    if (VentrixPlugin.JumpPressed)
+                    {
+                        motion += cam.up * speed;
+                    }
+                    else
+                    {
+                        motion += -cam.up * speed;
+                    }
+                }
+            }
+
             int level = DiskRegistry.ScootingDisk.Level;
 
             if (level <= 0)
