@@ -3,20 +3,20 @@ using BepInEx.Configuration;
 
 namespace VentrixSyncDisks.Implementation.Config;
 
-public abstract class ConfigCache
+public abstract class ConfigCacheDiskEffect
 {
     public abstract bool GetDescriptionRelevant(int level);
     public abstract string GetDescription(int level);
 }
 
-public class ConfigCache<T> : ConfigCache where T : IEquatable<T>
+public class ConfigCacheDiskEffect<T> : ConfigCacheDiskEffect where T : IEquatable<T>
 {
     private T[] _cachedLevels;
     private int _maxLevel;
     
     private Func<int, T, T, string> _descriptionDelegate;
     
-    public ConfigCache(T defaultValue, Func<int, T, T, string> descriptionDelegate, params ConfigEntry<T>[] levels)
+    public ConfigCacheDiskEffect(T defaultValue, Func<int, T, T, string> descriptionDelegate, params ConfigEntry<T>[] levels)
     {
         int levelCount = levels.Length;
         _cachedLevels = new T[levelCount + 1];

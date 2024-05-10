@@ -8,113 +8,120 @@ public static partial class VentrixConfig
     public const string NAME_LONG_SNOOPING = "Grate Snooping";
     private const string NAME_SHORT_SNOOPING = "Snooping";
     private const int ID_SNOOPING = 6;
-
-    private static ConfigEntry<bool> SnoopingCanSnoopCiviliansBase;
-    private static ConfigEntry<bool> SnoopingCanSnoopCiviliansFirst;
-    private static ConfigEntry<bool> SnoopingCanSnoopCiviliansSecond;
-    public static ConfigCache<bool> SnoopingCanSnoopCivilians;
     
-    private static ConfigEntry<bool> SnoopingCanSnoopPeeksBase;
-    private static ConfigEntry<bool> SnoopingCanSnoopPeeksFirst;
-    private static ConfigEntry<bool> SnoopingCanSnoopPeeksSecond;
-    public static ConfigCache<bool> SnoopingCanSnoopPeeks;
+    public static ConfigCacheSimple<float> SnoopingPassTimeWarpDelay;
+    public static ConfigCacheSimple<float> SnoopingPassTimeNotificationDelay;
     
-    private static ConfigEntry<bool> SnoopingCanSnoopSecurityBase;
-    private static ConfigEntry<bool> SnoopingCanSnoopSecurityFirst;
-    private static ConfigEntry<bool> SnoopingCanSnoopSecuritySecond;
-    public static ConfigCache<bool> SnoopingCanSnoopSecurity;
+    public static ConfigCacheDiskEffect<bool> SnoopingCanSnoopCivilians;
+    public static ConfigCacheDiskEffect<bool> SnoopingCanSnoopPeeks;
+    public static ConfigCacheDiskEffect<bool> SnoopingCanSnoopSecurity;
+    public static ConfigCacheDiskEffect<bool> SnoopingCanPassTime;
+
+    private static ConfigEntry<bool> _snoopingCanSnoopCiviliansBase;
+    private static ConfigEntry<bool> _snoopingCanSnoopCiviliansFirst;
+    private static ConfigEntry<bool> _snoopingCanSnoopCiviliansSecond;
     
-    private static ConfigEntry<bool> SnoopingCanPassTimeBase;
-    private static ConfigEntry<bool> SnoopingCanPassTimeFirst;
-    private static ConfigEntry<bool> SnoopingCanPassTimeSecond;
-    public static ConfigCache<bool> SnoopingCanPassTime;
+    private static ConfigEntry<bool> _snoopingCanSnoopPeeksBase;
+    private static ConfigEntry<bool> _snoopingCanSnoopPeeksFirst;
+    private static ConfigEntry<bool> _snoopingCanSnoopPeeksSecond;
+    
+    private static ConfigEntry<bool> _snoopingCanSnoopSecurityBase;
+    private static ConfigEntry<bool> _snoopingCanSnoopSecurityFirst;
+    private static ConfigEntry<bool> _snoopingCanSnoopSecuritySecond;
+    
+    private static ConfigEntry<bool> _snoopingCanPassTimeBase;
+    private static ConfigEntry<bool> _snoopingCanPassTimeFirst;
+    private static ConfigEntry<bool> _snoopingCanPassTimeSecond;
 
-    public static ConfigEntry<float> SnoopingPassTimeWarpDelay;
-    public static ConfigEntry<float> SnoopingPassTimeNotificationDelay;
-
+    private static ConfigEntry<float> _snoopingPassTimeWarpDelay;
+    private static ConfigEntry<float> _snoopingPassTimeNotificationDelay;
+    
     private static void InitializeSnooping(ConfigFile config)
     {
-        SnoopingCanSnoopCiviliansBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (Base Level)", true,
+        _snoopingCanSnoopCiviliansBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (Base Level)", true,
                                                     new ConfigDescription($"Whether you see civilians through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanSnoopCiviliansFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (First Upgrade)", true,
+        _snoopingCanSnoopCiviliansFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (First Upgrade)", true,
                                                      new ConfigDescription($"Whether you see civilians through walls when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanSnoopCiviliansSecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (Second Upgrade)", true,
+        _snoopingCanSnoopCiviliansSecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Civilians (Second Upgrade)", true,
                                                       new ConfigDescription($"Whether you see civilians through walls when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
 
-        SnoopingCanSnoopPeeksBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Base Level)", false,
+        _snoopingCanSnoopPeeksBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Base Level)", false,
                                                     new ConfigDescription($"Whether you see things through walls when near \"peek\" vents at the base level of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanSnoopPeeksFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (First Upgrade)", false,
+        _snoopingCanSnoopPeeksFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (First Upgrade)", false,
                                                      new ConfigDescription($"Whether you see things through walls when near \"peek\" vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanSnoopPeeksSecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Second Upgrade)", false,
+        _snoopingCanSnoopPeeksSecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Peek Vents (Second Upgrade)", false,
                                                       new ConfigDescription($"Whether you see things through walls when near \"peek\" vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanSnoopSecurityBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (Base Level)", false,
+        _snoopingCanSnoopSecurityBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (Base Level)", false,
                                                 new ConfigDescription($"Whether you see security systems through walls when near vents at the base level of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanSnoopSecurityFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (First Upgrade)", true,
+        _snoopingCanSnoopSecurityFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (First Upgrade)", true,
                                                     new ConfigDescription($"Whether you see security systems through walls when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanSnoopSecuritySecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (Second Upgrade)", true,
+        _snoopingCanSnoopSecuritySecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Snoop Security Systems (Second Upgrade)", true,
                                                      new ConfigDescription($"Whether you see security systems through walls when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanPassTimeBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (Base Level)", false,
+        _snoopingCanPassTimeBase = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (Base Level)", false,
                                                    new ConfigDescription($"Whether you can stare at your watch to pass time when near vents at the base level of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanPassTimeFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (First Upgrade)", false,
+        _snoopingCanPassTimeFirst = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (First Upgrade)", false,
                                               new ConfigDescription($"Whether you can stare at your watch to pass time when near vents with the first upgrade of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingCanPassTimeSecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (Second Upgrade)", true,
+        _snoopingCanPassTimeSecond = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Can Pass Time Near Vents (Second Upgrade)", true,
                                               new ConfigDescription($"Whether you can stare at your watch to pass time when near vents with the second upgrade of {NAME_SHORT_SNOOPING}."));
         
-        SnoopingPassTimeWarpDelay = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Pass Time Warp Delay", 10f,
+        _snoopingPassTimeWarpDelay = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Pass Time Warp Delay", 10f,
                                              new ConfigDescription($"When using {NAME_LONG_SNOOPING}, how long you must stare at your watch to pass time near vents."));
         
-        SnoopingPassTimeNotificationDelay = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Pass Time Notification Delay", 5f,
+        _snoopingPassTimeNotificationDelay = config.Bind($"{ID_SNOOPING}. {NAME_SHORT_SNOOPING}", "Pass Time Notification Delay", 5f,
                                              new ConfigDescription($"When using {NAME_LONG_SNOOPING}, when to notify you while staring at your watch that you are about to pass time near vents. (Set to negative number for no notification.)"));
     }
     
-    private static void SetupSnoopingCaches()
+    private static void CacheSnooping()
     {
-        SnoopingCanSnoopCivilians = new ConfigCache<bool>(false,
+        SnoopingPassTimeWarpDelay = new ConfigCacheSimple<float>(_snoopingPassTimeWarpDelay);
+        SnoopingPassTimeNotificationDelay = new ConfigCacheSimple<float>(_snoopingPassTimeNotificationDelay);
+        
+        SnoopingCanSnoopCivilians = new ConfigCacheDiskEffect<bool>(false,
                                                           (level, oldValue, newValue) =>
                                                               $"You can now see unaware civilians through walls when near vent entrances.",
-                                                          SnoopingCanSnoopCiviliansBase, SnoopingCanSnoopCiviliansFirst, SnoopingCanSnoopCiviliansSecond);
+                                                          _snoopingCanSnoopCiviliansBase, _snoopingCanSnoopCiviliansFirst, _snoopingCanSnoopCiviliansSecond);
         
-        SnoopingCanSnoopPeeks = new ConfigCache<bool>(false,
+        SnoopingCanSnoopPeeks = new ConfigCacheDiskEffect<bool>(false,
                                                       (level, oldValue, newValue) =>
                                                           $"Snooping now also applies when near \"peeking\" vents in the middle of air ducts.",
-                                                      SnoopingCanSnoopPeeksBase, SnoopingCanSnoopPeeksFirst, SnoopingCanSnoopPeeksSecond);
+                                                      _snoopingCanSnoopPeeksBase, _snoopingCanSnoopPeeksFirst, _snoopingCanSnoopPeeksSecond);
         
-        SnoopingCanSnoopSecurity = new ConfigCache<bool>(false,
+        SnoopingCanSnoopSecurity = new ConfigCacheDiskEffect<bool>(false,
                                                          (level, oldValue, newValue) =>
                                                              $"You can now see cameras, laser sensors, sentry guns, and gas dispensers through walls when near vent entrances.",
-                                                         SnoopingCanSnoopSecurityBase, SnoopingCanSnoopSecurityFirst, SnoopingCanSnoopSecuritySecond);
+                                                         _snoopingCanSnoopSecurityBase, _snoopingCanSnoopSecurityFirst, _snoopingCanSnoopSecuritySecond);
         
-        SnoopingCanPassTime = new ConfigCache<bool>(false,
+        SnoopingCanPassTime = new ConfigCacheDiskEffect<bool>(false,
                                                     (level, oldValue, newValue) =>
                                                         $"When in air ducts near vents, you can now stare at your watch to pass time faster.",
-                                                    SnoopingCanPassTimeBase, SnoopingCanPassTimeFirst, SnoopingCanPassTimeSecond);
+                                                    _snoopingCanPassTimeBase, _snoopingCanPassTimeFirst, _snoopingCanPassTimeSecond);
     }
 
     private static void ResetSnooping()
     {
-        SnoopingCanSnoopCiviliansBase.Value = (bool)SnoopingCanSnoopCiviliansBase.DefaultValue;
-        SnoopingCanSnoopCiviliansFirst.Value = (bool)SnoopingCanSnoopCiviliansFirst.DefaultValue;
-        SnoopingCanSnoopCiviliansSecond.Value = (bool)SnoopingCanSnoopCiviliansSecond.DefaultValue;
-        SnoopingCanSnoopPeeksBase.Value = (bool)SnoopingCanSnoopPeeksBase.DefaultValue;
-        SnoopingCanSnoopPeeksFirst.Value = (bool)SnoopingCanSnoopPeeksFirst.DefaultValue;
-        SnoopingCanSnoopPeeksSecond.Value = (bool)SnoopingCanSnoopPeeksSecond.DefaultValue;
-        SnoopingCanSnoopSecurityBase.Value = (bool)SnoopingCanSnoopSecurityBase.DefaultValue;
-        SnoopingCanSnoopSecurityFirst.Value = (bool)SnoopingCanSnoopSecurityFirst.DefaultValue;
-        SnoopingCanSnoopSecuritySecond.Value = (bool)SnoopingCanSnoopSecuritySecond.DefaultValue;
-        SnoopingCanPassTimeBase.Value = (bool)SnoopingCanPassTimeBase.DefaultValue;
-        SnoopingCanPassTimeFirst.Value = (bool)SnoopingCanPassTimeFirst.DefaultValue;
-        SnoopingCanPassTimeSecond.Value = (bool)SnoopingCanPassTimeSecond.DefaultValue;
-        SnoopingPassTimeWarpDelay.Value = (float)SnoopingPassTimeWarpDelay.DefaultValue;
-        SnoopingPassTimeNotificationDelay.Value = (float)SnoopingPassTimeNotificationDelay.DefaultValue;
+        _snoopingPassTimeWarpDelay.Value = (float)_snoopingPassTimeWarpDelay.DefaultValue;
+        _snoopingPassTimeNotificationDelay.Value = (float)_snoopingPassTimeNotificationDelay.DefaultValue;
+        _snoopingCanSnoopCiviliansBase.Value = (bool)_snoopingCanSnoopCiviliansBase.DefaultValue;
+        _snoopingCanSnoopCiviliansFirst.Value = (bool)_snoopingCanSnoopCiviliansFirst.DefaultValue;
+        _snoopingCanSnoopCiviliansSecond.Value = (bool)_snoopingCanSnoopCiviliansSecond.DefaultValue;
+        _snoopingCanSnoopPeeksBase.Value = (bool)_snoopingCanSnoopPeeksBase.DefaultValue;
+        _snoopingCanSnoopPeeksFirst.Value = (bool)_snoopingCanSnoopPeeksFirst.DefaultValue;
+        _snoopingCanSnoopPeeksSecond.Value = (bool)_snoopingCanSnoopPeeksSecond.DefaultValue;
+        _snoopingCanSnoopSecurityBase.Value = (bool)_snoopingCanSnoopSecurityBase.DefaultValue;
+        _snoopingCanSnoopSecurityFirst.Value = (bool)_snoopingCanSnoopSecurityFirst.DefaultValue;
+        _snoopingCanSnoopSecuritySecond.Value = (bool)_snoopingCanSnoopSecuritySecond.DefaultValue;
+        _snoopingCanPassTimeBase.Value = (bool)_snoopingCanPassTimeBase.DefaultValue;
+        _snoopingCanPassTimeFirst.Value = (bool)_snoopingCanPassTimeFirst.DefaultValue;
+        _snoopingCanPassTimeSecond.Value = (bool)_snoopingCanPassTimeSecond.DefaultValue;
     }
 }

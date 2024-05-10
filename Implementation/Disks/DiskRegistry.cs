@@ -59,11 +59,11 @@ public static class DiskRegistry
         }
     }
 
-    private static string GetDiskLevelDescription(int level, params ConfigCache[] caches)
+    private static string GetDiskLevelDescription(int level, params ConfigCacheDiskEffect[] caches)
     {
         CacheDescriptions.Clear();
 
-        foreach (ConfigCache cache in caches)
+        foreach (ConfigCacheDiskEffect cache in caches)
         {
             if (cache.GetDescriptionRelevant(level))
             {

@@ -8,16 +8,25 @@ public static partial class VentrixConfig
 {
     private const string ExpectedVersion = "af2cfc5492bd478c9e7ccda801b1151c";
     
+    // These aren't used often and they are needed immediately so I'm not tangling them up in caches.
     public static ConfigEntry<bool> Enabled;
     public static ConfigEntry<string> Version;
     
-    public static ConfigEntry<bool> MobilityEnabled;
-    public static ConfigEntry<bool> ReconEnabled;
-    public static ConfigEntry<bool> MischiefEnabled;
+    public static ConfigCacheSimple<bool> MobilityEnabled;
+    public static ConfigCacheSimple<bool> ReconEnabled;
+    public static ConfigCacheSimple<bool> MischiefEnabled;
+    
+    public static ConfigCacheSimple<bool> AvailableAtLegitSyncDiskClinics;
+    public static ConfigCacheSimple<bool> AvailableAtShadySyncDiskClinics;
+    public static ConfigCacheSimple<bool> AvailableAtBlackMarkets;
+    
+    private static ConfigEntry<bool> _mobilityEnabled;
+    private static ConfigEntry<bool> _reconEnabled;
+    private static ConfigEntry<bool> _mischiefEnabled;
 
-    public static ConfigEntry<bool> AvailableAtLegitSyncDiskClinics;
-    public static ConfigEntry<bool> AvailableAtShadySyncDiskClinics;
-    public static ConfigEntry<bool> AvailableAtBlackMarkets;
+    private static ConfigEntry<bool> _availableAtLegitSyncDiskClinics;
+    private static ConfigEntry<bool> _availableAtShadySyncDiskClinics;
+    private static ConfigEntry<bool> _availableAtBlackMarkets;
 
     public static void Initialize(ConfigFile config)
     {
@@ -27,22 +36,22 @@ public static partial class VentrixConfig
         Version = config.Bind("1. General", "Version", string.Empty,
                               new ConfigDescription("Ventrix Sync Disks uses this to reset your configuration between major versions. Don't modify it or it will reset your configuration!"));
 
-        MobilityEnabled = config.Bind("1. General", "Vent Mobility Enabled", true,
+        _mobilityEnabled = config.Bind("1. General", "Vent Mobility Enabled", true,
                                               new ConfigDescription("Whether the \"Vent Mobility\" sync disk is in the game."));
         
-        ReconEnabled = config.Bind("1. General", "Vent Recon Enabled", true,
+        _reconEnabled = config.Bind("1. General", "Vent Recon Enabled", true,
                                       new ConfigDescription("Whether the \"Vent Recon\" sync disk is in the game."));
         
-        MischiefEnabled = config.Bind("1. General", "Vent Mischief Enabled", true,
+        _mischiefEnabled = config.Bind("1. General", "Vent Mischief Enabled", true,
                                       new ConfigDescription("Whether the \"Vent Mischief\" sync disk is in the game."));
 
-        AvailableAtLegitSyncDiskClinics = config.Bind("1. General", "Available At Legit Sync Disk Clinics", false,
+        _availableAtLegitSyncDiskClinics = config.Bind("1. General", "Available At Legit Sync Disk Clinics", false,
                                                       new ConfigDescription("Whether Ventrix Industries sync disks are sold at legitimate sync disk clinics."));
         
-        AvailableAtShadySyncDiskClinics = config.Bind("1. General", "Available At Shady Sync Disk Clinics", true,
+        _availableAtShadySyncDiskClinics = config.Bind("1. General", "Available At Shady Sync Disk Clinics", true,
                                                  new ConfigDescription("Whether Ventrix Industries sync disks are sold at black market sync disk clinics."));
         
-        AvailableAtBlackMarkets = config.Bind("1. General", "Available At Black Markets", false,
+        _availableAtBlackMarkets = config.Bind("1. General", "Available At Black Markets", false,
                                               new ConfigDescription("Whether Ventrix Industries sync disks are sold at black markets."));
         
         InitializeScooting(config);
@@ -54,14 +63,16 @@ public static partial class VentrixConfig
         InitializeRendering(config);
         
         ProcessUpgrades();
-        
-        SetupScootingCaches();
-        SetupParkourCaches();
-        SetupMappingCaches();
-        SetupSnoopingCaches();
-        SetupSpecterCaches();
-        SetupTerrorCaches();
-        
+
+        CacheGeneral();
+        CacheScooting();
+        CacheParkour();
+        CacheMapping();
+        CacheSnooping();
+        CacheSpecter();
+        CacheTerror();
+        CacheRendering();
+
         Utilities.Log("VentrixConfig has initialized!", LogLevel.Debug);
     }
 
@@ -77,24 +88,35 @@ public static partial class VentrixConfig
         Reset();
     }
 
+    private static void CacheGeneral()
+    {
+        MobilityEnabled = new ConfigCacheSimple<bool>(_mobilityEnabled);
+        ReconEnabled = new ConfigCacheSimple<bool>(_reconEnabled);
+        MischiefEnabled = new ConfigCacheSimple<bool>(_mischiefEnabled);
+        AvailableAtLegitSyncDiskClinics = new ConfigCacheSimple<bool>(_availableAtLegitSyncDiskClinics);
+        AvailableAtShadySyncDiskClinics = new ConfigCacheSimple<bool>(_availableAtShadySyncDiskClinics);
+        AvailableAtBlackMarkets = new ConfigCacheSimple<bool>(_availableAtBlackMarkets);
+    }
+
     private static void Reset()
     {
         Enabled.Value = (bool)Enabled.DefaultValue;
-        MobilityEnabled.Value = (bool)MobilityEnabled.DefaultValue;
-        ReconEnabled.Value = (bool)ReconEnabled.DefaultValue;
-        MischiefEnabled.Value = (bool)MischiefEnabled.DefaultValue;
-        AvailableAtLegitSyncDiskClinics.Value = (bool)AvailableAtLegitSyncDiskClinics.DefaultValue;
-        AvailableAtShadySyncDiskClinics.Value = (bool)AvailableAtShadySyncDiskClinics.DefaultValue;
-        AvailableAtBlackMarkets.Value = (bool)AvailableAtBlackMarkets.DefaultValue;
+        _mobilityEnabled.Value = (bool)_mobilityEnabled.DefaultValue;
+        _reconEnabled.Value = (bool)_reconEnabled.DefaultValue;
+        _mischiefEnabled.Value = (bool)_mischiefEnabled.DefaultValue;
+        _availableAtLegitSyncDiskClinics.Value = (bool)_availableAtLegitSyncDiskClinics.DefaultValue;
+        _availableAtShadySyncDiskClinics.Value = (bool)_availableAtShadySyncDiskClinics.DefaultValue;
+        _availableAtBlackMarkets.Value = (bool)_availableAtBlackMarkets.DefaultValue;
 
         ResetScooting();
         ResetParkour();
         
         ResetMapping();
-        ResetRendering();
         ResetSnooping();
         
         ResetSpecter();
         ResetTerror();
+        
+        ResetRendering();
     }
 }

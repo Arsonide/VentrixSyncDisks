@@ -8,9 +8,7 @@ namespace VentrixSyncDisks.Implementation.Mapping;
 public class DuctMarkerPool : BasePoolManager<DuctMarker>
 {
     public static DuctMarkerPool Instance;
-    public static float MarkerSpawnTime = 0.2f;
-    public static float MarkerDespawnTime = 0.2f;
-    
+
     private static Material NormalDuctMaterial;
     private static Material PeekDuctMaterial;
     private static Material NormalVentMaterial;
@@ -25,22 +23,19 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
         int zWrite = Shader.PropertyToID("_ZWrite");
          
         NormalDuctMaterial = new Material(unlitShader);
-        NormalDuctMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.MappingNodeColorNormal.Value));
+        NormalDuctMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.RenderingNodeColorNormal.Value));
         NormalDuctMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
         NormalDuctMaterial.SetInt(zWrite, 0);
 
         PeekDuctMaterial = new Material(unlitShader);
-        PeekDuctMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.MappingNodeColorPeek.Value));
+        PeekDuctMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.RenderingNodeColorPeek.Value));
         PeekDuctMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
         PeekDuctMaterial.SetInt(zWrite, 0);
         
         NormalVentMaterial = new Material(unlitShader);
-        NormalVentMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.MappingNodeColorVent.Value));
+        NormalVentMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.RenderingNodeColorVent.Value));
         NormalVentMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
         NormalVentMaterial.SetInt(zWrite, 0);
-        
-        MarkerSpawnTime = VentrixConfig.MappingNodeSpawnTime.Value;
-        MarkerDespawnTime = VentrixConfig.MappingNodeDespawnTime.Value;
     }
 
     protected override DuctMarker CreateBaseObject()
