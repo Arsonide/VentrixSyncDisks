@@ -12,7 +12,7 @@ At Ventrix Industries, we pride ourselves on being more than just a company; we'
 
 ## Your Toolbox
 
-Next up, let's break down your toolbox. We'll explore the specifics of each sync disk, each equipped with two unique but related upgrade paths to boost your efficiency in the field.
+Next up, let's dissect your toolbox. We'll dive into the nitty-gritty of each sync disk, each equipped with two unique but related upgrade paths designed to improve your vent maintenance efficiency in the field. Because a more efficient technician is our best asset in maximizing customer satisfaction (and our bottom line).
 
 ### Vent Mobility
 
@@ -28,7 +28,7 @@ Next up, let's break down your toolbox. We'll explore the specifics of each sync
 
 ### Vent Mischief
 
-* **Shaft Specter**: Avoid disturbing customers with footsteps or chattering teeth during long maintenance sessions - this disk dramatically lowers the chance of you making noises when as you move through vents, and makes you immune to the cold while performing vent maintenance.
+* **Shaft Specter**: Avoid disturbing customers with footsteps or chattering teeth during long maintenance sessions - this disk dramatically lowers the chance of you making noises as you move through vents, and makes you immune to the cold while performing vent maintenance.
 
 * **Tunnel Terror**: This disk was designed for breaking out of vents in toxic gas emergencies. It lets you loudly burst forth from air vents in a way that will probably startle onlooking customers in private areas. It also makes you immune to toxic gas in vents. Use with caution - this disk may unleash your inner vent goblin.
 
