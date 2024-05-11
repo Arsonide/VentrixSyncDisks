@@ -31,6 +31,8 @@ public static partial class VentrixConfig
     public static ConfigCacheSimple<bool> AvailableAtShadySyncDiskClinics;
     public static ConfigCacheSimple<bool> AvailableAtBlackMarkets;
     
+    public static ConfigCacheSimple<bool> VentVerticalMovementEnabled;
+
     private static ConfigEntry<bool> _mobilityEnabled;
     private static ConfigEntry<bool> _reconEnabled;
     private static ConfigEntry<bool> _mischiefEnabled;
@@ -38,6 +40,8 @@ public static partial class VentrixConfig
     private static ConfigEntry<bool> _availableAtLegitSyncDiskClinics;
     private static ConfigEntry<bool> _availableAtShadySyncDiskClinics;
     private static ConfigEntry<bool> _availableAtBlackMarkets;
+
+    private static ConfigEntry<bool> _ventVerticalMovementEnabled;
 
     public static void Initialize(ConfigFile config)
     {
@@ -66,6 +70,9 @@ public static partial class VentrixConfig
         
         _availableAtBlackMarkets = config.Bind(section, "Available At Black Market Traders", false,
                                                new ConfigDescription("The sync disks appear in the world, but with this, they will also be purchasable at black market traders."));
+        
+        _ventVerticalMovementEnabled = config.Bind(section, "Vent Vertical Movement Enabled", true,
+                                                   new ConfigDescription("Whether you can now use the jump and crouch keys to move up and down in vents."));
         
         InitializeScooting(config);
         InitializeParkour(config);
@@ -109,6 +116,7 @@ public static partial class VentrixConfig
         AvailableAtLegitSyncDiskClinics = new ConfigCacheSimple<bool>(_availableAtLegitSyncDiskClinics);
         AvailableAtShadySyncDiskClinics = new ConfigCacheSimple<bool>(_availableAtShadySyncDiskClinics);
         AvailableAtBlackMarkets = new ConfigCacheSimple<bool>(_availableAtBlackMarkets);
+        VentVerticalMovementEnabled = new ConfigCacheSimple<bool>(_ventVerticalMovementEnabled);
     }
 
     private static void Reset()
@@ -120,6 +128,7 @@ public static partial class VentrixConfig
         _availableAtLegitSyncDiskClinics.Value = (bool)_availableAtLegitSyncDiskClinics.DefaultValue;
         _availableAtShadySyncDiskClinics.Value = (bool)_availableAtShadySyncDiskClinics.DefaultValue;
         _availableAtBlackMarkets.Value = (bool)_availableAtBlackMarkets.DefaultValue;
+        _ventVerticalMovementEnabled.Value = (bool)_ventVerticalMovementEnabled.DefaultValue;
 
         ResetScooting();
         ResetParkour();

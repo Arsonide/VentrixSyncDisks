@@ -74,6 +74,7 @@ You will see many options that say (All Upgrades) below, this is just to keep th
 - **Available At Legit Sync Disk Clinics**: The sync disks appear in the world, but with this, they will also be purchasable at legitimate sync clinics.
 - **Available At Shady Sync Disk Clinics**: The sync disks appear in the world, but with this, they will also be purchasable at black market sync clinics.
 - **Available At Black Market Traders**: The sync disks appear in the world, but with this, they will also be purchasable at black market traders.
+- **Vent Vertical Movement Enabled**: Whether you can now use the jump and crouch keys to move up and down in vents.
 
 ---
 

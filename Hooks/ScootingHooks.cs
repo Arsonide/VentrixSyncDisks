@@ -2,6 +2,7 @@
 
 using HarmonyLib;
 using UnityEngine;
+using VentrixSyncDisks.Implementation.Common;
 using VentrixSyncDisks.Implementation.Config;
 using VentrixSyncDisks.Implementation.Disks;
 
@@ -20,26 +21,7 @@ public class ScootingHooks
                 return true;
             }
 
-            if (VentrixPlugin.JumpPressed || VentrixPlugin.CrouchPressed)
-            {
-                Transform cam = Camera.main?.transform;
-                float speed = Player.Instance.fps.m_WalkSpeed * 0.3f;
-                speed *= StatusController.Instance.movementSpeedMultiplier;
-                speed *= Game.Instance.movementSpeed;
-                speed *= Time.smoothDeltaTime;
-
-                if (cam != null)
-                {
-                    if (VentrixPlugin.JumpPressed)
-                    {
-                        motion += cam.up * speed;
-                    }
-                    else
-                    {
-                        motion += -cam.up * speed;
-                    }
-                }
-            }
+            HandleVerticalMovement(ref motion);
 
             int level = DiskRegistry.ScootingDisk.Level;
 
@@ -59,6 +41,40 @@ public class ScootingHooks
             return true;
 
 #pragma warning restore 0162
+        }
+
+        private static void HandleVerticalMovement(ref Vector3 motion)
+        {
+            if (!VentrixConfig.VentVerticalMovementEnabled.Value)
+            {
+                return;
+            }
+            
+            if (!InputManager.JumpPressed && !InputManager.CrouchPressed)
+            {
+                return;
+            }
+
+            Transform cam = Camera.main?.transform;
+            
+            if (cam == null)
+            {
+                return;
+            }
+            
+            float speed = Player.Instance.fps.m_WalkSpeed * 0.3f;
+            speed *= StatusController.Instance.movementSpeedMultiplier;
+            speed *= Game.Instance.movementSpeed;
+            speed *= Time.smoothDeltaTime;
+            
+            if (InputManager.JumpPressed)
+            {
+                motion += cam.up * speed;
+            }
+            else
+            {
+                motion += -cam.up * speed;
+            }
         }
     }
 }

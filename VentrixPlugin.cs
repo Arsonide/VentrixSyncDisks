@@ -17,9 +17,6 @@ namespace VentrixSyncDisks;
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 public class VentrixPlugin : PluginController<VentrixPlugin>
 {
-    public static bool JumpPressed;
-    public static bool CrouchPressed;
-
     public static Action OnLoaded;
     
     public override void Load()
@@ -58,12 +55,10 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
         DiskRegistry.Initialize();
         SnoopManager.Initialize();
         FreakoutManager.Initialize();
+        InputManager.Initialize();
         
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
         Lib.SaveGame.OnAfterLoad += OnAfterLoad;
-
-        Lib.InputDetection.OnButtonStateChanged -= OnButtonStateChanged;
-        Lib.InputDetection.OnButtonStateChanged += OnButtonStateChanged;
     }
 
     private void Uninitialize()
@@ -86,9 +81,9 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
         DiskRegistry.Uninitialize();
         SnoopManager.Uninitialize();
         FreakoutManager.Uninitialize();
+        InputManager.Uninitialize();
         
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
-        Lib.InputDetection.OnButtonStateChanged -= OnButtonStateChanged;
     }
 
     private void OnAfterLoad(object sender, SaveGameArgs e)
@@ -114,18 +109,5 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
         Timer.Create();
 
         OnLoaded?.Invoke();
-    }
-    
-    private void OnButtonStateChanged(object sender, InputDetectionEventArgs args)
-    {
-        switch (args.Key)
-        {
-            case InteractablePreset.InteractionKey.jump:
-                JumpPressed = args.IsDown;
-                break;
-            case InteractablePreset.InteractionKey.crouch:
-                CrouchPressed = args.IsDown;
-                break;
-        }
     }
 }
