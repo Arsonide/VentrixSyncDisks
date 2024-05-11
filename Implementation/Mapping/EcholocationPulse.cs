@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
+using VentrixSyncDisks.Hooks;
 using VentrixSyncDisks.Implementation.Common;
 using VentrixSyncDisks.Implementation.Config;
 using VentrixSyncDisks.Implementation.Disks;
@@ -12,6 +13,8 @@ namespace VentrixSyncDisks.Implementation.Mapping;
 
 public class EcholocationPulse : BasePoolObject
 {
+    private static AudioController.SoundMaterialOverride _coinMaterial = new AudioController.SoundMaterialOverride(0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f, 0f);
+    
     private Coroutine _pulseCoroutine;
     private DuctExplorer _explorer = new DuctExplorer();
 
@@ -64,6 +67,14 @@ public class EcholocationPulse : BasePoolObject
         for (int i = 0; i < pulseRange; ++i)
         {
             List<DuctExplorerTick> results = _explorer.TickExploration(startDuct);
+
+            if (VentrixConfig.MappingEcholocationSoundVolume.Value > float.Epsilon)
+            {
+                if (i % 2 == 0)
+                {
+                    PlayCoinSound((1f - ((float)i / (float)pulseRange)) * VentrixConfig.MappingEcholocationSoundVolume.Value);
+                }
+            }
 
             foreach (DuctExplorerTick result in results)
             {
@@ -120,5 +131,22 @@ public class EcholocationPulse : BasePoolObject
         {
             DuctMarkerPool.Instance.CreateMarker(directionalType, position + new Vector3(0f, VentrixConfig.RenderingDirectionalNodeOffset.Value, 0f), directionalScaleY, pulseDuration);
         }
+    }
+
+    private void PlayCoinSound(float volume)
+    {
+        if (MappingHooks.CoinImpactPhysicsProfile == null)
+        {
+            return;
+        }
+        
+        Transform cam = Camera.main?.transform;
+
+        if (cam == null)
+        {
+            return;
+        }
+        
+        AudioController.Instance.PlayWorldOneShot(MappingHooks.CoinImpactPhysicsProfile.physicsCollisionAudio, Player.Instance, Player.Instance.currentNode, cam.position, null, null, volume, null, true, _coinMaterial);
     }
 }

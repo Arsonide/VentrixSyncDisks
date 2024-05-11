@@ -97,6 +97,7 @@ You will see many options that say (All Upgrades) below, this is just to keep th
 - **Echolocation Speed (All Upgrades)**: How quickly your echolocation pulse travels down vents with each upgrade.
 - **Echolocation Duration (All Upgrades)**: How long it takes for your echolocation pulse to expire with each upgrade.
 - **Coin Duration Multiplier (All Upgrades)**: A multiplier on echolocation duration while holding a coin with each upgrade.
+- **Echolocation Sound Volume**: How loud the coin sounds that play during echolocation pulses are. Set to zero to turn them off.
 
 ---
 

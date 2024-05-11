@@ -9,6 +9,8 @@ public static partial class VentrixConfig
     private const string NAME_SHORT_MAPPING = "Mapping";
     private const int ID_MAPPING = 4;
     
+    public static ConfigCacheSimple<float> MappingEcholocationSoundVolume;
+
     public static ConfigCacheDiskEffect<int> MappingEcholocationRange;
     public static ConfigCacheDiskEffect<float> MappingEcholocationSpeed;
     public static ConfigCacheDiskEffect<float> MappingEcholocationDuration;
@@ -29,6 +31,8 @@ public static partial class VentrixConfig
     private static ConfigEntry<float> _mappingCoinMultiplierBase;
     private static ConfigEntry<float> _mappingCoinMultiplierFirst;
     private static ConfigEntry<float> _mappingCoinMultiplierSecond;
+
+    private static ConfigEntry<float> _mappingEcholocationSoundVolume;
 
     private static void InitializeMapping(ConfigFile config)
     {
@@ -81,10 +85,15 @@ public static partial class VentrixConfig
         
         _mappingCoinMultiplierSecond = config.Bind(section, $"{COIN_DURATION_MULTIPLIER_TITLE} {LEVEL_3_TITLE}", 0.1f,
                                                   new ConfigDescription($"{COIN_DURATION_MULTIPLIER_DESCRIPTION} {LEVEL_3_DESCRIPTION} {NAME_SHORT_MAPPING}."));
+        
+        _mappingEcholocationSoundVolume = config.Bind(section, "Echolocation Sound Volume", 0.2f,
+                                                 new ConfigDescription("How loud the coin sounds that play during echolocation pulses are. Set to zero to turn them off."));
     }
     
     private static void CacheMapping()
     {
+        MappingEcholocationSoundVolume = new ConfigCacheSimple<float>(_mappingEcholocationSoundVolume);
+
         MappingEcholocationRange = new ConfigCacheDiskEffect<int>(-1,
                                                         GetEcholocationRangeDescription,
                                                         _mappingEcholocationRangeBase, _mappingEcholocationRangeFirst, _mappingEcholocationRangeSecond);
@@ -105,6 +114,7 @@ public static partial class VentrixConfig
 
     private static void ResetMapping()
     {
+        _mappingEcholocationSoundVolume.Value = (float)_mappingEcholocationSoundVolume.DefaultValue;
         _mappingEcholocationRangeBase.Value = (int)_mappingEcholocationRangeBase.DefaultValue;
         _mappingEcholocationRangeFirst.Value = (int)_mappingEcholocationRangeFirst.DefaultValue;
         _mappingEcholocationRangeSecond.Value = (int)_mappingEcholocationRangeSecond.DefaultValue;
