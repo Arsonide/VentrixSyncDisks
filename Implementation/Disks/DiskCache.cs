@@ -7,14 +7,6 @@ namespace VentrixSyncDisks.Implementation.Disks;
 
 public class DiskCache
 {
-    public bool IsInstalled
-    {
-        get
-        {
-            return Level > 0;
-        }
-    }
-
     public int Level
     {
         get

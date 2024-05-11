@@ -86,7 +86,7 @@ public class VentrixPlugin : PluginController<VentrixPlugin>
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
     }
 
-    private void OnAfterLoad(object sender, SaveGameArgs e)
+    private void OnAfterLoad(object sender, SaveGameArgs args)
     {
         if (EcholocationPulsePool.Instance == null)
         {

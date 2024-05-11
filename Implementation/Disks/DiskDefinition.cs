@@ -49,7 +49,7 @@ public class DiskDefinition
         builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketTrader);
         builder.AddSaleLocation(SyncDiskBuilder.SyncDiskSaleLocation.BlackmarketSyncClinic);
 #else
-        builder.SetPrice(1000);
+        builder.SetPrice(Price);
         builder.SetRarity(SyncDiskPreset.Rarity.medium);
 
         if (VentrixConfig.AvailableAtLegitSyncDiskClinics.Value)

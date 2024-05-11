@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BepInEx.Logging;
 using UnityEngine;
+using System;
 
 namespace VentrixSyncDisks.Implementation.Common;
 
@@ -65,15 +66,15 @@ public static class Utilities
         {
             return Color.white;
         }
-
-        byte a = 255;
-
-        if (!byte.TryParse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber, null, out byte r) ||
-            !byte.TryParse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber, null, out byte g) ||
-            !byte.TryParse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber, null, out byte b))
+        
+        if (!byte.TryParse(hex.AsSpan(0, 2), System.Globalization.NumberStyles.HexNumber, null, out byte r) ||
+            !byte.TryParse(hex.AsSpan(2, 2), System.Globalization.NumberStyles.HexNumber, null, out byte g) ||
+            !byte.TryParse(hex.AsSpan(4, 2), System.Globalization.NumberStyles.HexNumber, null, out byte b))
         {
             return Color.white;
         }
+
+        byte a = 255;
 
         if (hex.Length == 8 && !byte.TryParse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber, null, out a))
         {
@@ -216,7 +217,7 @@ public static class Utilities
 	    return null;
     }
     
-    private static AirDuctGroup.AirVent FindWallVent(NewNode foundNode, NewNode ductNode) // foundNode, thisDuct.node
+    private static AirDuctGroup.AirVent FindWallVent(NewNode foundNode, NewNode ductNode)
     {
 	    foreach (AirDuctGroup.AirVent vent in foundNode.room.airVents)
 	    {

@@ -7,9 +7,6 @@ namespace VentrixSyncDisks.Implementation.Snooping;
 
 public static class SnoopWarp
 {
-    private static float _warpDelay = 10f;
-    private static float _notificationDelay = 5f;
-    
     private static SnoopWarpState _state = SnoopWarpState.None;
     private static float _timer;
     private static bool _notification;
@@ -19,9 +16,6 @@ public static class SnoopWarp
         Lib.SaveGame.OnAfterLoad -= OnAfterLoad;
         Lib.SaveGame.OnAfterLoad += OnAfterLoad;
 
-        _warpDelay = VentrixConfig.SnoopingPassTimeWarpDelay.Value;
-        _notificationDelay = VentrixConfig.SnoopingPassTimeNotificationDelay.Value;
-        
         Reset();
     }
     
@@ -67,13 +61,13 @@ public static class SnoopWarp
             case SnoopWarpState.Engaging:
                 _timer += UnityEngine.Time.deltaTime;
 
-                if (!_notification && _notificationDelay > 0 && _timer >= _notificationDelay)
+                if (!_notification && VentrixConfig.SnoopingPassTimeNotificationDelay.Value > 0 && _timer >= VentrixConfig.SnoopingPassTimeNotificationDelay.Value)
                 {
                     InterfaceController.Instance.NewGameMessage(InterfaceController.GameMessageType.notification, 0, "Starting to pass time at vent...");
                     _notification = true;
                 }
                 
-                if (_timer >= _warpDelay)
+                if (_timer >=  VentrixConfig.SnoopingPassTimeWarpDelay.Value)
                 {
                     SetState(SnoopWarpState.TimeWarping);
                 }

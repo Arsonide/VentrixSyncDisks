@@ -9,7 +9,7 @@ public class SpecterHooks
     [HarmonyPatch(typeof(AudioController), "PlayWorldFootstep")]
     public class AudioControllerPlayWorldFootstepHook
     {
-        private static System.Random _rand = new System.Random();
+        private static readonly System.Random _rand = new System.Random();
 
         [HarmonyPrefix]
         private static bool Prefix(AudioController __instance, ref bool __result, AudioEvent eventPreset, Actor actor, bool rightFoot = false)
