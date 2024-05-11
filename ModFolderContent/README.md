@@ -71,6 +71,9 @@ You will see many options that say (All Upgrades) below, this is just to keep th
 - **Vent Mobility Enabled**: Whether or not the "Vent Mobility" sync disk is available in the game.
 - **Vent Recon Enabled**: Whether or not the "Vent Recon" sync disk is available in the game.
 - **Vent Mischief Enabled**: Whether or not the "Vent Mischief" sync disk is available in the game.
+- **Vent Mobility Price**: The price of the "Vent Mobility" sync disk at vendors.
+- **Vent Recon Price**: The price of the "Vent Recon" sync disk at vendors.
+- **Vent Mischief Price**: The price of the "Vent Mischief" sync disk at vendors.
 - **Available At Legit Sync Disk Clinics**: The sync disks appear in the world, but with this, they will also be purchasable at legitimate sync clinics.
 - **Available At Shady Sync Disk Clinics**: The sync disks appear in the world, but with this, they will also be purchasable at black market sync clinics.
 - **Available At Black Market Traders**: The sync disks appear in the world, but with this, they will also be purchasable at black market traders.

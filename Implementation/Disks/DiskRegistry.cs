@@ -209,6 +209,7 @@ public static class DiskRegistry
         DiskDefinition mobilityDisk = new DiskDefinition
         {
             Name = "Vent Mobility",
+            Price = VentrixConfig.MobilityPrice.Value,
         };
 
         // Effect A Properties
@@ -253,6 +254,7 @@ public static class DiskRegistry
         DiskDefinition reconDisk = new DiskDefinition
         {
             Name = "Vent Recon",
+            Price = VentrixConfig.ReconPrice.Value,
         };
 
         // Effect A Properties
@@ -297,6 +299,7 @@ public static class DiskRegistry
         DiskDefinition mischiefDisk = new DiskDefinition
         {
             Name = "Vent Mischief",
+            Price = VentrixConfig.MischiefPrice.Value,
         };
 
         // Effect A Properties

@@ -28,6 +28,10 @@ public static partial class VentrixConfig
     public static ConfigCacheSimple<bool> ReconEnabled;
     public static ConfigCacheSimple<bool> MischiefEnabled;
     
+    public static ConfigCacheSimple<int> MobilityPrice;
+    public static ConfigCacheSimple<int> ReconPrice;
+    public static ConfigCacheSimple<int> MischiefPrice;
+    
     public static ConfigCacheSimple<bool> AvailableAtLegitSyncDiskClinics;
     public static ConfigCacheSimple<bool> AvailableAtShadySyncDiskClinics;
     public static ConfigCacheSimple<bool> AvailableAtBlackMarkets;
@@ -37,6 +41,10 @@ public static partial class VentrixConfig
     private static ConfigEntry<bool> _mobilityEnabled;
     private static ConfigEntry<bool> _reconEnabled;
     private static ConfigEntry<bool> _mischiefEnabled;
+
+    private static ConfigEntry<int> _mobilityPrice;
+    private static ConfigEntry<int> _reconPrice;
+    private static ConfigEntry<int> _mischiefPrice;
 
     private static ConfigEntry<bool> _availableAtLegitSyncDiskClinics;
     private static ConfigEntry<bool> _availableAtShadySyncDiskClinics;
@@ -63,6 +71,15 @@ public static partial class VentrixConfig
         _mischiefEnabled = config.Bind(section, "Vent Mischief Enabled", true,
                                        new ConfigDescription("Whether or not the \"Vent Mischief\" sync disk is available in the game."));
 
+        _mobilityPrice = config.Bind(section, "Vent Mobility Price", 750,
+                                       new ConfigDescription("The price of the \"Vent Mobility\" sync disk at vendors."));
+        
+        _reconPrice = config.Bind(section, "Vent Recon Price", 750,
+                                    new ConfigDescription("The price of the \"Vent Recon\" sync disk at vendors."));
+        
+        _mischiefPrice = config.Bind(section, "Vent Mischief Price", 750,
+                                       new ConfigDescription("The price of the \"Vent Mischief\" sync disk at vendors."));
+        
         _availableAtLegitSyncDiskClinics = config.Bind(section, "Available At Legit Sync Disk Clinics", false,
                                                        new ConfigDescription("The sync disks appear in the world, but with this, they will also be purchasable at legitimate sync clinics."));
         
@@ -114,6 +131,9 @@ public static partial class VentrixConfig
         MobilityEnabled = new ConfigCacheSimple<bool>(_mobilityEnabled);
         ReconEnabled = new ConfigCacheSimple<bool>(_reconEnabled);
         MischiefEnabled = new ConfigCacheSimple<bool>(_mischiefEnabled);
+        MobilityPrice = new ConfigCacheSimple<int>(_mobilityPrice);
+        ReconPrice = new ConfigCacheSimple<int>(_reconPrice);
+        MischiefPrice = new ConfigCacheSimple<int>(_mischiefPrice);
         AvailableAtLegitSyncDiskClinics = new ConfigCacheSimple<bool>(_availableAtLegitSyncDiskClinics);
         AvailableAtShadySyncDiskClinics = new ConfigCacheSimple<bool>(_availableAtShadySyncDiskClinics);
         AvailableAtBlackMarkets = new ConfigCacheSimple<bool>(_availableAtBlackMarkets);
@@ -126,6 +146,9 @@ public static partial class VentrixConfig
         _mobilityEnabled.Value = (bool)_mobilityEnabled.DefaultValue;
         _reconEnabled.Value = (bool)_reconEnabled.DefaultValue;
         _mischiefEnabled.Value = (bool)_mischiefEnabled.DefaultValue;
+        _mobilityPrice.Value = (int)_mobilityPrice.DefaultValue;
+        _reconPrice.Value = (int)_reconPrice.DefaultValue;
+        _mischiefPrice.Value = (int)_mischiefPrice.DefaultValue;
         _availableAtLegitSyncDiskClinics.Value = (bool)_availableAtLegitSyncDiskClinics.DefaultValue;
         _availableAtShadySyncDiskClinics.Value = (bool)_availableAtShadySyncDiskClinics.DefaultValue;
         _availableAtBlackMarkets.Value = (bool)_availableAtBlackMarkets.DefaultValue;
