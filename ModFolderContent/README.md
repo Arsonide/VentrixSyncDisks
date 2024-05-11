@@ -147,4 +147,4 @@ You will see many options that say (All Upgrades) below, this is just to keep th
 - **Node Despawn Time**: When rendering vent networks, when nodes expire, how long it takes for them to shrink and disappear.
 
 ## License
-All code in this project is distributed under the MIT License. Feel free to use, modify, and distribute as needed. That license can be found in **License.txt**. Attribution and licenses for all third party libraries and assets used in the creation of Ventrix Sync Disks can be found in **Attribution.txt**.
+All code in this project is distributed under the MIT License. Feel free to use, modify, and distribute as needed. That license can be found in **License.txt**.
