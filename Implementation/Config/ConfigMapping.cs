@@ -99,16 +99,16 @@ public static partial class VentrixConfig
                                                         _mappingEcholocationRangeBase, _mappingEcholocationRangeFirst, _mappingEcholocationRangeSecond);
 
         MappingEcholocationSpeed = new ConfigCacheDiskEffect<float>(0.1f,
-                                                          (level, oldValue, newValue) => $"Your \"echolocation\" pulses now travel {Utilities.MultiplierForDescription(newValue / oldValue, "slower", "faster", out string description)}% {description}.",
+                                                          (level, oldValue, newValue) => $"Your \"echolocation\" pulses now travel {Utilities.DirectMultiplierDescription(newValue / oldValue, "slower", "faster", out string description)}% {description}.",
                                                           _mappingEcholocationSpeedBase, _mappingEcholocationSpeedFirst, _mappingEcholocationSpeedSecond);
 
         MappingEcholocationDuration = new ConfigCacheDiskEffect<float>(1f,
-                                                             (level, oldValue, newValue) => $"Your \"echolocation\" pulses now expire {Utilities.MultiplierForDescription(newValue / oldValue, "faster", "slower", out string description)}% {description}.",
+                                                             (level, oldValue, newValue) => $"Your \"echolocation\" pulses now expire {Utilities.DirectMultiplierDescription(newValue / oldValue, "faster", "slower", out string description)}% {description}.",
                                                              _mappingEcholocationDurationBase, _mappingEcholocationDurationFirst, _mappingEcholocationDurationSecond);
 
         MappingCoinMultiplier = new ConfigCacheDiskEffect<float>(1f,
                                                        (level, oldValue, newValue) =>
-                                                           $"You remember your \"echolocation\" pulse {Utilities.MultiplierForDescription(newValue, "longer", "shorter", out string description)}% {description} while holding a coin.",
+                                                           $"You remember your \"echolocation\" pulse {Utilities.InverseMultiplierDescription(newValue, "longer", "shorter", out string description)}% {description} while holding a coin.",
                                                        _mappingCoinMultiplierBase, _mappingCoinMultiplierFirst, _mappingCoinMultiplierSecond);
     }
 
@@ -137,7 +137,7 @@ public static partial class VentrixConfig
         }
 
         float change = (float)newValue / (float)oldValue;
-        int percent = Utilities.MultiplierForDescription(change, "smaller", "larger", out string description);
+        int percent = Utilities.DirectMultiplierDescription(change, "smaller", "larger", out string description);
 
         return $"Your \"echolocation\" pulses are now {percent}% {description}.";
     }

@@ -101,7 +101,7 @@ public static partial class VentrixConfig
         
         SnoopingCanSnoopCivilians = new ConfigCacheDiskEffect<bool>(false,
                                                           (level, oldValue, newValue) =>
-                                                              $"You can now see unaware civilians through walls when near vent entrances.",
+                                                              $"You can now see unaware civilians through walls when in air ducts near vents.",
                                                           _snoopingCanSnoopCiviliansBase, _snoopingCanSnoopCiviliansFirst, _snoopingCanSnoopCiviliansSecond);
         
         SnoopingCanSnoopPeeks = new ConfigCacheDiskEffect<bool>(false,
@@ -111,7 +111,7 @@ public static partial class VentrixConfig
         
         SnoopingCanSnoopSecurity = new ConfigCacheDiskEffect<bool>(false,
                                                          (level, oldValue, newValue) =>
-                                                             $"You can now see cameras, laser sensors, sentry guns, and gas dispensers through walls when near vent entrances.",
+                                                             $"You can now see most security devices through walls when in air ducts near vents.",
                                                          _snoopingCanSnoopSecurityBase, _snoopingCanSnoopSecurityFirst, _snoopingCanSnoopSecuritySecond);
         
         SnoopingCanPassTime = new ConfigCacheDiskEffect<bool>(false,

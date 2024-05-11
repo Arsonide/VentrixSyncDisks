@@ -55,7 +55,7 @@ public static partial class VentrixConfig
     private static void CacheSpecter()
     {
         SpecterFootstepChance = new ConfigCacheDiskEffect<float>(1f,
-                                                       (level, oldValue, newValue) => $"You make {Utilities.MultiplierForDescription(newValue, "less", "more", out string description)}% {description} noise moving through vents.",
+                                                       (level, oldValue, newValue) => $"You make {Utilities.DirectMultiplierDescription(newValue, "less", "more", out string description)}% {description} noise moving through vents.",
                                                        _specterFootstepChanceBase, _specterFootstepChanceFirst, _specterFootstepChanceSecond);
         
         SpecterColdImmunity = new ConfigCacheDiskEffect<bool>(false,

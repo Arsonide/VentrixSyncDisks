@@ -35,7 +35,7 @@ public static partial class VentrixConfig
     private static void CacheScooting()
     {
         ScootingSpeedMultiplier = new ConfigCacheDiskEffect<float>(1f,
-                                                         (level, oldValue, newValue) => $"You now move {Utilities.MultiplierForDescription(newValue, "slower", "faster", out string description)}% {description} through vents.",
+                                                         (level, oldValue, newValue) => $"You now move {Utilities.DirectMultiplierDescription(newValue, "slower", "faster", out string description)}% {description} through vents.",
                                                          _scootingSpeedMultiplierBase, _scootingSpeedMultiplierFirst, _scootingSpeedMultiplierSecond);
     }
 

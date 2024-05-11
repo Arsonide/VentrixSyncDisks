@@ -73,7 +73,7 @@ public static partial class VentrixConfig
                                                       _parkourInteractRangeBase, _parkourInteractRangeFirst, _parkourInteractRangeSecond);
         
         ParkourTransitionSpeed = new ConfigCacheDiskEffect<float>(1f,
-                                                        (level, oldValue, newValue) => $"You get in and out of vents {Utilities.MultiplierForDescription(newValue, "faster", "slower", out string description)}% {description}.",
+                                                        (level, oldValue, newValue) => $"You get in and out of vents {Utilities.DirectMultiplierDescription(newValue, "faster", "slower", out string description)}% {description}.",
                                                         _parkourTransitionSpeedBase, _parkourTransitionSpeedFirst, _parkourTransitionSpeedSecond);
         
         ParkourAutoClose = new ConfigCacheDiskEffect<bool>(false,
