@@ -5,7 +5,7 @@ namespace VentrixSyncDisks.Implementation.Pooling;
 
 public class BasePoolManager<T> where T : BasePoolObject
 {
-    private T _baseObject = null;
+    private T _baseObject;
     private string _typeName = string.Empty;
     
     private readonly List<T> _availableObjects = new List<T>();

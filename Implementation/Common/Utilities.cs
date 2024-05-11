@@ -66,11 +66,11 @@ public static class Utilities
             return Color.white;
         }
 
-        byte r = 255, g = 255, b = 255, a = 255;
+        byte a = 255;
 
-        if (!byte.TryParse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber, null, out r) ||
-            !byte.TryParse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber, null, out g) ||
-            !byte.TryParse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber, null, out b))
+        if (!byte.TryParse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber, null, out byte r) ||
+            !byte.TryParse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber, null, out byte g) ||
+            !byte.TryParse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber, null, out byte b))
         {
             return Color.white;
         }
@@ -103,7 +103,7 @@ public static class Utilities
 	
 	public static Vector3 AirDuctToPosition(AirDuctGroup.AirDuctSection airDuct)
 	{
-		return CityData.Instance.NodeToRealpos(airDuct.node.nodeCoord + new Vector3(0f, 0f, (float)airDuct.level * 2f + 1f) / 6f) + new Vector3(0f, InteriorControls.Instance.airDuctYOffset, 0f);
+		return CityData.Instance.NodeToRealpos(airDuct.node.nodeCoord + new Vector3(0f, 0f, airDuct.level * 2f + 1f) / 6f) + new Vector3(0f, InteriorControls.Instance.airDuctYOffset, 0f);
 	}
 	
     public static AirDuctGroup.AirDuctSection PositionToAirDuct(Vector3 position)

@@ -7,13 +7,13 @@ namespace VentrixSyncDisks.Implementation.Common;
 public class Timer : MonoBehaviour
 {
     public static Action OnTick;
-    private static Timer Instance;
+    private static Timer _instance;
     private const float TICK_TIME = 1f;
     private float _timer = TICK_TIME;
 
     public static void Create()
     {
-        if (Instance != null)
+        if (_instance != null)
         {
             return;
         }
@@ -22,7 +22,7 @@ public class Timer : MonoBehaviour
         go.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         Timer timer = go.AddComponent<Timer>();
         DontDestroyOnLoad(go);
-        Instance = timer;
+        _instance = timer;
     }
 
     private void OnEnable()

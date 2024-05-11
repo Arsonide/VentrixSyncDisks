@@ -1,4 +1,4 @@
-﻿#define MOCK_INSTALLATION // Uncomment to pretend the Sync Disk is installed, even if it isn't.
+﻿// #define MOCK_INSTALLATION // Uncomment to pretend the Sync Disk is installed, even if it isn't.
 
 using System.Collections.Generic;
 using SOD.Common.Helpers.SyncDiskObjects;
@@ -7,7 +7,13 @@ namespace VentrixSyncDisks.Implementation.Disks;
 
 public class DiskCache
 {
-    public bool IsInstalled => Level > 0;
+    public bool IsInstalled
+    {
+        get
+        {
+            return Level > 0;
+        }
+    }
 
     public int Level
     {
@@ -25,7 +31,7 @@ public class DiskCache
         }
     }
 
-    private readonly int _effectId = -1;
+    private readonly int _effectId;
     private readonly HashSet<int> _upgradeOptionIds;
     
     private int _level = -1;

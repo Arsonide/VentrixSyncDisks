@@ -11,8 +11,8 @@ public static class SnoopWarp
     private static float _notificationDelay = 5f;
     
     private static SnoopWarpState _state = SnoopWarpState.None;
-    private static float _timer = 0f;
-    private static bool _notification = false;
+    private static float _timer;
+    private static bool _notification;
 
     public static void Initialize()
     {

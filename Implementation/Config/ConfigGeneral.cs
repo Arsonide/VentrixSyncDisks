@@ -1,12 +1,13 @@
 ﻿using BepInEx.Configuration;
 using BepInEx.Logging;
 using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Config.Caches;
 
 namespace VentrixSyncDisks.Implementation.Config;
 
 public static partial class VentrixConfig
 {
-    private const string ExpectedVersion = "af2cfc5492bd478c9e7ccda801b1151c";
+    private const string EXPECTED_VERSION = "e3b0c304664e45b0852a433cd8641f98";
     
     private const string LEVEL_1_TITLE = "(No Upgrades)";
     private const string LEVEL_2_TITLE = "(First Upgrade)";
@@ -21,7 +22,7 @@ public static partial class VentrixConfig
 
     // These aren't used often and they are needed immediately so I'm not tangling them up in caches.
     public static ConfigEntry<bool> Enabled;
-    public static ConfigEntry<string> Version;
+    private static ConfigEntry<string> _version;
     
     public static ConfigCacheSimple<bool> MobilityEnabled;
     public static ConfigCacheSimple<bool> ReconEnabled;
@@ -50,7 +51,7 @@ public static partial class VentrixConfig
         Enabled = config.Bind(section, "Enabled", true,
                               new ConfigDescription("Another method of enabling and disabling Ventrix Sync Disks."));
 
-        Version = config.Bind(section, "Version", string.Empty,
+        _version = config.Bind(section, "Version", string.Empty,
                               new ConfigDescription("Ventrix Sync Disks uses this to reset your configuration between major versions. Don't modify it or it will reset your configuration!"));
 
         _mobilityEnabled = config.Bind(section, "Vent Mobility Enabled", true,
@@ -98,13 +99,13 @@ public static partial class VentrixConfig
 
     private static void ProcessUpgrades()
     {
-        if (Version.Value == ExpectedVersion)
+        if (_version.Value == EXPECTED_VERSION)
         {
             return;
         }
 
         Utilities.Log("Detected either a new installation or a major upgrade of Ventrix Sync Disks, resetting the configuration file!");
-        Version.Value = ExpectedVersion;
+        _version.Value = EXPECTED_VERSION;
         Reset();
     }
 

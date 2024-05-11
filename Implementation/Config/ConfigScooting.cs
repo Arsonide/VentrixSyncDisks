@@ -1,5 +1,6 @@
 ﻿using BepInEx.Configuration;
 using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Config.Caches;
 
 namespace VentrixSyncDisks.Implementation.Config;
 

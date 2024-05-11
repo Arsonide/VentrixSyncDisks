@@ -8,7 +8,7 @@ public class EcholocationPulsePool : BasePoolManager<EcholocationPulse>
 {
     public static EcholocationPulsePool Instance;
     
-    public WaitForSeconds[] PulseDelays = null;
+    public WaitForSeconds[] PulseDelays;
 
     protected override void SetupManager()
     {

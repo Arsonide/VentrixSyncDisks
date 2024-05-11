@@ -1,7 +1,7 @@
 ﻿using System;
 using BepInEx.Configuration;
 
-namespace VentrixSyncDisks.Implementation.Config;
+namespace VentrixSyncDisks.Implementation.Config.Caches;
 
 public abstract class ConfigCacheDiskEffect
 {
@@ -11,10 +11,10 @@ public abstract class ConfigCacheDiskEffect
 
 public class ConfigCacheDiskEffect<T> : ConfigCacheDiskEffect where T : IEquatable<T>
 {
-    private T[] _cachedLevels;
-    private int _maxLevel;
+    private readonly T[] _cachedLevels;
+    private readonly int _maxLevel;
     
-    private Func<int, T, T, string> _descriptionDelegate;
+    private readonly Func<int, T, T, string> _descriptionDelegate;
     
     public ConfigCacheDiskEffect(T defaultValue, Func<int, T, T, string> descriptionDelegate, params ConfigEntry<T>[] levels)
     {

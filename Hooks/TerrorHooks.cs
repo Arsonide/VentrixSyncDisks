@@ -8,7 +8,7 @@ namespace VentrixSyncDisks.Hooks;
 
 public class TerrorHooks
 {
-    private static List<Human> _terrorTargets = new List<Human>();
+    private static readonly List<Human> _terrorTargets = new List<Human>();
     
     [HarmonyPatch(typeof(Player), "ExitVent")]
     public class PlayerExitVentHook

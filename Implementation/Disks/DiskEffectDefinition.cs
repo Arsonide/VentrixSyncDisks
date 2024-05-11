@@ -9,7 +9,7 @@ public class DiskEffectDefinition
     public string Icon = string.Empty;
     public string Description = string.Empty;
 
-    public List<string> Upgrades = new List<string>();
+    public readonly List<string> Upgrades = new List<string>();
 
     public int EffectId = -1;
     public SyncDiskBuilder.OptionIds OptionIds;

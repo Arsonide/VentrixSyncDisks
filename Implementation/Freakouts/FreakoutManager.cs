@@ -10,7 +10,7 @@ namespace VentrixSyncDisks.Implementation.Freakouts;
 
 public static class FreakoutManager
 {
-    private static FreakoutList Freakouts = new FreakoutList();
+    private static FreakoutList _freakouts = new FreakoutList();
     
     public static void Initialize()
     {
@@ -42,33 +42,33 @@ public static class FreakoutManager
             return;
         }
         
-        for (int i = Freakouts.Active.Count - 1; i >= 0; --i)
+        for (int i = _freakouts.Active.Count - 1; i >= 0; --i)
         {
-            Freakout freakout = Freakouts.Active[i];
+            Freakout freakout = _freakouts.Active[i];
             freakout.TicksLeft--;
 
             if (freakout.TicksLeft <= 0 && freakout.TryGetHuman(out Human human))
             {
                 ForceSetNerve(human, freakout.NerveTaken);
-                Freakouts.Active.RemoveAt(i);
+                _freakouts.Active.RemoveAt(i);
             }
         }
     }
 
     private static void OnHourChanged(object sender, TimeChangedArgs args)
     {
-        Freakouts.Hourly.Clear();
+        _freakouts.Hourly.Clear();
     }
     
     public static void StartFreakout(Human human, int seconds)
     {
         // Only scare people once per hour.
-        if (human == null || human.ai == null || Freakouts.Hourly.Contains(human.humanID))
+        if (human == null || human.ai == null || _freakouts.Hourly.Contains(human.humanID))
         {
             return;
         }
         
-        Freakouts.Active.Add(new Freakout()
+        _freakouts.Active.Add(new Freakout()
         {
             HumanID = human.humanID,
             HumanCache = human,
@@ -76,7 +76,7 @@ public static class FreakoutManager
             TicksLeft = seconds,
         });
 
-        Freakouts.Hourly.Add(human.humanID);
+        _freakouts.Hourly.Add(human.humanID);
         ForceSetNerve(human, 0f);
     }
 
@@ -93,7 +93,7 @@ public static class FreakoutManager
 
     private static void ResetDefaults()
     {
-        Freakouts = new FreakoutList();
+        _freakouts = new FreakoutList();
     }
     
     private static void OnAfterSave(object sender, SaveGameArgs args)
@@ -107,7 +107,7 @@ public static class FreakoutManager
                 IncludeFields = true,
             };
             
-            string json = JsonSerializer.Serialize(Freakouts, options);
+            string json = JsonSerializer.Serialize(_freakouts, options);
             File.WriteAllText(path, json);
         }
         catch
@@ -128,7 +128,7 @@ public static class FreakoutManager
                 IncludeFields = true,
             };
             
-            Freakouts = JsonSerializer.Deserialize<FreakoutList>(json, options);
+            _freakouts = JsonSerializer.Deserialize<FreakoutList>(json, options);
         }
         catch
         {

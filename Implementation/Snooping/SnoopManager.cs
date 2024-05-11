@@ -13,9 +13,9 @@ public static class SnoopManager
     public static bool IsSnooping;
     public static NewRoom SnoopingRoom;
 
-    private static List<AirDuctGroup.AirDuctSection> Neighbors = new List<AirDuctGroup.AirDuctSection>();
-    private static List<Vector3Int> NeighborOffsets = new List<Vector3Int>();
-    private static List<AirDuctGroup.AirVent> Vents = new List<AirDuctGroup.AirVent>();
+    private static List<AirDuctGroup.AirDuctSection> _neighbors = new List<AirDuctGroup.AirDuctSection>();
+    private static List<Vector3Int> _neighborOffsets = new List<Vector3Int>();
+    private static List<AirDuctGroup.AirVent> _vents = new List<AirDuctGroup.AirVent>();
     
     public static void Initialize()
     {
@@ -102,15 +102,15 @@ public static class SnoopManager
             return section.node?.room;
         }
         
-        Utilities.GetVentInformation(section, ref Neighbors, ref NeighborOffsets, ref Vents);
+        Utilities.GetVentInformation(section, ref _neighbors, ref _neighborOffsets, ref _vents);
 
-        if (Vents.Count <= 0)
+        if (_vents.Count <= 0)
         {
             return null;
         }
 
         // Apparently parts of vent an be unassigned, sometimes...not all the time. Just search a variety of sources for a stupid room.
-        AirDuctGroup.AirVent vent = Vents[0];
+        AirDuctGroup.AirVent vent = _vents[0];
         NewRoom roomNode = vent?.roomNode?.room;
 
         if (roomNode != null)
@@ -125,7 +125,7 @@ public static class SnoopManager
             return ventRoom;
         }
 
-        return section?.node?.room;
+        return section.node?.room;
     }
 
     public static void OnActorRoomChanged(Actor actor)
@@ -188,7 +188,7 @@ public static class SnoopManager
                             continue;
                         }
 
-                        SnoopHighlighter highlight = null;
+                        SnoopHighlighter highlight;
                         
                         switch (pair.Key)
                         {

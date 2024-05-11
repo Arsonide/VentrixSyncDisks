@@ -13,10 +13,10 @@ namespace VentrixSyncDisks.Implementation.Mapping;
 
 public class EcholocationPulse : BasePoolObject
 {
-    private static AudioController.SoundMaterialOverride _coinMaterial = new AudioController.SoundMaterialOverride(0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f, 0f);
+    private static readonly AudioController.SoundMaterialOverride _coinMaterial = new AudioController.SoundMaterialOverride(0f, 0f, 0f, 0.5f, 0f, 0f, 0.5f, 0f);
     
     private Coroutine _pulseCoroutine;
-    private DuctExplorer _explorer = new DuctExplorer();
+    private readonly DuctExplorer _explorer = new DuctExplorer();
 
     public override void OnCheckout()
     {
@@ -72,7 +72,7 @@ public class EcholocationPulse : BasePoolObject
             {
                 if (i % 2 == 0)
                 {
-                    PlayCoinSound((1f - ((float)i / (float)pulseRange)) * VentrixConfig.MappingEcholocationSoundVolume.Value);
+                    PlayCoinSound((1f - (i / (float)pulseRange)) * VentrixConfig.MappingEcholocationSoundVolume.Value);
                 }
             }
 

@@ -9,9 +9,9 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
 {
     public static DuctMarkerPool Instance;
 
-    private static Material NormalDuctMaterial;
-    private static Material PeekDuctMaterial;
-    private static Material NormalVentMaterial;
+    private static Material _normalDuctMaterial;
+    private static Material _peekDuctMaterial;
+    private static Material _normalVentMaterial;
 
     protected override void SetupManager()
     {
@@ -22,20 +22,20 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
         int zTestDepthEqualForOpaque = Shader.PropertyToID("_ZTestDepthEqualForOpaque");
         int zWrite = Shader.PropertyToID("_ZWrite");
          
-        NormalDuctMaterial = new Material(unlitShader);
-        NormalDuctMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.RenderingNodeColorNormal.Value));
-        NormalDuctMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
-        NormalDuctMaterial.SetInt(zWrite, 0);
+        _normalDuctMaterial = new Material(unlitShader);
+        _normalDuctMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.RenderingNodeColorNormal.Value));
+        _normalDuctMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
+        _normalDuctMaterial.SetInt(zWrite, 0);
 
-        PeekDuctMaterial = new Material(unlitShader);
-        PeekDuctMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.RenderingNodeColorPeek.Value));
-        PeekDuctMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
-        PeekDuctMaterial.SetInt(zWrite, 0);
+        _peekDuctMaterial = new Material(unlitShader);
+        _peekDuctMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.RenderingNodeColorPeek.Value));
+        _peekDuctMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
+        _peekDuctMaterial.SetInt(zWrite, 0);
         
-        NormalVentMaterial = new Material(unlitShader);
-        NormalVentMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.RenderingNodeColorVent.Value));
-        NormalVentMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
-        NormalVentMaterial.SetInt(zWrite, 0);
+        _normalVentMaterial = new Material(unlitShader);
+        _normalVentMaterial.SetColor(unlitColor, Utilities.HexToColor(VentrixConfig.RenderingNodeColorVent.Value));
+        _normalVentMaterial.SetInt(zTestDepthEqualForOpaque, (int)UnityEngine.Rendering.CompareFunction.Always);
+        _normalVentMaterial.SetInt(zWrite, 0);
     }
 
     protected override DuctMarker CreateBaseObject()
@@ -43,7 +43,7 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         
         Renderer r = cube.GetComponent<Renderer>();
-        r.sharedMaterial = NormalDuctMaterial;
+        r.sharedMaterial = _normalDuctMaterial;
 
         DuctMarker ductMarker = cube.AddComponent<DuctMarker>();
         ductMarker.Renderer = r;
@@ -75,13 +75,13 @@ public class DuctMarkerPool : BasePoolManager<DuctMarker>
         switch (type)
         {
             case DuctMarkerType.NormalDuct:
-                ventRenderer.Renderer.sharedMaterial = NormalDuctMaterial;
+                ventRenderer.Renderer.sharedMaterial = _normalDuctMaterial;
                 break;
             case DuctMarkerType.PeekDuct:
-                ventRenderer.Renderer.sharedMaterial = PeekDuctMaterial;
+                ventRenderer.Renderer.sharedMaterial = _peekDuctMaterial;
                 break;
             case DuctMarkerType.NormalVent:
-                ventRenderer.Renderer.sharedMaterial = NormalVentMaterial;
+                ventRenderer.Renderer.sharedMaterial = _normalVentMaterial;
                 break;
         }
 

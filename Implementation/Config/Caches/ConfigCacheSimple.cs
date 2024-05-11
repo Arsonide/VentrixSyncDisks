@@ -1,6 +1,6 @@
 ﻿using BepInEx.Configuration;
 
-namespace VentrixSyncDisks.Implementation.Config;
+namespace VentrixSyncDisks.Implementation.Config.Caches;
 
 public class ConfigCacheSimple<T>
 {

@@ -5,6 +5,7 @@ using SOD.Common.Helpers;
 using SOD.Common.Helpers.SyncDiskObjects;
 using VentrixSyncDisks.Hooks;
 using VentrixSyncDisks.Implementation.Config;
+using VentrixSyncDisks.Implementation.Config.Caches;
 
 namespace VentrixSyncDisks.Implementation.Disks;
 
@@ -18,9 +19,9 @@ public static class DiskRegistry
     public static DiskCache SpecterDisk;
     public static DiskCache TerrorDisk;
 
-    private static List<DiskCache> AllDisks = new List<DiskCache>();
-    private static List<string> CacheDescriptions = new List<string>();
-    private static StringBuilder Builder = new StringBuilder();
+    private static readonly List<DiskCache> _allDisks = new List<DiskCache>();
+    private static readonly List<string> _cacheDescriptions = new List<string>();
+    private static readonly StringBuilder _builder = new StringBuilder();
     
     public static void Initialize()
     {
@@ -35,62 +36,62 @@ public static class DiskRegistry
 
     private static void Register()
     {
-        AllDisks.Clear();
+        _allDisks.Clear();
 
         if (VentrixConfig.MobilityEnabled.Value)
         {
             RegisterMobility();
-            AllDisks.Add(ScootingDisk);
-            AllDisks.Add(ParkourDisk);
+            _allDisks.Add(ScootingDisk);
+            _allDisks.Add(ParkourDisk);
         }
 
         if (VentrixConfig.ReconEnabled.Value)
         {
             RegisterRecon();
-            AllDisks.Add(MappingDisk);
-            AllDisks.Add(SnoopingDisk);
+            _allDisks.Add(MappingDisk);
+            _allDisks.Add(SnoopingDisk);
         }
 
         if (VentrixConfig.MischiefEnabled.Value)
         {
             RegisterMischief();
-            AllDisks.Add(SpecterDisk);
-            AllDisks.Add(TerrorDisk);
+            _allDisks.Add(SpecterDisk);
+            _allDisks.Add(TerrorDisk);
         }
     }
 
     private static string GetDiskLevelDescription(int level, params ConfigCacheDiskEffect[] caches)
     {
-        CacheDescriptions.Clear();
+        _cacheDescriptions.Clear();
 
         foreach (ConfigCacheDiskEffect cache in caches)
         {
             if (cache.GetDescriptionRelevant(level))
             {
-                CacheDescriptions.Add(cache.GetDescription(level));
+                _cacheDescriptions.Add(cache.GetDescription(level));
             }
         }
 
-        int count = CacheDescriptions.Count;
+        int count = _cacheDescriptions.Count;
 
         if (count <= 0)
         {
             return "Error Getting Description";
         }
         
-        Builder.Clear();
+        _builder.Clear();
 
         for (int i = 0; i < count; ++i)
         {
             bool isFirst = i == 0;
             bool isLast = i == count - 1;
-            string raw = CacheDescriptions[i];
-            Builder.Append(isFirst ? raw[0] : char.ToLowerInvariant(raw[0]));
-            Builder.Append(raw, 1, raw.Length - 2);
-            Builder.Append(isLast ? "." : "; ");
+            string raw = _cacheDescriptions[i];
+            _builder.Append(isFirst ? raw[0] : char.ToLowerInvariant(raw[0]));
+            _builder.Append(raw, 1, raw.Length - 2);
+            _builder.Append(isLast ? "." : "; ");
         }
 
-        return Builder.ToString();
+        return _builder.ToString();
     }
     
     #region Level Management Events
@@ -113,7 +114,7 @@ public static class DiskRegistry
     
     private static void OnAfterLoad(object sender, SaveGameArgs e)
     {
-        foreach (DiskCache disk in AllDisks)
+        foreach (DiskCache disk in _allDisks)
         {
             disk.Reset();
         }
@@ -131,7 +132,7 @@ public static class DiskRegistry
         int id = args.Effect.Value.Id;
         bool dirty = false;
         
-        foreach (DiskCache disk in AllDisks)
+        foreach (DiskCache disk in _allDisks)
         {
             if (disk.Install(id))
             {
@@ -155,7 +156,7 @@ public static class DiskRegistry
         int id = args.UpgradeOption.Value.Id;
         bool dirty = false;
         
-        foreach (DiskCache disk in AllDisks)
+        foreach (DiskCache disk in _allDisks)
         {
             if (disk.Upgrade(id))
             {
@@ -179,7 +180,7 @@ public static class DiskRegistry
         int id = args.Effect.Value.Id;
         bool dirty = false;
         
-        foreach (DiskCache disk in AllDisks)
+        foreach (DiskCache disk in _allDisks)
         {
             if (disk.Uninstall(id))
             {
@@ -215,9 +216,9 @@ public static class DiskRegistry
         {
             Name = VentrixConfig.NAME_LONG_SCOOTING,
             Icon = "IconRun",
+            Description = GetDiskLevelDescription(1, VentrixConfig.ScootingSpeedMultiplier),
         };
 
-        scootingEffect.Description = GetDiskLevelDescription(1, VentrixConfig.ScootingSpeedMultiplier);
         scootingEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.ScootingSpeedMultiplier));
         scootingEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.ScootingSpeedMultiplier));
         
@@ -226,9 +227,9 @@ public static class DiskRegistry
         {
             Name = VentrixConfig.NAME_LONG_PARKOUR,
             Icon = "IconWetFloor",
+            Description = GetDiskLevelDescription(1, VentrixConfig.ParkourTransitionSpeed, VentrixConfig.ParkourInteractRange, VentrixConfig.ParkourAutoClose),
         };
 
-        parkourEffect.Description = GetDiskLevelDescription(1, VentrixConfig.ParkourTransitionSpeed, VentrixConfig.ParkourInteractRange, VentrixConfig.ParkourAutoClose);
         parkourEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.ParkourTransitionSpeed, VentrixConfig.ParkourInteractRange, VentrixConfig.ParkourAutoClose));
         parkourEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.ParkourTransitionSpeed, VentrixConfig.ParkourInteractRange, VentrixConfig.ParkourAutoClose));
         
@@ -259,9 +260,9 @@ public static class DiskRegistry
         {
             Name = VentrixConfig.NAME_LONG_MAPPING,
             Icon = "IconCoinDistraction",
+            Description = GetDiskLevelDescription(1, VentrixConfig.MappingEcholocationRange, VentrixConfig.MappingEcholocationSpeed, VentrixConfig.MappingEcholocationDuration, VentrixConfig.MappingCoinMultiplier),
         };
 
-        mappingEffect.Description = GetDiskLevelDescription(1, VentrixConfig.MappingEcholocationRange, VentrixConfig.MappingEcholocationSpeed, VentrixConfig.MappingEcholocationDuration, VentrixConfig.MappingCoinMultiplier);
         mappingEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.MappingEcholocationRange, VentrixConfig.MappingEcholocationSpeed, VentrixConfig.MappingEcholocationDuration, VentrixConfig.MappingCoinMultiplier));
         mappingEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.MappingEcholocationRange, VentrixConfig.MappingEcholocationSpeed, VentrixConfig.MappingEcholocationDuration, VentrixConfig.MappingCoinMultiplier));
         
@@ -270,9 +271,9 @@ public static class DiskRegistry
         {
             Name = VentrixConfig.NAME_LONG_SNOOPING,
             Icon = "IconOpticalCammo",
+            Description = GetDiskLevelDescription(1, VentrixConfig.SnoopingCanSnoopCivilians, VentrixConfig.SnoopingCanSnoopSecurity, VentrixConfig.SnoopingCanPassTime, VentrixConfig.SnoopingCanSnoopPeeks),
         };
 
-        snoopingEffect.Description = GetDiskLevelDescription(1, VentrixConfig.SnoopingCanSnoopCivilians, VentrixConfig.SnoopingCanSnoopSecurity, VentrixConfig.SnoopingCanPassTime, VentrixConfig.SnoopingCanSnoopPeeks);
         snoopingEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.SnoopingCanSnoopCivilians, VentrixConfig.SnoopingCanSnoopSecurity, VentrixConfig.SnoopingCanPassTime, VentrixConfig.SnoopingCanSnoopPeeks));
         snoopingEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.SnoopingCanSnoopCivilians, VentrixConfig.SnoopingCanSnoopSecurity, VentrixConfig.SnoopingCanPassTime, VentrixConfig.SnoopingCanSnoopPeeks));
 
@@ -303,9 +304,9 @@ public static class DiskRegistry
         {
             Name = VentrixConfig.NAME_LONG_SPECTER,
             Icon = "IconDeath",
+            Description = GetDiskLevelDescription(1, VentrixConfig.SpecterFootstepChance, VentrixConfig.SpecterColdImmunity),
         };
 
-        specterEffect.Description = GetDiskLevelDescription(1, VentrixConfig.SpecterFootstepChance, VentrixConfig.SpecterColdImmunity);
         specterEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.SpecterFootstepChance, VentrixConfig.SpecterColdImmunity));
         specterEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.SpecterFootstepChance, VentrixConfig.SpecterColdImmunity));
         
@@ -314,9 +315,9 @@ public static class DiskRegistry
         {
             Name = VentrixConfig.NAME_LONG_TERROR,
             Icon = "IconPassedOut",
+            Description = GetDiskLevelDescription(1, VentrixConfig.TerrorFreakoutDuration, VentrixConfig.TerrorToxicImmunity),
         };
 
-        terrorEffect.Description = GetDiskLevelDescription(1, VentrixConfig.TerrorFreakoutDuration, VentrixConfig.TerrorToxicImmunity);
         terrorEffect.Upgrades.Add(GetDiskLevelDescription(2, VentrixConfig.TerrorFreakoutDuration, VentrixConfig.TerrorToxicImmunity));
         terrorEffect.Upgrades.Add(GetDiskLevelDescription(3, VentrixConfig.TerrorFreakoutDuration, VentrixConfig.TerrorToxicImmunity));
         

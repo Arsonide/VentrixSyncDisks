@@ -5,7 +5,8 @@ namespace VentrixSyncDisks.Implementation.Snooping;
 
 public class SnoopHighlighterPool : BasePoolManager<SnoopHighlighter>
 {
-    public static MaterialPropertyBlock FullAlphaBlock = null;
+    public static MaterialPropertyBlock FullAlphaBlock;
+    private static readonly int _fullAlphaKey = Shader.PropertyToID("_AlphaVal");
 
     public static SnoopHighlighterPool Instance;
 
@@ -13,7 +14,7 @@ public class SnoopHighlighterPool : BasePoolManager<SnoopHighlighter>
     {
         base.SetupManager();
         FullAlphaBlock = new MaterialPropertyBlock();
-        FullAlphaBlock.SetFloat("_AlphaVal", 1f);
+        FullAlphaBlock.SetFloat(_fullAlphaKey, 1f);
     }
 
     protected override SnoopHighlighter CreateBaseObject()

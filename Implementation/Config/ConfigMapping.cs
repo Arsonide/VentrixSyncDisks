@@ -1,5 +1,6 @@
 ﻿using BepInEx.Configuration;
 using VentrixSyncDisks.Implementation.Common;
+using VentrixSyncDisks.Implementation.Config.Caches;
 
 namespace VentrixSyncDisks.Implementation.Config;
 
@@ -136,7 +137,7 @@ public static partial class VentrixConfig
             return "Throwing coins in air ducts will create brief \"echolocation\" pulses that show the vent network through walls.";
         }
 
-        float change = (float)newValue / (float)oldValue;
+        float change = newValue / (float)oldValue;
         int percent = Utilities.DirectMultiplierDescription(change, "smaller", "larger", out string description);
 
         return $"Your \"echolocation\" pulses are now {percent}% {description}.";

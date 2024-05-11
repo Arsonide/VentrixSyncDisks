@@ -7,7 +7,7 @@ namespace VentrixSyncDisks.Implementation.Mapping;
 
 public class DuctMarker : BasePoolObject
 {
-    private static readonly Vector3 MINIMUM_SCALE = new Vector3(float.Epsilon, float.Epsilon, float.Epsilon);
+    private static readonly Vector3 _minimumScale = new Vector3(float.Epsilon, float.Epsilon, float.Epsilon);
     
     public Renderer Renderer;
     public Transform Transform;
@@ -22,7 +22,7 @@ public class DuctMarker : BasePoolObject
         _targetScale = targetScale;
         _lifetime = lifetime;
         SetState(DuctMarkerState.Spawning, true);
-        Transform.localScale = MINIMUM_SCALE;
+        Transform.localScale = _minimumScale;
     }
     
     private void OnDespawn()
@@ -30,7 +30,7 @@ public class DuctMarker : BasePoolObject
         DuctMarkerPool.Instance.ReleaseMarker(this);
     }
 
-    private void SetState(DuctMarkerState newState, bool force = true)
+    private void SetState(DuctMarkerState newState, bool force = false)
     {
         DuctMarkerState oldState = _state;
 
@@ -45,7 +45,7 @@ public class DuctMarker : BasePoolObject
         switch (_state)
         {
             case DuctMarkerState.Spawning:
-                Transform.localScale = MINIMUM_SCALE;
+                Transform.localScale = _minimumScale;
                 break;
             case DuctMarkerState.Spawned:
                 Transform.localScale = _targetScale;
@@ -54,7 +54,7 @@ public class DuctMarker : BasePoolObject
                 Transform.localScale = _targetScale;
                 break;
             case DuctMarkerState.Despawned:
-                Transform.localScale = MINIMUM_SCALE;
+                Transform.localScale = _minimumScale;
                 OnDespawn();
                 break;
         }
@@ -80,7 +80,7 @@ public class DuctMarker : BasePoolObject
 
     private void UpdateSpawning()
     {
-        Transform.localScale = Vector3.Lerp(MINIMUM_SCALE, _targetScale, _timer / VentrixConfig.RenderingNodeSpawnTime.Value);
+        Transform.localScale = Vector3.Lerp(_minimumScale, _targetScale, _timer / VentrixConfig.RenderingNodeSpawnTime.Value);
         
         if (_timer >= VentrixConfig.RenderingNodeSpawnTime.Value)
         {
@@ -98,7 +98,7 @@ public class DuctMarker : BasePoolObject
     
     private void UpdateDespawning()
     {
-        Transform.localScale = Vector3.Lerp(_targetScale, MINIMUM_SCALE, _timer / VentrixConfig.RenderingNodeDespawnTime.Value);
+        Transform.localScale = Vector3.Lerp(_targetScale, _minimumScale, _timer / VentrixConfig.RenderingNodeDespawnTime.Value);
         
         if (_timer >= VentrixConfig.RenderingNodeDespawnTime.Value)
         {

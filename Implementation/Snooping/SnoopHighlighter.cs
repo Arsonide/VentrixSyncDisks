@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using SOD.Common;
-using SOD.Common.Helpers;
 using UnityEngine;
 using VentrixSyncDisks.Implementation.Common;
 using VentrixSyncDisks.Implementation.Config;
@@ -14,8 +12,8 @@ public class SnoopHighlighter : BasePoolObject
     private const int HIGHLIGHTED_LAYER = 30;
     private const int ACTOR_UNHIGHLIGHTED_LAYER = 24;
     
-    private List<GameObject> _highlightObjects = new List<GameObject>();
-    private List<int> _highlightLayers = new List<int>();
+    private readonly List<GameObject> _highlightObjects = new List<GameObject>();
+    private readonly List<int> _highlightLayers = new List<int>();
     
     private bool _isActor;
     private Actor _actor;

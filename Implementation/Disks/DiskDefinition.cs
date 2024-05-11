@@ -1,4 +1,4 @@
-﻿#define EASILY_ATTAINABLE // Uncomment to make the Sync Disk free and at every location.
+﻿// #define EASILY_ATTAINABLE // Uncomment to make the Sync Disk free and at every location.
 
 using System.Collections.Generic;
 using SOD.Common;
@@ -11,11 +11,11 @@ public class DiskDefinition
 {
     public string Name = string.Empty;
     public int Price = 1000;
-    public List<DiskEffectDefinition> Effects = new List<DiskEffectDefinition>();
+    public readonly List<DiskEffectDefinition> Effects = new List<DiskEffectDefinition>();
 
     public void Register()
     {
-        SyncDiskBuilder builder = Lib.SyncDisks.Builder(Name, MyPluginInfo.PLUGIN_GUID, true);
+        SyncDiskBuilder builder = Lib.SyncDisks.Builder(Name, MyPluginInfo.PLUGIN_GUID);
         builder.SetManufacturer(SyncDiskPreset.Manufacturer.KensingtonIndigo);
 
 #if EASILY_ATTAINABLE

@@ -84,11 +84,11 @@ public class ParkourHooks
     [HarmonyPatch(typeof(Player), "TransformPlayerController")]
     public class PlayerTransformPlayerControllerHook
     {
-        private static PlayerTransitionPreset EnterPreset;
-        private static PlayerTransitionPreset ExitPreset;
+        private static PlayerTransitionPreset _enterPreset;
+        private static PlayerTransitionPreset _exitPreset;
 
-        private static float EnterSpeed = 1f;
-        private static float ExitSpeed = 1f;
+        private static float _enterSpeed = 1f;
+        private static float _exitSpeed = 1f;
     
         [HarmonyPrefix]
         private static bool Prefix(Player __instance, PlayerTransitionPreset newEnterTransition)
@@ -98,27 +98,27 @@ public class ParkourHooks
                 return true;
             }
         
-            if (EnterPreset == null && newEnterTransition.presetName.StartsWith("VentEnter"))
+            if (_enterPreset == null && newEnterTransition.presetName.StartsWith("VentEnter"))
             {
-                EnterPreset = newEnterTransition;
-                EnterSpeed = EnterPreset.transitionTime;
+                _enterPreset = newEnterTransition;
+                _enterSpeed = _enterPreset.transitionTime;
             }
-            else if (ExitPreset == null && newEnterTransition.presetName.StartsWith("VentExit"))
+            else if (_exitPreset == null && newEnterTransition.presetName.StartsWith("VentExit"))
             {
-                ExitPreset = newEnterTransition;
-                ExitSpeed = ExitPreset.transitionTime;
-            }
-
-            if (newEnterTransition == EnterPreset)
-            {
-                float multiplier = VentrixConfig.ParkourTransitionSpeed.GetLevel(DiskRegistry.ParkourDisk.Level);
-                EnterPreset.transitionTime = DiskRegistry.ParkourDisk.Level > 0 ? EnterSpeed * multiplier : EnterSpeed;
+                _exitPreset = newEnterTransition;
+                _exitSpeed = _exitPreset.transitionTime;
             }
 
-            if (newEnterTransition == ExitPreset)
+            if (newEnterTransition == _enterPreset)
             {
                 float multiplier = VentrixConfig.ParkourTransitionSpeed.GetLevel(DiskRegistry.ParkourDisk.Level);
-                ExitPreset.transitionTime = DiskRegistry.ParkourDisk.Level > 0 ? ExitSpeed * multiplier : ExitSpeed;
+                _enterPreset.transitionTime = DiskRegistry.ParkourDisk.Level > 0 ? _enterSpeed * multiplier : _enterSpeed;
+            }
+
+            if (newEnterTransition == _exitPreset)
+            {
+                float multiplier = VentrixConfig.ParkourTransitionSpeed.GetLevel(DiskRegistry.ParkourDisk.Level);
+                _exitPreset.transitionTime = DiskRegistry.ParkourDisk.Level > 0 ? _exitSpeed * multiplier : _exitSpeed;
             }
 
             return true;

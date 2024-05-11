@@ -10,8 +10,8 @@ public class MappingHooks
 {
     public static PhysicsProfile CoinImpactPhysicsProfile;
 
-    private static int LastCoinThrown;
-    private static Vector3 LastCoinImpactPosition;
+    private static int _lastCoinThrown;
+    private static Vector3 _lastCoinImpactPosition;
 
     private const string COIN_NAME = "WorldCoin";
     private const float IMPACT_THRESHOLD_DISTANCE = 1f;
@@ -38,8 +38,8 @@ public class MappingHooks
                 return;
             }
 
-            LastCoinThrown = __instance.GetInstanceID();
-            LastCoinImpactPosition = Vector3.zero;
+            _lastCoinThrown = __instance.GetInstanceID();
+            _lastCoinImpactPosition = Vector3.zero;
         }
     }
 
@@ -60,7 +60,7 @@ public class MappingHooks
             }
             
             // We're going to do a lot of early outs here to make sure a coin vibrating in the corner doesn't spam echolocation pulses.
-            if (__instance.GetInstanceID() != LastCoinThrown)
+            if (__instance.GetInstanceID() != _lastCoinThrown)
             {
                 return;
             }
@@ -77,12 +77,12 @@ public class MappingHooks
             
             Vector3 coinPosition = __instance.transform.position;
 
-            if (LastCoinImpactPosition != Vector3.zero && Vector3.Distance(LastCoinImpactPosition, coinPosition) < IMPACT_THRESHOLD_DISTANCE)
+            if (_lastCoinImpactPosition != Vector3.zero && Vector3.Distance(_lastCoinImpactPosition, coinPosition) < IMPACT_THRESHOLD_DISTANCE)
             {
                 return;
             }
 
-            LastCoinImpactPosition = coinPosition;
+            _lastCoinImpactPosition = coinPosition;
             AirDuctGroup.AirDuctSection startDuct = Utilities.PositionToAirDuct(coinPosition);
 
             if (startDuct == null)
