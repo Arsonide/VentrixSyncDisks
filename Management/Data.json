@@ -1,0 +1,68 @@
+{
+  "modName": "VentrixSyncDisks",
+  "creatorName": "Arsonide",
+
+  "versions": [
+    {
+      "version": "0.8.0",
+      "changes": "- Adds three vent related sync disks with six possible skill lines that can be acquired (by default) from Black Market Sync Clinics, as side job rewards, and (in newly generated cities) around the world randomly:\n  - Vent Mobility:\n    - Chute Scooting, which makes the player move faster in vents.\n    - Duct Parkour, which makes entering and exiting vents faster, lets you do it from further away, and closes vents behind you.\n  - Vent Recon:\n    - Acoustic Mapping, which visually shows vents through walls when you throw a coin inside vents.\n    - Grate Snooping, which shows people and security devices in rooms whether they see you or not, and lets you pass time near vents.\n  - Vent Mischief:\n    - Shaft Specter, which makes you move more quietly in vents, and makes youu immune to cold in vents.\n    - Tunnel Terror, which scares citizens in private rooms when you pop out of vents, and makes you immune to toxic gas in vents.\n- Other Changes:\n  - You can now move up and down in vents using the jump and crouch keys.\n  - Extensive configuration options for each skill line."
+    }
+  ],
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  "contentPath": "./Content",
+  "manifestPath": "./Content/manifest.json",
+  "changelogPath": "./Content/CHANGELOG.md",
+  "gitReadmePath": "../README.md",
+  "projectPath": "../VentrixSyncDisks.csproj",
+  "releasePath": "./Releases",
+  "dllPath": "../bin/Debug/net6.0/VentrixSyncDisks.dll",
+  "interopPath": "%AppData%/r2modmanPlus-local/ShadowsofDoubt/profiles/Default/BepInEx/interop",
+  "libraryPath": "../lib",
+
+  "operations": [
+    {
+      "file": "./Content/manifest.json",
+      "search": "\"version_number\"\\s*:\\s*\"([^\"]+)\"",
+      "replace": "\"version_number\": \"{version}\""
+    },
+    {
+      "file": "../VentrixSyncDisks.csproj",
+      "search": "<Version>([^<]+)</Version>",
+      "replace": "<Version>{version}</Version>"
+    },
+    {
+      "file": "../VentrixSyncDisks.csproj",
+      "search": "<PackageVersion>([^<]+)</PackageVersion>",
+      "replace": "<PackageVersion>{version}</PackageVersion>"
+    },
+    {
+      "file": "../VentrixSyncDisks.csproj",
+      "search": "<AssemblyVersion>([^<]+)</AssemblyVersion>",
+      "replace": "<AssemblyVersion>{version}</AssemblyVersion>"
+    },
+    {
+      "file": "../VentrixSyncDisks.csproj",
+      "search": "<FileVersion>([^<]+)</FileVersion>",
+      "replace": "<FileVersion>{version}</FileVersion>"
+    }
+  ]
+}
